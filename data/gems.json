@@ -1,0 +1,3264 @@
+[
+{
+"name":"Absolution",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Absolution#Item_acquisition"
+},
+{
+"name":"Added Chaos Damage Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Added_Chaos_Damage_Support#Item_acquisition"
+},
+{
+"name":"Added Cold Damage Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Added_Cold_Damage_Support#Item_acquisition"
+},
+{
+"name":"Added Fire Damage Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Added_Fire_Damage_Support#Item_acquisition"
+},
+{
+"name":"Added Lightning Damage Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Added_Lightning_Damage_Support#Item_acquisition"
+},
+{
+"name":"Additional Accuracy Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Additional_Accuracy_Support#Item_acquisition"
+},
+{
+"name":"Advanced Traps Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Advanced_Traps_Support#Item_acquisition"
+},
+{
+"name":"Alchemist's Mark",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Alchemist%27s_Mark#Item_acquisition"
+},
+{
+"name":"Ambush",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Ambush#Item_acquisition"
+},
+{
+"name":"Ancestral Call Support",
+"type":"support",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Ancestral_Call_Support#Item_acquisition"
+},
+{
+"name":"Ancestral Cry",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Ancestral_Cry#Item_acquisition"
+},
+{
+"name":"Anger",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Anger#Item_acquisition"
+},
+{
+"name":"Animate Guardian",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Animate_Guardian#Item_acquisition"
+},
+{
+"name":"Animate Weapon",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Animate_Weapon#Item_acquisition"
+},
+{
+"name":"Arc",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Arc#Item_acquisition"
+},
+{
+"name":"Arcane Cloak",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Arcane_Cloak#Item_acquisition"
+},
+{
+"name":"Arcane Surge Support",
+"type":"support",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Arcane_Surge_Support#Item_acquisition"
+},
+{
+"name":"Arcanist Brand",
+"type":"skill",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Arcanist_Brand#Item_acquisition"
+},
+{
+"name":"Archmage Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Archmage_Support#Item_acquisition"
+},
+{
+"name":"Arctic Armour",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Arctic_Armour#Item_acquisition"
+},
+{
+"name":"Armageddon Brand",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Armageddon_Brand#Item_acquisition"
+},
+{
+"name":"Arrogance Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Arrogance_Support#Item_acquisition"
+},
+{
+"name":"Arrow Nova Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Arrow_Nova_Support#Item_acquisition"
+},
+{
+"name":"Artillery Ballista",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Artillery_Ballista#Item_acquisition"
+},
+{
+"name":"Assassin's Mark",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Assassin%27s_Mark#Item_acquisition"
+},
+{
+"name":"Autoexertion",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Autoexertion#Item_acquisition"
+},
+{
+"name":"Automation",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Automation#Item_acquisition"
+},
+{
+"name":"Ball Lightning",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Ball_Lightning#Item_acquisition"
+},
+{
+"name":"Ballista Totem Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Ballista_Totem_Support#Item_acquisition"
+},
+{
+"name":"Bane",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Bane#Item_acquisition"
+},
+{
+"name":"Barrage",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Barrage#Item_acquisition"
+},
+{
+"name":"Barrage Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Barrage_Support#Item_acquisition"
+},
+{
+"name":"Battlemage's Cry",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Battlemage%27s_Cry#Item_acquisition"
+},
+{
+"name":"Bear Trap",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Bear_Trap#Item_acquisition"
+},
+{
+"name":"Behead Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Behead_Support#Item_acquisition"
+},
+{
+"name":"Berserk",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Berserk#Item_acquisition"
+},
+{
+"name":"Blade Blast",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Blade_Blast#Item_acquisition"
+},
+{
+"name":"Blade Flurry",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Blade_Flurry#Item_acquisition"
+},
+{
+"name":"Blade Trap",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Blade_Trap#Item_acquisition"
+},
+{
+"name":"Blade Vortex",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Blade_Vortex#Item_acquisition"
+},
+{
+"name":"Bladefall",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Bladefall#Item_acquisition"
+},
+{
+"name":"Bladestorm",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Bladestorm#Item_acquisition"
+},
+{
+"name":"Blasphemy Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Blasphemy_Support#Item_acquisition"
+},
+{
+"name":"Blast Rain",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Blast_Rain#Item_acquisition"
+},
+{
+"name":"Blastchain Mine Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Blastchain_Mine_Support#Item_acquisition"
+},
+{
+"name":"Blazing Salvo",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Blazing_Salvo#Item_acquisition"
+},
+{
+"name":"Blessed Call Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Blessed_Call_Support#Item_acquisition"
+},
+{
+"name":"Blight",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Blight#Item_acquisition"
+},
+{
+"name":"Blind Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Blind_Support#Item_acquisition"
+},
+{
+"name":"Blink Arrow",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Blink_Arrow#Item_acquisition"
+},
+{
+"name":"Block Chance Reduction Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Block_Chance_Reduction_Support#Item_acquisition"
+},
+{
+"name":"Blood Rage",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Blood_Rage#Item_acquisition"
+},
+{
+"name":"Blood and Sand",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Blood_and_Sand#Item_acquisition"
+},
+{
+"name":"Bloodlust Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Bloodlust_Support#Item_acquisition"
+},
+{
+"name":"Bloodthirst Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Bloodthirst_Support#Item_acquisition"
+},
+{
+"name":"Bodyswap",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Bodyswap#Item_acquisition"
+},
+{
+"name":"Bone Offering",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Bone_Offering#Item_acquisition"
+},
+{
+"name":"Bonechill Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Bonechill_Support#Item_acquisition"
+},
+{
+"name":"Boneshatter",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Boneshatter#Item_acquisition"
+},
+{
+"name":"Brand Recall",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Brand_Recall#Item_acquisition"
+},
+{
+"name":"Brutality Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Brutality_Support#Item_acquisition"
+},
+{
+"name":"Burning Arrow",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Burning_Arrow#Item_acquisition"
+},
+{
+"name":"Burning Damage Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Burning_Damage_Support#Item_acquisition"
+},
+{
+"name":"Cast On Critical Strike Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cast_On_Critical_Strike_Support#Item_acquisition"
+},
+{
+"name":"Cast on Death Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cast_on_Death_Support#Item_acquisition"
+},
+{
+"name":"Cast on Melee Kill Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cast_on_Melee_Kill_Support#Item_acquisition"
+},
+{
+"name":"Cast when Damage Taken Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cast_when_Damage_Taken_Support#Item_acquisition"
+},
+{
+"name":"Cast when Stunned Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cast_when_Stunned_Support#Item_acquisition"
+},
+{
+"name":"Cast while Channelling Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cast_while_Channelling_Support#Item_acquisition"
+},
+{
+"name":"Caustic Arrow",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Caustic_Arrow#Item_acquisition"
+},
+{
+"name":"Chain Hook",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Chain_Hook#Item_acquisition"
+},
+{
+"name":"Chain Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Chain_Support#Item_acquisition"
+},
+{
+"name":"Chance to Bleed Support",
+"type":"support",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Chance_to_Bleed_Support#Item_acquisition"
+},
+{
+"name":"Chance to Flee Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Chance_to_Flee_Support#Item_acquisition"
+},
+{
+"name":"Chance to Poison Support",
+"type":"support",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Chance_to_Poison_Support#Item_acquisition"
+},
+{
+"name":"Charged Dash",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Charged_Dash#Item_acquisition"
+},
+{
+"name":"Charged Mines Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Charged_Mines_Support#Item_acquisition"
+},
+{
+"name":"Charged Traps Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Charged_Traps_Support#Item_acquisition"
+},
+{
+"name":"Clarity",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Clarity#Item_acquisition"
+},
+{
+"name":"Cleave",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Cleave#Item_acquisition"
+},
+{
+"name":"Close Combat Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Close_Combat_Support#Item_acquisition"
+},
+{
+"name":"Cluster Traps Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Cluster_Traps_Support#Item_acquisition"
+},
+{
+"name":"Cobra Lash",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Cobra_Lash#Item_acquisition"
+},
+{
+"name":"Cold Penetration Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Cold_Penetration_Support#Item_acquisition"
+},
+{
+"name":"Cold Snap",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Cold_Snap#Item_acquisition"
+},
+{
+"name":"Cold to Fire Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Cold_to_Fire_Support#Item_acquisition"
+},
+{
+"name":"Combustion Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Combustion_Support#Item_acquisition"
+},
+{
+"name":"Concentrated Effect Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Concentrated_Effect_Support#Item_acquisition"
+},
+{
+"name":"Conductivity",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Conductivity#Item_acquisition"
+},
+{
+"name":"Conflagration",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Conflagration#Item_acquisition"
+},
+{
+"name":"Consecrated Path",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Consecrated_Path#Item_acquisition"
+},
+{
+"name":"Contagion",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Contagion#Item_acquisition"
+},
+{
+"name":"Controlled Blaze Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Controlled_Blaze_Support#Item_acquisition"
+},
+{
+"name":"Controlled Destruction Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Controlled_Destruction_Support#Item_acquisition"
+},
+{
+"name":"Conversion Trap",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Conversion_Trap#Item_acquisition"
+},
+{
+"name":"Convocation",
+"type":"skill",
+"color":"white",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Convocation#Item_acquisition"
+},
+{
+"name":"Corrupting Cry Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Corrupting_Cry_Support#Item_acquisition"
+},
+{
+"name":"Corrupting Fever",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Corrupting_Fever#Item_acquisition"
+},
+{
+"name":"Crackling Lance",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Crackling_Lance#Item_acquisition"
+},
+{
+"name":"Creeping Frost",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Creeping_Frost#Item_acquisition"
+},
+{
+"name":"Cremation",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Cremation#Item_acquisition"
+},
+{
+"name":"Critical Strike Affliction Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Critical_Strike_Affliction_Support#Item_acquisition"
+},
+{
+"name":"Cruelty Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Cruelty_Support#Item_acquisition"
+},
+{
+"name":"Crushing Fist",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Crushing_Fist#Item_acquisition"
+},
+{
+"name":"Culling Strike Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Culling_Strike_Support#Item_acquisition"
+},
+{
+"name":"Cursed Ground Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Cursed_Ground_Support#Item_acquisition"
+},
+{
+"name":"Cyclone",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Cyclone#Item_acquisition"
+},
+{
+"name":"Damage on Full Life Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Damage_on_Full_Life_Support#Item_acquisition"
+},
+{
+"name":"Dark Bargain",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Dark_Bargain#Item_acquisition"
+},
+{
+"name":"Dash",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Dash#Item_acquisition"
+},
+{
+"name":"Deadly Ailments Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Deadly_Ailments_Support#Item_acquisition"
+},
+{
+"name":"Decay Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Decay_Support#Item_acquisition"
+},
+{
+"name":"Decoy Totem",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Decoy_Totem#Item_acquisition"
+},
+{
+"name":"Defiance Banner",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Defiance_Banner#Item_acquisition"
+},
+{
+"name":"Desecrate",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Desecrate#Item_acquisition"
+},
+{
+"name":"Despair",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Despair#Item_acquisition"
+},
+{
+"name":"Destructive Link",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Destructive_Link#Item_acquisition"
+},
+{
+"name":"Determination",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Determination#Item_acquisition"
+},
+{
+"name":"Detonate Dead",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Detonate_Dead#Item_acquisition"
+},
+{
+"name":"Detonate Mines",
+"type":"skill",
+"color":"white",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Detonate_Mines#Item_acquisition"
+},
+{
+"name":"Devour Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Devour_Support#Item_acquisition"
+},
+{
+"name":"Devouring Totem",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Devouring_Totem#Item_acquisition"
+},
+{
+"name":"Discharge",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Discharge#Item_acquisition"
+},
+{
+"name":"Discipline",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Discipline#Item_acquisition"
+},
+{
+"name":"Divine Blast",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Divine_Blast#Item_acquisition"
+},
+{
+"name":"Divine Ire",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Divine_Ire#Item_acquisition"
+},
+{
+"name":"Divine Retribution",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Divine_Retribution#Item_acquisition"
+},
+{
+"name":"Dominating Blow",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Dominating_Blow#Item_acquisition"
+},
+{
+"name":"Double Strike",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Double_Strike#Item_acquisition"
+},
+{
+"name":"Dread Banner",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Dread_Banner#Item_acquisition"
+},
+{
+"name":"Dual Strike",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Dual_Strike#Item_acquisition"
+},
+{
+"name":"Earthquake",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Earthquake#Item_acquisition"
+},
+{
+"name":"Earthshatter",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Earthshatter#Item_acquisition"
+},
+{
+"name":"Efficacy Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Efficacy_Support#Item_acquisition"
+},
+{
+"name":"Elemental Army Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Elemental_Army_Support#Item_acquisition"
+},
+{
+"name":"Elemental Damage with Attacks Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Elemental_Damage_with_Attacks_Support#Item_acquisition"
+},
+{
+"name":"Elemental Focus Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Elemental_Focus_Support#Item_acquisition"
+},
+{
+"name":"Elemental Hit",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Elemental_Hit#Item_acquisition"
+},
+{
+"name":"Elemental Penetration Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Elemental_Penetration_Support#Item_acquisition"
+},
+{
+"name":"Elemental Proliferation Support",
+"type":"support",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Elemental_Proliferation_Support#Item_acquisition"
+},
+{
+"name":"Elemental Weakness",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Elemental_Weakness#Item_acquisition"
+},
+{
+"name":"Endurance Charge on Melee Stun Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Endurance_Charge_on_Melee_Stun_Support#Item_acquisition"
+},
+{
+"name":"Enduring Cry",
+"type":"skill",
+"color":"str",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Enduring_Cry#Item_acquisition"
+},
+{
+"name":"Energy Blade",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Energy_Blade#Item_acquisition"
+},
+{
+"name":"Energy Leech Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Energy_Leech_Support#Item_acquisition"
+},
+{
+"name":"Enfeeble",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Enfeeble#Item_acquisition"
+},
+{
+"name":"Ensnaring Arrow",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Ensnaring_Arrow#Item_acquisition"
+},
+{
+"name":"Essence Drain",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Essence_Drain#Item_acquisition"
+},
+{
+"name":"Eternal Blessing Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Eternal_Blessing_Support#Item_acquisition"
+},
+{
+"name":"Ethereal Knives",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Ethereal_Knives#Item_acquisition"
+},
+{
+"name":"Eviscerate",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Eviscerate#Item_acquisition"
+},
+{
+"name":"Excommunicate Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Excommunicate_Support#Item_acquisition"
+},
+{
+"name":"Exemplar Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Exemplar_Support#Item_acquisition"
+},
+{
+"name":"Expert Retaliation Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Expert_Retaliation_Support#Item_acquisition"
+},
+{
+"name":"Explosive Arrow",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Explosive_Arrow#Item_acquisition"
+},
+{
+"name":"Explosive Concoction",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Explosive_Concoction#Item_acquisition"
+},
+{
+"name":"Explosive Trap",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Explosive_Trap#Item_acquisition"
+},
+{
+"name":"Exsanguinate",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Exsanguinate#Item_acquisition"
+},
+{
+"name":"Eye of Winter",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Eye_of_Winter#Item_acquisition"
+},
+{
+"name":"Faster Attacks Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Faster_Attacks_Support#Item_acquisition"
+},
+{
+"name":"Faster Casting Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Faster_Casting_Support#Item_acquisition"
+},
+{
+"name":"Faster Projectiles Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Faster_Projectiles_Support#Item_acquisition"
+},
+{
+"name":"Feeding Frenzy Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Feeding_Frenzy_Support#Item_acquisition"
+},
+{
+"name":"Fire Penetration Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Fire_Penetration_Support#Item_acquisition"
+},
+{
+"name":"Fire Trap",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Fire_Trap#Item_acquisition"
+},
+{
+"name":"Fireball",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Fireball#Item_acquisition"
+},
+{
+"name":"Firestorm",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Firestorm#Item_acquisition"
+},
+{
+"name":"Fist of War Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Fist_of_War_Support#Item_acquisition"
+},
+{
+"name":"Flame Dash",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Flame_Dash#Item_acquisition"
+},
+{
+"name":"Flame Link",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Flame_Link#Item_acquisition"
+},
+{
+"name":"Flame Surge",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Flame_Surge#Item_acquisition"
+},
+{
+"name":"Flame Wall",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Flame_Wall#Item_acquisition"
+},
+{
+"name":"Flameblast",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Flameblast#Item_acquisition"
+},
+{
+"name":"Flamethrower Trap",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Flamethrower_Trap#Item_acquisition"
+},
+{
+"name":"Flamewood Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Flamewood_Support#Item_acquisition"
+},
+{
+"name":"Flammability",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Flammability#Item_acquisition"
+},
+{
+"name":"Flesh Offering",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Flesh_Offering#Item_acquisition"
+},
+{
+"name":"Flesh and Stone",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Flesh_and_Stone#Item_acquisition"
+},
+{
+"name":"Flicker Strike",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Flicker_Strike#Item_acquisition"
+},
+{
+"name":"Focused Ballista Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Focused_Ballista_Support#Item_acquisition"
+},
+{
+"name":"Focused Channelling Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Focused_Channelling_Support#Item_acquisition"
+},
+{
+"name":"Forbidden Rite",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Forbidden_Rite#Item_acquisition"
+},
+{
+"name":"Fork Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Fork_Support#Item_acquisition"
+},
+{
+"name":"Fortify Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Fortify_Support#Item_acquisition"
+},
+{
+"name":"Freezing Pulse",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Freezing_Pulse#Item_acquisition"
+},
+{
+"name":"Frenzy",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Frenzy#Item_acquisition"
+},
+{
+"name":"Fresh Meat Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Fresh_Meat_Support#Item_acquisition"
+},
+{
+"name":"Frigid Bond Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Frigid_Bond_Support#Item_acquisition"
+},
+{
+"name":"Frost Blades",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Frost_Blades#Item_acquisition"
+},
+{
+"name":"Frost Bomb",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Frost_Bomb#Item_acquisition"
+},
+{
+"name":"Frost Shield",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Frost_Shield#Item_acquisition"
+},
+{
+"name":"Frost Wall",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Frost_Wall#Item_acquisition"
+},
+{
+"name":"Frostbite",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Frostbite#Item_acquisition"
+},
+{
+"name":"Frostblink",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Frostblink#Item_acquisition"
+},
+{
+"name":"Frostbolt",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Frostbolt#Item_acquisition"
+},
+{
+"name":"Frozen Legion",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Frozen_Legion#Item_acquisition"
+},
+{
+"name":"Galvanic Arrow",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Galvanic_Arrow#Item_acquisition"
+},
+{
+"name":"Galvanic Field",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Galvanic_Field#Item_acquisition"
+},
+{
+"name":"General's Cry",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/General%27s_Cry#Item_acquisition"
+},
+{
+"name":"Generosity Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Generosity_Support#Item_acquisition"
+},
+{
+"name":"Glacial Cascade",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Glacial_Cascade#Item_acquisition"
+},
+{
+"name":"Glacial Hammer",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Glacial_Hammer#Item_acquisition"
+},
+{
+"name":"Glacial Shield Swipe",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Glacial_Shield_Swipe#Item_acquisition"
+},
+{
+"name":"Grace",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Grace#Item_acquisition"
+},
+{
+"name":"Greater Multiple Projectiles Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Greater_Multiple_Projectiles_Support#Item_acquisition"
+},
+{
+"name":"Greater Volley Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Greater_Volley_Support#Item_acquisition"
+},
+{
+"name":"Ground Slam",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Ground_Slam#Item_acquisition"
+},
+{
+"name":"Guardian's Blessing Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Guardian%27s_Blessing_Support#Item_acquisition"
+},
+{
+"name":"Hallow Support",
+"type":"support",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Hallow_Support#Item_acquisition"
+},
+{
+"name":"Haste",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Haste#Item_acquisition"
+},
+{
+"name":"Hatred",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Hatred#Item_acquisition"
+},
+{
+"name":"Heavy Strike",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Heavy_Strike#Item_acquisition"
+},
+{
+"name":"Herald of Agony",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Herald_of_Agony#Item_acquisition"
+},
+{
+"name":"Herald of Ash",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Herald_of_Ash#Item_acquisition"
+},
+{
+"name":"Herald of Ice",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Herald_of_Ice#Item_acquisition"
+},
+{
+"name":"Herald of Purity",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Herald_of_Purity#Item_acquisition"
+},
+{
+"name":"Herald of Thunder",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Herald_of_Thunder#Item_acquisition"
+},
+{
+"name":"Hex Bloom Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Hex_Bloom_Support#Item_acquisition"
+},
+{
+"name":"Hexblast",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Hexblast#Item_acquisition"
+},
+{
+"name":"Hextouch Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Hextouch_Support#Item_acquisition"
+},
+{
+"name":"High-Impact Mine Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/High-Impact_Mine_Support#Item_acquisition"
+},
+{
+"name":"Holy Flame Totem",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Holy_Flame_Totem#Item_acquisition"
+},
+{
+"name":"Holy Hammers",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Holy_Hammers#Item_acquisition"
+},
+{
+"name":"Holy Strike",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Holy_Strike#Item_acquisition"
+},
+{
+"name":"Holy Sweep",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Holy_Sweep#Item_acquisition"
+},
+{
+"name":"Hydrosphere",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Hydrosphere#Item_acquisition"
+},
+{
+"name":"Hypothermia Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Hypothermia_Support#Item_acquisition"
+},
+{
+"name":"Ice Bite Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Ice_Bite_Support#Item_acquisition"
+},
+{
+"name":"Ice Crash",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Ice_Crash#Item_acquisition"
+},
+{
+"name":"Ice Nova",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Ice_Nova#Item_acquisition"
+},
+{
+"name":"Ice Shot",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Ice_Shot#Item_acquisition"
+},
+{
+"name":"Ice Spear",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Ice_Spear#Item_acquisition"
+},
+{
+"name":"Ice Trap",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Ice_Trap#Item_acquisition"
+},
+{
+"name":"Icicle Mine",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Icicle_Mine#Item_acquisition"
+},
+{
+"name":"Ignite Proliferation Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Ignite_Proliferation_Support#Item_acquisition"
+},
+{
+"name":"Immolate Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Immolate_Support#Item_acquisition"
+},
+{
+"name":"Immortal Call",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Immortal_Call#Item_acquisition"
+},
+{
+"name":"Impale Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Impale_Support#Item_acquisition"
+},
+{
+"name":"Impending Doom Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Impending_Doom_Support#Item_acquisition"
+},
+{
+"name":"Incinerate",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Incinerate#Item_acquisition"
+},
+{
+"name":"Increased Area of Effect Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Increased_Area_of_Effect_Support#Item_acquisition"
+},
+{
+"name":"Increased Critical Damage Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Increased_Critical_Damage_Support#Item_acquisition"
+},
+{
+"name":"Increased Critical Strikes Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Increased_Critical_Strikes_Support#Item_acquisition"
+},
+{
+"name":"Infernal Blow",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Infernal_Blow#Item_acquisition"
+},
+{
+"name":"Infernal Cry",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Infernal_Cry#Item_acquisition"
+},
+{
+"name":"Infernal Legion Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Infernal_Legion_Support#Item_acquisition"
+},
+{
+"name":"Infused Channelling Support",
+"type":"support",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Infused_Channelling_Support#Item_acquisition"
+},
+{
+"name":"Innervate Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Innervate_Support#Item_acquisition"
+},
+{
+"name":"Inspiration Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Inspiration_Support#Item_acquisition"
+},
+{
+"name":"Intensify Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Intensify_Support#Item_acquisition"
+},
+{
+"name":"Intimidating Cry",
+"type":"skill",
+"color":"str",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Intimidating_Cry#Item_acquisition"
+},
+{
+"name":"Intuitive Link",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Intuitive_Link#Item_acquisition"
+},
+{
+"name":"Iron Grip Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Iron_Grip_Support#Item_acquisition"
+},
+{
+"name":"Iron Will Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Iron_Will_Support#Item_acquisition"
+},
+{
+"name":"Item Rarity Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Item_Rarity_Support#Item_acquisition"
+},
+{
+"name":"Kinetic Blast",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Kinetic_Blast#Item_acquisition"
+},
+{
+"name":"Kinetic Bolt",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Kinetic_Bolt#Item_acquisition"
+},
+{
+"name":"Kinetic Fusillade",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Kinetic_Fusillade#Item_acquisition"
+},
+{
+"name":"Kinetic Instability Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Kinetic_Instability_Support#Item_acquisition"
+},
+{
+"name":"Kinetic Rain",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Kinetic_Rain#Item_acquisition"
+},
+{
+"name":"Knockback Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Knockback_Support#Item_acquisition"
+},
+{
+"name":"Lacerate",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Lacerate#Item_acquisition"
+},
+{
+"name":"Lancing Steel",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Lancing_Steel#Item_acquisition"
+},
+{
+"name":"Leap Slam",
+"type":"skill",
+"color":"str",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Leap_Slam#Item_acquisition"
+},
+{
+"name":"Less Duration Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Less_Duration_Support#Item_acquisition"
+},
+{
+"name":"Life Gain on Hit Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Life_Gain_on_Hit_Support#Item_acquisition"
+},
+{
+"name":"Life Leech Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Life_Leech_Support#Item_acquisition"
+},
+{
+"name":"Lifetap Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Lifetap_Support#Item_acquisition"
+},
+{
+"name":"Lightning Arrow",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Lightning_Arrow#Item_acquisition"
+},
+{
+"name":"Lightning Conduit",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Lightning_Conduit#Item_acquisition"
+},
+{
+"name":"Lightning Penetration Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Lightning_Penetration_Support#Item_acquisition"
+},
+{
+"name":"Lightning Spire Trap",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Lightning_Spire_Trap#Item_acquisition"
+},
+{
+"name":"Lightning Strike",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Lightning_Strike#Item_acquisition"
+},
+{
+"name":"Lightning Tendrils",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Lightning_Tendrils#Item_acquisition"
+},
+{
+"name":"Lightning Trap",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Lightning_Trap#Item_acquisition"
+},
+{
+"name":"Lightning Warp",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Lightning_Warp#Item_acquisition"
+},
+{
+"name":"Living Lightning Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Living_Lightning_Support#Item_acquisition"
+},
+{
+"name":"Locus Mine Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Locus_Mine_Support#Item_acquisition"
+},
+{
+"name":"Maim Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Maim_Support#Item_acquisition"
+},
+{
+"name":"Malevolence",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Malevolence#Item_acquisition"
+},
+{
+"name":"Mana Leech Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Mana_Leech_Support#Item_acquisition"
+},
+{
+"name":"Mana-Infused Staff",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Mana-Infused_Staff#Item_acquisition"
+},
+{
+"name":"Manabond",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Manabond#Item_acquisition"
+},
+{
+"name":"Manaforged Arrows Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Manaforged_Arrows_Support#Item_acquisition"
+},
+{
+"name":"Mark On Hit Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Mark_On_Hit_Support#Item_acquisition"
+},
+{
+"name":"Meat Shield Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Meat_Shield_Support#Item_acquisition"
+},
+{
+"name":"Melee Physical Damage Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Melee_Physical_Damage_Support#Item_acquisition"
+},
+{
+"name":"Melee Splash Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Melee_Splash_Support#Item_acquisition"
+},
+{
+"name":"Minefield Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Minefield_Support#Item_acquisition"
+},
+{
+"name":"Minion Damage Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Minion_Damage_Support#Item_acquisition"
+},
+{
+"name":"Minion Life Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Minion_Life_Support#Item_acquisition"
+},
+{
+"name":"Minion Speed Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Minion_Speed_Support#Item_acquisition"
+},
+{
+"name":"Mirage Archer Support",
+"type":"support",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Mirage_Archer_Support#Item_acquisition"
+},
+{
+"name":"Mirror Arrow",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Mirror_Arrow#Item_acquisition"
+},
+{
+"name":"Molten Shell",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Molten_Shell#Item_acquisition"
+},
+{
+"name":"Molten Strike",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Molten_Strike#Item_acquisition"
+},
+{
+"name":"Momentum Support",
+"type":"support",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Momentum_Support#Item_acquisition"
+},
+{
+"name":"More Duration Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/More_Duration_Support#Item_acquisition"
+},
+{
+"name":"Multiple Projectiles Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Multiple_Projectiles_Support#Item_acquisition"
+},
+{
+"name":"Multiple Totems Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Multiple_Totems_Support#Item_acquisition"
+},
+{
+"name":"Multiple Traps Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Multiple_Traps_Support#Item_acquisition"
+},
+{
+"name":"Multistrike Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Multistrike_Support#Item_acquisition"
+},
+{
+"name":"Nightblade Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Nightblade_Support#Item_acquisition"
+},
+{
+"name":"Orb of Storms",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Orb_of_Storms#Item_acquisition"
+},
+{
+"name":"Overcharge Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Overcharge_Support#Item_acquisition"
+},
+{
+"name":"Overexertion Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Overexertion_Support#Item_acquisition"
+},
+{
+"name":"Pact of Beidat",
+"type":"skill",
+"color":"white",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Pact_of_Beidat#Item_acquisition"
+},
+{
+"name":"Pact of Ghorr",
+"type":"skill",
+"color":"white",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Pact_of_Ghorr#Item_acquisition"
+},
+{
+"name":"Pact of K'Tash",
+"type":"skill",
+"color":"white",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Pact_of_K%27Tash#Item_acquisition"
+},
+{
+"name":"Pact of Lycia",
+"type":"skill",
+"color":"white",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Pact_of_Lycia#Item_acquisition"
+},
+{
+"name":"Penance Brand",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Penance_Brand#Item_acquisition"
+},
+{
+"name":"Perforate",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Perforate#Item_acquisition"
+},
+{
+"name":"Pestilent Strike",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Pestilent_Strike#Item_acquisition"
+},
+{
+"name":"Petrified Blood",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Petrified_Blood#Item_acquisition"
+},
+{
+"name":"Phase Run",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Phase_Run#Item_acquisition"
+},
+{
+"name":"Physical to Lightning Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Physical_to_Lightning_Support#Item_acquisition"
+},
+{
+"name":"Pierce Support",
+"type":"support",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Pierce_Support#Item_acquisition"
+},
+{
+"name":"Pinpoint Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Pinpoint_Support#Item_acquisition"
+},
+{
+"name":"Plague Bearer",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Plague_Bearer#Item_acquisition"
+},
+{
+"name":"Poacher's Mark",
+"type":"skill",
+"color":"dex",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Poacher%27s_Mark#Item_acquisition"
+},
+{
+"name":"Point Blank Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Point_Blank_Support#Item_acquisition"
+},
+{
+"name":"Poisonous Concoction",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Poisonous_Concoction#Item_acquisition"
+},
+{
+"name":"Portal",
+"type":"skill",
+"color":"white",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Portal_(skill_gem)#Item_acquisition"
+},
+{
+"name":"Power Charge On Critical Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Power_Charge_On_Critical_Support#Item_acquisition"
+},
+{
+"name":"Power Siphon",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Power_Siphon#Item_acquisition"
+},
+{
+"name":"Precision",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Precision#Item_acquisition"
+},
+{
+"name":"Predator Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Predator_Support#Item_acquisition"
+},
+{
+"name":"Pride",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Pride#Item_acquisition"
+},
+{
+"name":"Prismatic Burst Support",
+"type":"support",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Prismatic_Burst_Support#Item_acquisition"
+},
+{
+"name":"Protective Link",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Protective_Link#Item_acquisition"
+},
+{
+"name":"Pulverise Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Pulverise_Support#Item_acquisition"
+},
+{
+"name":"Puncture",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Puncture#Item_acquisition"
+},
+{
+"name":"Punishment",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Punishment#Item_acquisition"
+},
+{
+"name":"Purifying Flame",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Purifying_Flame#Item_acquisition"
+},
+{
+"name":"Purity of Elements",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Purity_of_Elements#Item_acquisition"
+},
+{
+"name":"Purity of Fire",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Purity_of_Fire#Item_acquisition"
+},
+{
+"name":"Purity of Ice",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Purity_of_Ice#Item_acquisition"
+},
+{
+"name":"Purity of Lightning",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Purity_of_Lightning#Item_acquisition"
+},
+{
+"name":"Pyroclast Mine",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Pyroclast_Mine#Item_acquisition"
+},
+{
+"name":"Rage Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Rage_Support#Item_acquisition"
+},
+{
+"name":"Rage Vortex",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Rage_Vortex#Item_acquisition"
+},
+{
+"name":"Rain of Arrows",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Rain_of_Arrows#Item_acquisition"
+},
+{
+"name":"Raise Spectre",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Raise_Spectre#Item_acquisition"
+},
+{
+"name":"Raise Zombie",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Raise_Zombie#Item_acquisition"
+},
+{
+"name":"Rallying Cry",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Rallying_Cry#Item_acquisition"
+},
+{
+"name":"Reap",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Reap#Item_acquisition"
+},
+{
+"name":"Reave",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Reave#Item_acquisition"
+},
+{
+"name":"Rejuvenation Totem",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Rejuvenation_Totem#Item_acquisition"
+},
+{
+"name":"Returning Projectiles Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Returning_Projectiles_Support#Item_acquisition"
+},
+{
+"name":"Righteous Fire",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Righteous_Fire#Item_acquisition"
+},
+{
+"name":"Rolling Magma",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Rolling_Magma#Item_acquisition"
+},
+{
+"name":"Rupture Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Rupture_Support#Item_acquisition"
+},
+{
+"name":"Ruthless Support",
+"type":"support",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Ruthless_Support#Item_acquisition"
+},
+{
+"name":"Sacred Wisps Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Sacred_Wisps_Support#Item_acquisition"
+},
+{
+"name":"Sacrifice Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Sacrifice_Support#Item_acquisition"
+},
+{
+"name":"Sadism Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Sadism_Support#Item_acquisition"
+},
+{
+"name":"Scorching Ray",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Scorching_Ray#Item_acquisition"
+},
+{
+"name":"Scourge Arrow",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Scourge_Arrow#Item_acquisition"
+},
+{
+"name":"Searing Bond",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Searing_Bond#Item_acquisition"
+},
+{
+"name":"Second Wind Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Second_Wind_Support#Item_acquisition"
+},
+{
+"name":"Seismic Cry",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Seismic_Cry#Item_acquisition"
+},
+{
+"name":"Seismic Trap",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Seismic_Trap#Item_acquisition"
+},
+{
+"name":"Shattering Steel",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Shattering_Steel#Item_acquisition"
+},
+{
+"name":"Shield Charge",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Shield_Charge#Item_acquisition"
+},
+{
+"name":"Shield Crush",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Shield_Crush#Item_acquisition"
+},
+{
+"name":"Shield of Light",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Shield_of_Light#Item_acquisition"
+},
+{
+"name":"Shock Nova",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Shock_Nova#Item_acquisition"
+},
+{
+"name":"Shockwave Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Shockwave_Support#Item_acquisition"
+},
+{
+"name":"Shockwave Totem",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Shockwave_Totem#Item_acquisition"
+},
+{
+"name":"Shrapnel Ballista",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Shrapnel_Ballista#Item_acquisition"
+},
+{
+"name":"Siege Ballista",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Siege_Ballista#Item_acquisition"
+},
+{
+"name":"Sigil of Power",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Sigil_of_Power#Item_acquisition"
+},
+{
+"name":"Siphoning Trap",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Siphoning_Trap#Item_acquisition"
+},
+{
+"name":"Slower Projectiles Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Slower_Projectiles_Support#Item_acquisition"
+},
+{
+"name":"Smite",
+"type":"skill",
+"color":"str",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Smite#Item_acquisition"
+},
+{
+"name":"Smoke Mine",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Smoke_Mine#Item_acquisition"
+},
+{
+"name":"Snipe",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Snipe#Item_acquisition"
+},
+{
+"name":"Sniper's Mark",
+"type":"skill",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Sniper%27s_Mark#Item_acquisition"
+},
+{
+"name":"Somatic Shell",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Somatic_Shell#Item_acquisition"
+},
+{
+"name":"Soul Link",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Soul_Link#Item_acquisition"
+},
+{
+"name":"Soulrend",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Soulrend#Item_acquisition"
+},
+{
+"name":"Spark",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Spark#Item_acquisition"
+},
+{
+"name":"Spectral Helix",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Spectral_Helix#Item_acquisition"
+},
+{
+"name":"Spectral Shield Throw",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Spectral_Shield_Throw#Item_acquisition"
+},
+{
+"name":"Spectral Throw",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Spectral_Throw#Item_acquisition"
+},
+{
+"name":"Spell Cascade Support",
+"type":"support",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Spell_Cascade_Support#Item_acquisition"
+},
+{
+"name":"Spell Echo Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Spell_Echo_Support#Item_acquisition"
+},
+{
+"name":"Spell Totem Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Spell_Totem_Support#Item_acquisition"
+},
+{
+"name":"Spellblade Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Spellblade_Support#Item_acquisition"
+},
+{
+"name":"Spellslinger",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Spellslinger#Item_acquisition"
+},
+{
+"name":"Spirit Offering",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Spirit_Offering#Item_acquisition"
+},
+{
+"name":"Split Arrow",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Split_Arrow#Item_acquisition"
+},
+{
+"name":"Splitting Steel",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Splitting_Steel#Item_acquisition"
+},
+{
+"name":"Static Strike",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Static_Strike#Item_acquisition"
+},
+{
+"name":"Steelskin",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Steelskin#Item_acquisition"
+},
+{
+"name":"Storm Brand",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Storm_Brand#Item_acquisition"
+},
+{
+"name":"Storm Burst",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Storm_Burst#Item_acquisition"
+},
+{
+"name":"Storm Call",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Storm_Call#Item_acquisition"
+},
+{
+"name":"Storm Rain",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Storm_Rain#Item_acquisition"
+},
+{
+"name":"Stormbind",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Stormbind#Item_acquisition"
+},
+{
+"name":"Stormblast Mine",
+"type":"skill",
+"color":"int",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Stormblast_Mine#Item_acquisition"
+},
+{
+"name":"Stun Support",
+"type":"support",
+"color":"str",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Stun_Support#Item_acquisition"
+},
+{
+"name":"Summon Carrion Golem",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Summon_Carrion_Golem#Item_acquisition"
+},
+{
+"name":"Summon Chaos Golem",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Summon_Chaos_Golem#Item_acquisition"
+},
+{
+"name":"Summon Flame Golem",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Summon_Flame_Golem#Item_acquisition"
+},
+{
+"name":"Summon Holy Relic",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Summon_Holy_Relic#Item_acquisition"
+},
+{
+"name":"Summon Ice Golem",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Summon_Ice_Golem#Item_acquisition"
+},
+{
+"name":"Summon Lightning Golem",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Summon_Lightning_Golem#Item_acquisition"
+},
+{
+"name":"Summon Phantasm Support",
+"type":"support",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Summon_Phantasm_Support#Item_acquisition"
+},
+{
+"name":"Summon Raging Spirit",
+"type":"skill",
+"color":"int",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Summon_Raging_Spirit#Item_acquisition"
+},
+{
+"name":"Summon Reaper",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Summon_Reaper#Item_acquisition"
+},
+{
+"name":"Summon Skeletons",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Summon_Skeletons#Item_acquisition"
+},
+{
+"name":"Summon Skitterbots",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Summon_Skitterbots#Item_acquisition"
+},
+{
+"name":"Summon Stone Golem",
+"type":"skill",
+"color":"str",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Summon_Stone_Golem#Item_acquisition"
+},
+{
+"name":"Sunder",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Sunder#Item_acquisition"
+},
+{
+"name":"Swift Affliction Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Swift_Affliction_Support#Item_acquisition"
+},
+{
+"name":"Swift Assembly Support",
+"type":"support",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Swift_Assembly_Support#Item_acquisition"
+},
+{
+"name":"Swiftbrand Support",
+"type":"support",
+"color":"int",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Swiftbrand_Support#Item_acquisition"
+},
+{
+"name":"Swordstorm",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Swordstorm#Item_acquisition"
+},
+{
+"name":"Tectonic Slam",
+"type":"skill",
+"color":"str",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Tectonic_Slam#Item_acquisition"
+},
+{
+"name":"Tempest Shield",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Tempest_Shield#Item_acquisition"
+},
+{
+"name":"Temporal Chains",
+"type":"skill",
+"color":"dex",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Temporal_Chains#Item_acquisition"
+},
+{
+"name":"Temporal Rift",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Temporal_Rift#Item_acquisition"
+},
+{
+"name":"Thunderstorm",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Thunderstorm#Item_acquisition"
+},
+{
+"name":"Tornado",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Tornado#Item_acquisition"
+},
+{
+"name":"Tornado Shot",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Tornado_Shot#Item_acquisition"
+},
+{
+"name":"Toxic Rain",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Toxic_Rain#Item_acquisition"
+},
+{
+"name":"Trap Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Trap_Support#Item_acquisition"
+},
+{
+"name":"Trap and Mine Damage Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Trap_and_Mine_Damage_Support#Item_acquisition"
+},
+{
+"name":"Trauma Support",
+"type":"support",
+"color":"str",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Trauma_Support#Item_acquisition"
+},
+{
+"name":"Trinity Support",
+"type":"support",
+"color":"int",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Trinity_Support#Item_acquisition"
+},
+{
+"name":"Unbound Ailments Support",
+"type":"support",
+"color":"int",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Unbound_Ailments_Support#Item_acquisition"
+},
+{
+"name":"Unearth",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Unearth#Item_acquisition"
+},
+{
+"name":"Unleash Support",
+"type":"support",
+"color":"int",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Unleash_Support#Item_acquisition"
+},
+{
+"name":"Urgent Orders Support",
+"type":"support",
+"color":"str",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Urgent_Orders_Support#Item_acquisition"
+},
+{
+"name":"Vampiric Link",
+"type":"skill",
+"color":"dex",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Vampiric_Link#Item_acquisition"
+},
+{
+"name":"Vengeful Cry",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Vengeful_Cry#Item_acquisition"
+},
+{
+"name":"Venom Gyre",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Venom_Gyre#Item_acquisition"
+},
+{
+"name":"Vicious Projectiles Support",
+"type":"support",
+"color":"dex",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Vicious_Projectiles_Support#Item_acquisition"
+},
+{
+"name":"Vigilant Strike",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Vigilant_Strike#Item_acquisition"
+},
+{
+"name":"Vile Toxins Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Vile_Toxins_Support#Item_acquisition"
+},
+{
+"name":"Viper Strike",
+"type":"skill",
+"color":"dex",
+"level":1,
+"url":"https://www.poewiki.net/wiki/Viper_Strike#Item_acquisition"
+},
+{
+"name":"Vitality",
+"type":"skill",
+"color":"str",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Vitality#Item_acquisition"
+},
+{
+"name":"Void Manipulation Support",
+"type":"support",
+"color":"dex",
+"level":8,
+"url":"https://www.poewiki.net/wiki/Void_Manipulation_Support#Item_acquisition"
+},
+{
+"name":"Void Sphere",
+"type":"skill",
+"color":"int",
+"level":34,
+"url":"https://www.poewiki.net/wiki/Void_Sphere#Item_acquisition"
+},
+{
+"name":"Volatile Dead",
+"type":"skill",
+"color":"dex",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Volatile_Dead#Item_acquisition"
+},
+{
+"name":"Volatility Support",
+"type":"support",
+"color":"str",
+"level":18,
+"url":"https://www.poewiki.net/wiki/Volatility_Support#Item_acquisition"
+},
+{
+"name":"Volcanic Fissure",
+"type":"skill",
+"color":"str",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Volcanic_Fissure#Item_acquisition"
+},
+{
+"name":"Volley Support",
+"type":"support",
+"color":"dex",
+"level":4,
+"url":"https://www.poewiki.net/wiki/Volley_Support#Item_acquisition"
+},
+{
+"name":"Voltaxic Burst",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Voltaxic_Burst#Item_acquisition"
+},
+{
+"name":"Vortex",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Vortex#Item_acquisition"
+},
+{
+"name":"Vulnerability",
+"type":"skill",
+"color":"str",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Vulnerability#Item_acquisition"
+},
+{
+"name":"Wall of Force",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Wall_of_Force#Item_acquisition"
+},
+{
+"name":"War Banner",
+"type":"skill",
+"color":"str",
+"level":4,
+"url":"https://www.poewiki.net/wiki/War_Banner#Item_acquisition"
+},
+{
+"name":"Warlord's Mark",
+"type":"skill",
+"color":"str",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Warlord%27s_Mark#Item_acquisition"
+},
+{
+"name":"Wave of Conviction",
+"type":"skill",
+"color":"int",
+"level":16,
+"url":"https://www.poewiki.net/wiki/Wave_of_Conviction#Item_acquisition"
+},
+{
+"name":"Whirling Blades",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Whirling_Blades#Item_acquisition"
+},
+{
+"name":"Wild Strike",
+"type":"skill",
+"color":"dex",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Wild_Strike#Item_acquisition"
+},
+{
+"name":"Windburst Support",
+"type":"support",
+"color":"dex",
+"level":31,
+"url":"https://www.poewiki.net/wiki/Windburst_Support#Item_acquisition"
+},
+{
+"name":"Winter Orb",
+"type":"skill",
+"color":"int",
+"level":28,
+"url":"https://www.poewiki.net/wiki/Winter_Orb#Item_acquisition"
+},
+{
+"name":"Wintertide Brand",
+"type":"skill",
+"color":"int",
+"level":12,
+"url":"https://www.poewiki.net/wiki/Wintertide_Brand#Item_acquisition"
+},
+{
+"name":"Wither",
+"type":"skill",
+"color":"int",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Wither#Item_acquisition"
+},
+{
+"name":"Withering Step",
+"type":"skill",
+"color":"dex",
+"level":10,
+"url":"https://www.poewiki.net/wiki/Withering_Step#Item_acquisition"
+},
+{
+"name":"Withering Touch Support",
+"type":"support",
+"color":"dex",
+"level":38,
+"url":"https://www.poewiki.net/wiki/Withering_Touch_Support#Item_acquisition"
+},
+{
+"name":"Wrath",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Wrath#Item_acquisition"
+},
+{
+"name":"Zealotry",
+"type":"skill",
+"color":"int",
+"level":24,
+"url":"https://www.poewiki.net/wiki/Zealotry#Item_acquisition"
+}
+]

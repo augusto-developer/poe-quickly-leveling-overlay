@@ -1,0 +1,21 @@
+/* Colours and fonts shared by every window. The palette follows the game's own windows:
+   deep navy panels, brass frames and parchment text. */
+:root {
+  --navy: #10142a;
+  --navy-deep: #0a0d1c;
+  --navy-raised: #1a2040;
+  --brass: #b08d4f;
+  --brass-dim: #5d4c2e;
+  --parchment: #e6dec9;
+  --muted: #958f7e;
+  --bad: #e0705a;
+  --warn: #d8b56a;
+  --good: #9ed67c;
+  /* gem colours */
+  --str: #d4553f;
+  --dex: #74b84f;
+  --int: #5f92e6;
+  --white: #dcdcdc;
+  --display: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --body: "Segoe UI", system-ui, sans-serif;
+}

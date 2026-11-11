@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self'">
+<title>Passive tree</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: #05060c; color: var(--parchment); font: 14px/1.45 var(--body); display: grid; grid-template-columns: 340px 1fr; overflow: hidden; }
+  button, textarea, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  /* sidebar */
+  aside { background: var(--navy); border-right: 1px solid var(--brass-dim); display: flex; flex-direction: column; min-height: 0; }
+  aside h1 { font: 400 22px/1 var(--display); font-variant: small-caps; letter-spacing: .04em; color: var(--brass); margin: 0; padding: 16px 18px 12px; }
+  .import { padding: 0 18px 14px; border-bottom: 1px solid var(--brass-dim); }
+  .import label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  textarea, select {
+    width: 100%; background: var(--navy-deep); border: 1px solid var(--brass-dim); border-radius: 3px; padding: 8px 10px;
+  }
+  textarea { height: 64px; resize: none; font: 12px/1.3 Consolas, monospace; word-break: break-all; }
+  textarea:focus, select:focus { border-color: var(--brass); outline: none; }
+  .row { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  .btn { background: none; border: 1px solid var(--brass-dim); border-radius: 3px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: var(--brass); background: var(--navy-raised); }
+  .btn.primary { border-color: var(--brass); color: var(--brass); }
+  .msg { font-size: 12px; color: var(--muted); margin-top: 8px; min-height: 17px; }
+  .msg.error { color: var(--bad); }
+  #spec-row { margin-top: 8px; }
+
+  .order-head { display: flex; align-items: center; gap: 8px; padding: 12px 18px 6px; }
+  .order-head h2 { font: 400 17px/1 var(--display); font-variant: small-caps; letter-spacing: .03em; margin: 0; flex: 1; }
+  .link { background: none; border: 0; padding: 0; color: var(--muted); cursor: pointer; text-decoration: underline; font-size: 12px; }
+  .link:hover { color: var(--parchment); }
+  ol { flex: 1; overflow-y: auto; list-style: none; margin: 0; padding: 0 0 8px; }
+  ol li { display: grid; grid-template-columns: 30px 1fr auto auto; align-items: center; gap: 6px; padding: 5px 12px 5px 18px; cursor: pointer; }
+  ol li:hover, ol li.focus { background: var(--navy-raised); }
+  .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--brass); color: var(--brass); font-size: 12px; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+  li.keystone .num { background: var(--brass); color: var(--navy-deep); }
+  .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cost { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cost.unreachable { color: var(--bad); }
+  .tools { display: flex; }
+  .tools button { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 2px 5px; font-size: 13px; line-height: 1; }
+  .tools button:hover { color: var(--parchment); }
+  .empty { padding: 10px 18px; color: var(--muted); }
+  ol li.group { display: block; padding: 8px 18px 3px; font-size: 11px; color: var(--muted); cursor: default; border-top: 1px solid rgba(93, 76, 46, .5); margin-top: 4px; }
+  ol li.group:first-child { border-top: 0; margin-top: 0; }
+  ol li.group:hover { background: none; }
+  ol li.locked .num { border-style: dashed; opacity: .75; }
+  ol li.locked .nm { color: #b9b19c; }
+  #notes { flex: 1; overflow-y: auto; margin: 0; padding: 4px 18px 12px; white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.5 var(--body); user-select: text; }
+  .foot { padding: 10px 18px 14px; border-top: 1px solid var(--brass-dim); font-size: 12px; color: var(--muted); }
+
+  /* tree */
+  main { position: relative; min-width: 0; }
+  canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+  main, aside { user-select: none; }
+  #perf { position: absolute; right: 10px; top: 8px; font: 12px Consolas, monospace; color: #9ed67c; background: rgba(5, 6, 12, .8); padding: 4px 8px; border-radius: 3px; pointer-events: none; }
+  canvas.dragging { cursor: grabbing; }
+  canvas.pick { cursor: pointer; }
+  .hint { position: absolute; left: 14px; bottom: 12px; font-size: 12px; color: var(--muted); background: rgba(5, 6, 12, .7); padding: 4px 8px; border-radius: 3px; pointer-events: none; }
+  #tip {
+    position: absolute; pointer-events: none; max-width: 340px; padding: 9px 12px 10px;
+    background: rgba(8, 8, 10, .95); border: 1px solid var(--brass-dim); border-radius: 3px; z-index: 3;
+  }
+  #tip .t { font: 400 17px/1.2 var(--display); font-variant: small-caps; letter-spacing: .03em; color: var(--brass); }
+  #tip .k { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+  #tip .s { font-size: 13px; color: #8f9ff0; }
+  #tip .p { font-size: 12px; color: var(--parchment); margin-top: 6px; }
+  #loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Passive tree</h1>
+  <div class="import">
+    <label for="pob">Path of Building code</label>
+    <textarea id="pob" spellcheck="false" placeholder="Paste the code from PoB: Import/Export, Generate"></textarea>
+    <div class="row">
+      <button class="btn primary" id="import">Import build</button>
+      <span class="msg" id="summary" style="margin:0"></span>
+    </div>
+    <div id="spec-row" hidden>
+      <select id="spec" aria-label="Tree inside the build"></select>
+    </div>
+    <div class="msg" id="msg" aria-live="polite"></div>
+  </div>
+  <div class="order-head">
+    <h2 id="order-title">Order of the points</h2>
+    <button class="link" id="toggle-notes" hidden>Notes</button>
+    <button class="link" id="suggest">Suggest order</button>
+    <button class="link" id="clear">Clear</button>
+  </div>
+  <ol id="order"></ol>
+  <pre id="notes" hidden></pre>
+  <div class="foot" id="foot"></div>
+</aside>
+<main>
+  <canvas id="tree"></canvas>
+  <div id="tip" hidden></div>
+  <div id="perf" hidden></div>
+  <div class="hint">Drag to move, scroll to zoom, click a notable or keystone to add it to the order</div>
+  <div id="loading">Loading the tree...</div>
+</main>
+<script src="js/tree.js"></script>
+</body>
+</html>

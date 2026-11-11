@@ -1,0 +1,14 @@
+# dependencies and build output
+node_modules/
+dist/
+
+# your own machine: settings and the OCR model the library downloads next to the project
+/config.json
+/eng.traineddata
+
+# editors and the operating system
+.vscode/
+.idea/
+*.log
+Thumbs.db
+.DS_Store

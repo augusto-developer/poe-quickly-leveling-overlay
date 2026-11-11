@@ -1,0 +1,50 @@
+{
+  "name": "poe-gem-overlay",
+  "version": "1.0.0",
+  "description": "Leveling overlay for Path of Exile: gems to buy in each town, the next passive point of your Path of Building tree, and a mercenary check.",
+  "main": "src/main/index.js",
+  "license": "MIT",
+  "author": "poe-gem-overlay contributors",
+  "keywords": ["path-of-exile", "poe", "overlay", "leveling", "electron"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test \"test/**/*.test.js\"",
+    "pack": "electron-builder --win --dir --publish never",
+    "dist": "electron-builder --win --publish never"
+  },
+  "dependencies": {
+    "tesseract.js": "^5.1.0",
+    "uiohook-napi": "^1.5.4"
+  },
+  "devDependencies": {
+    "electron": "^45.3.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.github.poe-gem-overlay",
+    "productName": "PoE Gem Overlay",
+    "copyright": "MIT License",
+    "asar": false,
+    "npmRebuild": false,
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["src/**", "data/**", "assets/**", "sounds/**", "package.json", "LICENSE"],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "PoE-Gem-Overlay-Setup-${version}.${ext}",
+      "shortcutName": "PoE Gem Overlay"
+    },
+    "portable": {
+      "artifactName": "PoE-Gem-Overlay-${version}-portable.${ext}"
+    }
+  }
+}

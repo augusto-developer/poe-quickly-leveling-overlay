@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self'">
+<title>Build notes</title>
+<style>
+  html, body { height: 100%; margin: 0; }
+  body { background: #0a0d1c; color: #e6dec9; font: 14px/1.55 "Segoe UI", system-ui, sans-serif; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid #5d4c2e; }
+  h1 { flex: 1; margin: 0; font: 400 19px/1 "Palatino Linotype", "Book Antiqua", Georgia, serif; font-variant: small-caps; letter-spacing: .04em; color: #b08d4f; }
+  button { font: inherit; font-size: 12px; color: #958f7e; background: none; border: 1px solid #5d4c2e; border-radius: 3px; padding: 3px 9px; cursor: pointer; }
+  button:hover { color: #e6dec9; border-color: #b08d4f; }
+  button:focus-visible { outline: 2px solid #b08d4f; outline-offset: 2px; }
+  pre { flex: 1; margin: 0; padding: 12px 16px 18px; overflow-y: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+  .empty { color: #958f7e; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Build notes</h1>
+  <button id="smaller" title="Smaller text">A-</button>
+  <button id="bigger" title="Larger text">A+</button>
+</header>
+<pre id="text"></pre>
+<script src="js/notes.js"></script>
+</body>
+</html>

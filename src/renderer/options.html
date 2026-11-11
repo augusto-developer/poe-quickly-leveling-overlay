@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>Options</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--navy-deep); color: var(--parchment); font: 14px/1.45 var(--body); }
+  button, textarea, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  header { display: flex; align-items: baseline; gap: 12px; padding: 16px 24px 12px; border-bottom: 1px solid var(--brass-dim); }
+  header h1 { flex: 1; margin: 0; font: 400 22px/1 var(--display); font-variant: small-caps; letter-spacing: .04em; color: var(--brass); }
+  #saved { font-size: 12px; color: var(--muted); }
+  main { padding: 4px 24px 28px; max-width: 760px; }
+  h2 { font: 400 18px/1.2 var(--display); font-variant: small-caps; letter-spacing: .03em; margin: 22px 0 4px; }
+  .lead { margin: 0 0 10px; color: var(--muted); font-size: 13px; max-width: 62ch; }
+
+  /* one row per hotkey: what it does on the left, the key on the right */
+  .keys { border-top: 1px solid rgba(93, 76, 46, .5); }
+  .key-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(93, 76, 46, .5); }
+  .key-row .what { font-weight: 600; }
+  .key-row .desc { grid-column: 1; color: var(--muted); font-size: 13px; max-width: 52ch; }
+  .key-row .set { grid-column: 2; grid-row: 1 / span 2; display: flex; align-items: center; gap: 6px; }
+  .key {
+    min-width: 132px; padding: 7px 12px; text-align: center; cursor: pointer;
+    background: var(--navy); border: 1px solid var(--brass-dim); border-radius: 3px; font-variant-numeric: tabular-nums;
+  }
+  .key:hover { border-color: var(--brass); background: var(--navy-raised); }
+  .key.unset { color: var(--muted); }
+  .key.recording { border-color: var(--brass); background: var(--navy-raised); color: var(--brass); }
+  .off { background: none; border: 0; padding: 4px; color: var(--muted); cursor: pointer; text-decoration: underline; font-size: 12px; }
+  .off:hover { color: var(--parchment); }
+  .off[hidden] { display: none; }
+  .note { grid-column: 1 / -1; font-size: 12px; margin-top: 2px; }
+  .note.error { color: var(--bad); }
+  .note.warn { color: var(--warn); }
+  .note:empty { display: none; }
+  .check { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; margin-top: 2px; }
+  .check input { width: 16px; height: 16px; accent-color: var(--brass); }
+
+  /* reset to defaults, with a confirmation in place */
+  .reset { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 12px; font-size: 13px; }
+  .btn { background: none; border: 1px solid var(--brass-dim); border-radius: 3px; padding: 6px 12px; cursor: pointer; }
+  .btn:hover { border-color: var(--brass); background: var(--navy-raised); }
+  .btn.danger { border-color: #7a3a30; color: #f0b3a6; }
+  .btn.danger:hover { border-color: var(--bad); background: rgba(192, 80, 60, .25); color: #fff; }
+  .btn.yes { background: #a23c2b; border-color: var(--bad); color: #fff; }
+  .btn.yes:hover { background: #c0503c; }
+  .reset [hidden] { display: none; }
+  .reset .ask { color: var(--parchment); }
+
+  .folder { display: flex; align-items: center; gap: 10px; }
+  .folder .path { flex: 1; min-width: 0; padding: 7px 10px; background: var(--navy); border: 1px solid var(--brass-dim); border-radius: 3px; font: 13px/1.4 Consolas, monospace; overflow-wrap: anywhere; }
+  .folder .path.unset { color: var(--muted); font-family: var(--body); }
+  .folder + .note { margin-top: 6px; }
+
+  textarea {
+    width: 100%; min-height: 96px; resize: vertical; padding: 10px 12px;
+    background: var(--navy); border: 1px solid var(--brass-dim); border-radius: 3px; font: 13px/1.4 Consolas, monospace;
+  }
+  textarea:focus { border-color: var(--brass); outline: none; }
+  .count { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+  .count .over { color: var(--bad); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Options</h1>
+  <span id="saved" aria-live="polite"></span>
+</header>
+<main>
+  <h2>Game folder</h2>
+  <p class="lead">Where Path of Exile is installed. The overlay only reads the log the game keeps there (logs\Client.txt), to know which area you are in.</p>
+  <div class="folder">
+    <span class="path" id="folder-path"></span>
+    <button class="btn" id="folder-change">Change folder</button>
+  </div>
+  <div class="note" id="folder-note"></div>
+
+  <h2>Hotkeys</h2>
+  <p class="lead">Click a key, then press the one you want. Esc cancels. Changes apply right away.</p>
+  <div class="keys" id="keys"></div>
+  <div class="reset">
+    <button class="btn danger" id="reset-keys">Reset hotkeys to default</button>
+    <span class="ask" id="reset-ask" hidden>Back to F2, F3, F4 and P, with the tree search on? Your regex is kept.</span>
+    <button class="btn yes" id="reset-yes" hidden>Reset</button>
+    <button class="btn" id="reset-no" hidden>Cancel</button>
+  </div>
+
+  <h2>My regex</h2>
+  <p class="lead">A search you use often, for gear or anything else. The "Paste my regex" hotkey types it into the search field of the open window, such as a vendor or the stash.</p>
+  <textarea id="regex" spellcheck="false" placeholder='Example: "nne|rint|+1 to Level"'></textarea>
+  <div class="count">
+    <span id="regex-note"></span>
+    <span id="regex-count"></span>
+  </div>
+</main>
+<script src="js/options.js"></script>
+</body>
+</html>

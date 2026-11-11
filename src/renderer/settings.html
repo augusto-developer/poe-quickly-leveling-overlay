@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>Gem route</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--navy-deep); color: var(--parchment);
+    font: 14px/1.45 var(--body);
+    display: grid; grid-template-rows: auto 1fr; overflow: hidden;
+  }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  /* header */
+  header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 22px; border-bottom: 1px solid var(--brass-dim);
+  }
+  header h1 { font: 400 22px/1 var(--display); font-variant: small-caps; letter-spacing: .04em; margin: 0; flex: 1; color: var(--brass); }
+  .ghost {
+    background: none; border: 1px solid var(--brass-dim); border-radius: 3px;
+    padding: 6px 14px; cursor: pointer; color: var(--parchment);
+  }
+  .ghost:hover { border-color: var(--brass); background: var(--navy-raised); }
+  #saved { color: var(--muted); font-size: 12px; min-width: 60px; text-align: right; }
+
+  main { display: grid; grid-template-columns: 320px 1fr; min-height: 0; }
+
+  /* route column */
+  .route { border-right: 1px solid var(--brass-dim); display: flex; flex-direction: column; min-height: 0; background: var(--navy); }
+  .route-list { flex: 1; overflow-y: auto; padding: 14px 0 6px; margin: 0; list-style: none; }
+  .step { position: relative; padding: 9px 44px 9px 44px; cursor: pointer; }
+  .step-remove { position: absolute; right: 10px; top: 9px; min-width: 24px; height: 24px; padding: 0 6px; background: none; border: 1px solid transparent; border-radius: 3px; color: var(--muted); cursor: pointer; font-size: 13px; line-height: 1; }
+  .step-remove:hover { color: var(--str); border-color: var(--str); }
+  .step-remove.asking { color: #fff; background: #a23c2b; border-color: var(--str); font-size: 12px; }
+  .step:has(.asking) { padding-right: 84px; }
+  .step::before { /* route rail */
+    content: ""; position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; background: var(--brass-dim);
+  }
+  .step:first-child::before { top: 18px; }
+  .step:last-child::before { bottom: calc(100% - 18px); }
+  .step::after { /* rail node */
+    content: ""; position: absolute; left: 19px; top: 14px; width: 9px; height: 9px;
+    border: 1px solid var(--brass); background: var(--navy); transform: rotate(45deg);
+  }
+  .step:hover { background: rgba(176, 141, 79, .07); }
+  .step[aria-selected="true"] { background: var(--navy-raised); }
+  .step[aria-selected="true"]::after { background: var(--brass); }
+  .step-name { font: 400 17px/1.2 var(--display); font-variant: small-caps; letter-spacing: .03em; }
+  .step-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; color: var(--muted); font-size: 12px; }
+  .sockets { display: flex; gap: 3px; flex-wrap: wrap; }
+  .socket { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .5); flex: none; }
+  .socket.str { background: var(--str); } .socket.dex { background: var(--dex); }
+  .socket.int { background: var(--int); } .socket.white { background: var(--white); }
+  .socket.unknown { background: none; border-color: var(--muted); }
+  .route-empty { padding: 18px 22px; color: var(--muted); }
+
+  .add-area { position: relative; padding: 12px 16px 16px; border-top: 1px solid var(--brass-dim); }
+  .add-area label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .acts { display: flex; gap: 3px; margin-bottom: 8px; }
+  .acts button { flex: 1; min-width: 0; height: 24px; padding: 0; background: none; border: 1px solid var(--brass-dim); border-radius: 3px; color: var(--muted); cursor: pointer; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .acts button:hover { border-color: var(--brass); color: var(--parchment); }
+  .acts button[aria-pressed="true"] { background: var(--brass); border-color: var(--brass); color: var(--navy-deep); }
+  .field {
+    width: 100%; background: var(--navy-deep); border: 1px solid var(--brass-dim); border-radius: 3px;
+    padding: 8px 10px;
+  }
+  .field::placeholder { color: #6f6a5c; }
+  .field:focus { border-color: var(--brass); outline: none; }
+  .dropdown {
+    position: absolute; left: 16px; right: 16px; bottom: calc(100% - 6px); max-height: 300px; overflow-y: auto;
+    background: var(--navy-raised); border: 1px solid var(--brass); border-radius: 3px;
+    margin: 0; padding: 4px 0; list-style: none; z-index: 5;
+  }
+  .dropdown li { display: flex; justify-content: space-between; gap: 10px; padding: 6px 10px; cursor: pointer; }
+  .dropdown li[aria-selected="true"], .dropdown li:hover { background: rgba(176, 141, 79, .22); }
+  .dropdown small { color: var(--muted); white-space: nowrap; }
+
+  /* gem column */
+  .picker { display: flex; flex-direction: column; min-height: 0; padding: 20px 26px 0; }
+  .picker-head { display: flex; align-items: baseline; gap: 14px; }
+  .picker-head h2 { font: 400 26px/1.15 var(--display); font-variant: small-caps; letter-spacing: .03em; margin: 0; flex: 1; }
+  .picker-head h2 span { color: var(--muted); font: 14px var(--body); font-variant: normal; letter-spacing: 0; margin-right: 8px; }
+  .link { background: none; border: 0; padding: 0; color: var(--muted); cursor: pointer; text-decoration: underline; }
+  .link:hover { color: var(--str); }
+
+  .chosen { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 16px; min-height: 30px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px; padding: 4px 6px 4px 9px;
+    background: var(--navy-raised); border: 1px solid var(--brass-dim); border-radius: 3px;
+  }
+  .chip button { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0 3px; font-size: 15px; line-height: 1; }
+  .chip button:hover { color: var(--str); }
+  .chosen-empty { color: var(--muted); align-self: center; }
+
+  .tools { display: flex; gap: 10px; align-items: center; }
+  .tools .field { flex: 1; font-size: 16px; padding: 10px 12px; }
+  .seg { display: flex; border: 1px solid var(--brass-dim); border-radius: 3px; overflow: hidden; }
+  .seg button { background: none; border: 0; padding: 9px 12px; cursor: pointer; color: var(--muted); }
+  .seg button + button { border-left: 1px solid var(--brass-dim); }
+  .seg button[aria-pressed="true"] { background: var(--navy-raised); color: var(--parchment); }
+  .colors { display: flex; gap: 6px; }
+  .colors button {
+    width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0;
+    opacity: .3;
+  }
+  .colors button[aria-pressed="true"] { opacity: 1; border-color: var(--navy-deep); box-shadow: 0 0 0 1px var(--brass); }
+  .colors .str { background: var(--str); } .colors .dex { background: var(--dex); }
+  .colors .int { background: var(--int); } .colors .white { background: var(--white); }
+
+  .count { color: var(--muted); font-size: 12px; margin: 10px 0 6px; }
+  .results { flex: 1; overflow-y: auto; margin: 0 -26px; padding: 0 26px 20px; list-style: none; }
+  .gem {
+    display: grid; grid-template-columns: 14px 1fr auto auto auto; align-items: center; gap: 10px;
+    padding: 7px 10px; border-bottom: 1px solid rgba(93, 76, 46, .35); cursor: pointer;
+  }
+  .gem:hover, .gem[aria-selected="true"] { background: var(--navy-raised); }
+  .gem .kind, .gem .level { color: var(--muted); font-size: 12px; }
+  .gem .wiki { background: none; border: 0; padding: 2px 4px; color: var(--muted); font-size: 12px; text-decoration: underline; cursor: pointer; }
+  .gem .wiki:hover { color: var(--brass); }
+  .gem .level { min-width: 58px; text-align: right; font-variant-numeric: tabular-nums; }
+  .gem.picked .name { color: var(--brass); }
+  .gem.picked .name::after { content: "  in the route"; color: var(--muted); font-size: 12px; }
+  .no-results { color: var(--muted); padding: 18px 10px; }
+
+  .blank { margin: auto; text-align: center; color: var(--muted); max-width: 340px; }
+  .blank p { font: 400 20px/1.3 var(--display); color: var(--parchment); margin: 0 0 6px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Gem route</h1>
+  <span id="saved" aria-live="polite"></span>
+  <button class="ghost" id="import">Import</button>
+  <button class="ghost" id="export">Export</button>
+</header>
+<main>
+  <section class="route" aria-label="Route areas">
+    <ul class="route-list" id="steps" role="listbox" aria-label="Areas with gems"></ul>
+    <div class="add-area">
+      <label for="area-input">Add an area to the route</label>
+      <div class="acts" id="acts" role="group" aria-label="Filter areas by act"></div>
+      <input class="field" id="area-input" placeholder="e.g. The Lower Prison" autocomplete="off" spellcheck="false">
+      <ul class="dropdown" id="area-drop" hidden></ul>
+    </div>
+  </section>
+
+  <section class="picker" id="picker" hidden>
+    <div class="picker-head">
+      <h2><span>After</span><b id="area-title" style="font-weight:400"></b></h2>
+      <button class="link" id="remove-step">Remove area from the route</button>
+    </div>
+    <div class="chosen" id="chosen"></div>
+    <div class="tools">
+      <input class="field" id="gem-input" placeholder="Search gems" autocomplete="off" spellcheck="false">
+      <div class="seg" id="kind" role="group" aria-label="Gem type">
+        <button data-kind="all" aria-pressed="true">All</button>
+        <button data-kind="skill" aria-pressed="false">Skill</button>
+        <button data-kind="support" aria-pressed="false">Support</button>
+      </div>
+      <div class="colors" id="colors" role="group" aria-label="Gem colour">
+        <button class="str" data-color="str" aria-pressed="true" title="Strength"></button>
+        <button class="dex" data-color="dex" aria-pressed="true" title="Dexterity"></button>
+        <button class="int" data-color="int" aria-pressed="true" title="Intelligence"></button>
+        <button class="white" data-color="white" aria-pressed="true" title="No attribute"></button>
+      </div>
+    </div>
+    <div class="count" id="count"></div>
+    <ul class="results" id="results"></ul>
+  </section>
+
+  <section class="blank" id="blank">
+    <p>No area selected</p>
+    Add an area in the field on the left and pick the gems you want to be reminded to buy after passing through it.
+  </section>
+</main>
+<script src="js/search.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

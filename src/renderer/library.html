@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>Builds</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--navy-deep); color: var(--parchment); font: 14px/1.45 var(--body); }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+
+  header { display: flex; align-items: baseline; gap: 12px; padding: 16px 24px 12px; border-bottom: 1px solid var(--brass-dim); }
+  header h1 { flex: 1; margin: 0; font: 400 22px/1 var(--display); font-variant: small-caps; letter-spacing: .04em; color: var(--brass); }
+  #flash { font-size: 12px; color: var(--muted); }
+  main { padding: 4px 24px 28px; max-width: 760px; }
+  h2 { font: 400 18px/1.2 var(--display); font-variant: small-caps; letter-spacing: .03em; margin: 22px 0 4px; }
+  .lead { margin: 0 0 10px; color: var(--muted); font-size: 13px; max-width: 62ch; }
+  .sum { color: var(--muted); font-size: 13px; }
+  .link { background: none; border: 0; padding: 0; color: var(--muted); cursor: pointer; text-decoration: underline; font-size: 12px; }
+  .link:hover { color: var(--parchment); }
+
+  .btn { background: none; border: 1px solid var(--brass-dim); border-radius: 3px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: var(--brass); background: var(--navy-raised); }
+  .btn.primary { border-color: var(--brass); color: var(--brass); }
+  .btn.yes { background: #a23c2b; border-color: var(--bad); color: #fff; }
+  .btn.yes:hover { background: #c0503c; }
+  .btn:disabled { opacity: .45; cursor: default; }
+
+  /* the setup that is loaded right now */
+  .now { background: var(--navy); border: 1px solid var(--brass-dim); border-radius: 3px; padding: 12px 14px; }
+  .now .state { margin-top: 2px; font-size: 13px; }
+  .now .state.ok { color: var(--good); }
+  .now .state.warn { color: var(--warn); }
+  .save { display: flex; gap: 8px; margin-top: 10px; }
+  .save input, .name-edit {
+    flex: 1; min-width: 0; padding: 7px 10px; background: var(--navy-deep); border: 1px solid var(--brass-dim); border-radius: 3px;
+  }
+  .save input:focus, .name-edit:focus { border-color: var(--brass); outline: none; }
+  .error { color: var(--bad); font-size: 13px; margin-top: 8px; }
+
+  /* saved builds */
+  .list-head { display: flex; align-items: baseline; gap: 12px; }
+  .list-head h2 { flex: 1; }
+  ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 10px; }
+  li.card {
+    display: grid; grid-template-columns: 52px 1fr auto; gap: 4px 14px; align-items: start;
+    padding: 14px 16px 12px 14px; background: var(--navy); border: 1px solid rgba(93, 76, 46, .55); border-radius: 4px;
+  }
+  /* the build that is in the overlay stands out from the shelf */
+  li.card.same { background: var(--navy-raised); border-color: var(--brass); box-shadow: inset 3px 0 0 var(--brass); }
+  li.card.changed { border-color: var(--warn); box-shadow: inset 3px 0 0 var(--warn); }
+
+  /* class crest: a ring in the colours of the class attributes */
+  .crest { grid-row: 1 / span 3; width: 52px; height: 52px; border-radius: 50%; padding: 3px; background: var(--brass-dim); }
+  .crest span {
+    display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--navy-deep);
+    font: 400 19px/1 var(--display); letter-spacing: .02em; color: var(--parchment);
+  }
+  .crest.none { border-radius: 6px; transform: rotate(45deg) scale(.78); }
+  .crest.none span { border-radius: 4px; }
+  .crest.none span::after { content: ""; width: 12px; height: 12px; border: 1px solid var(--brass-dim); }
+
+  .name { font: 400 20px/1.2 var(--display); overflow-wrap: anywhere; }
+  .tag { font: 12px/1 var(--body); margin-left: 10px; white-space: nowrap; }
+  .tag.ok { color: var(--good); }
+  .tag.warn { color: var(--warn); }
+  .class { grid-column: 2; font-size: 13px; color: var(--brass); }
+  .class .rest { color: var(--muted); }
+  .acts { grid-column: 3; grid-row: 1 / span 2; display: flex; align-items: center; gap: 8px; }
+
+  /* gems: how many of each colour, then the first few names */
+  .gems { grid-column: 2 / -1; display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 13px; min-width: 0; }
+  .mix { flex: none; display: flex; width: 96px; height: 7px; border-radius: 4px; overflow: hidden; background: var(--navy-deep); gap: 1px; }
+  .mix i { display: block; min-width: 3px; }
+  .str { background: #d4553f; } .dex { background: #74b84f; } .int { background: #5f92e6; }
+  .gems .count { flex: none; font-variant-numeric: tabular-nums; }
+  .gems .names { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .minor { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .minor .date { flex: 1; }
+  .ask { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; font-size: 13px; }
+  li.card .name-edit { grid-column: 2; align-self: center; font-size: 16px; }
+  .ask .q { flex: 1 1 100%; }
+  .empty { padding: 16px 0; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Builds</h1>
+  <span id="flash" aria-live="polite"></span>
+</header>
+<main>
+  <h2>In the overlay now</h2>
+  <div class="now">
+    <div id="now-sum"></div>
+    <div class="state" id="now-state"></div>
+    <form class="save" id="save-form">
+      <input id="save-name" maxlength="60" placeholder="Name for this setup, such as Frost Blades Scion" aria-label="Name for this setup">
+      <button class="btn primary" id="save-new">Save as new build</button>
+    </form>
+    <div class="error" id="error" role="alert" hidden></div>
+  </div>
+
+  <div class="list-head">
+    <h2>Saved builds</h2>
+    <button class="link" id="folder">Open the folder</button>
+  </div>
+  <p class="lead">Each build keeps its gem route, its passive trees with their order, and the notes. Loading one does not touch your progress: gems already bought and points already taken stay marked.</p>
+  <ul id="list"></ul>
+</main>
+<script src="js/library.js"></script>
+</body>
+</html>

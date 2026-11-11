@@ -1,0 +1,73 @@
+[
+  {
+    "type": "Fallen Reverend",
+    "tier": "good",
+    "note": "Always spawns with Absolution and prioritises it. Extremely consistent."
+  },
+  {
+    "type": "Blade Ambusher",
+    "tier": "good",
+    "note": "Always spawns with the same main skills. Highest DPS on low gear, great for bosses, weaker on clear speed."
+  },
+  {
+    "type": "Combatant",
+    "tier": "great",
+    "all": ["Frost Blades", "Static Strike"],
+    "note": "Frost Blades with Static Strike: the best Combatant combination."
+  },
+  {
+    "type": "Combatant",
+    "tier": "ok",
+    "all": ["Spectral Helix", "Static Strike"],
+    "note": "Spectral Helix with Static Strike: works, but Frost Blades is better."
+  },
+  {
+    "type": "Combatant",
+    "tier": "ok",
+    "all": ["Wild Strike", "Static Strike"],
+    "note": "Wild Strike with Static Strike: works, but Frost Blades is better."
+  },
+  {
+    "type": "Manyshot",
+    "tier": "good",
+    "all": ["Vaal Ice Shot"],
+    "none": ["Icicle Rain"],
+    "note": "Vaal Ice Shot without Icicle Rain."
+  },
+  {
+    "type": "Warpriest",
+    "tier": "great",
+    "all": ["Holy Flame Elementals", "Dominating Blow"],
+    "note": "Came with both Holy Flame Elementals and Dominating Blow."
+  },
+  {
+    "type": "Warpriest",
+    "tier": "good",
+    "any": ["Holy Flame Elementals", "Dominating Blow"],
+    "note": "Came with one of the two: Holy Flame Elementals or Dominating Blow."
+  },
+  {
+    "type": "Cruel Mistress",
+    "tier": "check",
+    "all": ["Soulrend of Reaping"],
+    "note": "Has Soulrend of Reaping. Check the supports: it needs at least explode."
+  },
+  {
+    "type": "Flame Hand",
+    "tier": "good",
+    "all": ["Flameblast", "Vaal Flameblast"],
+    "note": "Came with both Flameblast and Vaal Flameblast."
+  },
+  {
+    "type": "Kineticist",
+    "tier": "great",
+    "all": ["Kinetic Blast of Clustering", "Greater Kinetic Blast"],
+    "note": "Kinetic Blast of Clustering together with Greater Kinetic Blast."
+  },
+  {
+    "type": "Kineticist",
+    "tier": "ok",
+    "any": ["Kinetic Blast of Clustering", "Greater Kinetic Blast"],
+    "note": "Came with only one of the two Kinetic Blast skills."
+  }
+]

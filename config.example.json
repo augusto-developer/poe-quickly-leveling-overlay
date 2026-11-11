@@ -1,0 +1,10 @@
+{
+  "debug": false,
+  "regexLimit": 250,
+  "soundVolumes": { "great": 0.6 },
+  "toastSeconds": 3,
+  "toastTop": 0.2,
+  "passiveSearchDelay": 350,
+  "inventory": null,
+  "mercLayout": null
+}

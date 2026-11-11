@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self'">
+<title>Alert</title>
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none; }
+  body { display: flex; flex-direction: column; align-items: center; font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif; }
+  #rain { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  .toast { position: relative; margin-top: 14px; display: flex; flex-direction: column; align-items: center; opacity: 0; transition: opacity .18s ease-out; }
+  .toast.show { opacity: 1; }
+
+  /* the verdict as a big mark: a cross, a tick, or a golden tick */
+  .mark { width: 170px; height: 170px; display: none; filter: drop-shadow(0 3px 10px rgba(0, 0, 0, .85)); }
+  .mark path { fill: none; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+  .mark .edge { stroke: rgba(8, 7, 5, .9); stroke-width: 25; }
+  .toast.show .mark { animation: land .22s cubic-bezier(.2, 1.4, .4, 1) both; }
+  .toast.show .mark .line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .26s ease-out .05s forwards; }
+  .toast.show .mark .line.second { animation-delay: .17s; }
+  @keyframes land { from { transform: scale(1.5); } to { transform: none; } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .toast.unlisted .cross, .toast.partial .cross { display: block; }
+  .toast.ok .tick, .toast.good .tick, .toast.check .tick, .toast.great .tick { display: block; }
+  .cross .line { stroke: #e0503c; }
+  .tick .line { stroke: #8fd46a; }
+  .toast.ok .tick .line { stroke: #e6c98a; }
+  .toast.great .tick { width: 200px; height: 200px; filter: drop-shadow(0 0 22px rgba(255, 200, 80, .75)) drop-shadow(0 3px 10px rgba(0, 0, 0, .85)); }
+  .toast.great .tick .line { stroke: #ffd36b; }
+
+  /* what was read, on a small plate under the mark */
+  .plate { margin-top: 4px; padding: 8px 26px 10px; text-align: center; max-width: 820px; background: rgba(10, 9, 7, .88); border: 1px solid #6b5a3a; border-radius: 4px; }
+  .title { font-size: 24px; line-height: 1.15; color: #e9dfc8; font-variant: small-caps; letter-spacing: .03em; }
+  .detail { margin-top: 3px; font: 14px/1.35 "Segoe UI", system-ui, sans-serif; color: #c9c0a8; }
+  .toast.great .plate { border-color: #c79a3c; }
+  .toast.great .title { color: #ffd98a; font-size: 30px; }
+  .toast.good .title, .toast.check .title { color: #a9e088; }
+  .toast.ok .title { color: #e6c98a; }
+  .toast.partial .title, .toast.unlisted .title { color: #f09a88; }
+  .toast.none .plate { margin-top: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast { transition: none; }
+    .toast.show .mark, .toast.show .mark .line { animation: none; stroke-dashoffset: 0; }
+  }
+</style>
+</head>
+<body>
+<canvas id="rain"></canvas>
+<div class="toast" id="toast">
+  <svg class="mark cross" viewBox="0 0 100 100" aria-hidden="true">
+    <path class="edge" d="M22 22 78 78M78 22 22 78"/>
+    <path class="line" pathLength="1" d="M22 22 78 78"/>
+    <path class="line second" pathLength="1" d="M78 22 22 78"/>
+  </svg>
+  <svg class="mark tick" viewBox="0 0 100 100" aria-hidden="true">
+    <path class="edge" d="M18 54 41 76 84 26"/>
+    <path class="line" pathLength="1" d="M18 54 41 76 84 26"/>
+  </svg>
+  <div class="plate">
+    <div class="title" id="title"></div>
+    <div class="detail" id="detail"></div>
+  </div>
+</div>
+<script src="js/toast.js"></script>
+</body>
+</html>
