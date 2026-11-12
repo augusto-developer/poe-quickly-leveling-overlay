@@ -16,7 +16,7 @@ const treeplan = require('../src/core/treeplan');
 const mercs = require('../src/core/mercs');
 const vision = require('../src/core/vision');
 const gamefolder = require('../src/core/gamefolder');
-const { parseArea } = require('../src/core/logwatcher');
+const { parseArea, parseGenerated } = require('../src/core/logwatcher');
 
 const areaActs = guide.indexAreas(require('../data/areas.json'));
 
@@ -28,6 +28,24 @@ test('regex: joins the gem names and shortens them to fit the search field', () 
   const short = buildRegex(many, 250);
   assert.ok(short.length <= 250, `${short.length} characters`);
   assert.match(short, /^"[^"]+"$/);
+});
+
+test('log: reads the id and level of the area being loaded', () => {
+  assert.deepEqual(parseGenerated('2026/11/12 18:31:46 28742781 1186a8a3 [DEBUG Client 12424] Generating level 13 area "1_1_town" with seed 1'), { level: 13, id: '1_1_town' });
+  assert.equal(parseGenerated('2026/11/12 18:31:46 28743140 f22b6a02 [INFO Client 12424] Tile hash: 1139181677'), null);
+});
+
+test('acts: the area id of the log decides between two areas with the same name', () => {
+  assert.equal(guide.actOfAreaId('1_1_1'), 1);
+  assert.equal(guide.actOfAreaId('2_6_1'), 6);
+  assert.equal(guide.actOfAreaId('2_10_town'), 10);
+  assert.equal(guide.actOfAreaId('HideoutCoastal'), null);
+  assert.equal(guide.actOfAreaId('MapWorldsStrand'), null);
+  // a new character starts in Act 1 even if the last one was in Act 7
+  assert.equal(guide.actFor('The Twilight Strand', 7, 'The Causeway', areaActs, '1_1_1'), 1);
+  assert.equal(guide.actFor('The Twilight Strand', 1, "Lioneye's Watch", areaActs, '2_6_1'), 6);
+  // an id that does not belong to that name is ignored, and the old rule applies
+  assert.equal(guide.actFor('The Twilight Strand', 7, 'The Causeway', areaActs, 'MapWorldsStrand'), 6);
 });
 
 test('log: reads the area from a "You have entered" line', () => {

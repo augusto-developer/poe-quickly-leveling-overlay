@@ -22,10 +22,11 @@ function recordVisit(area) {
 }
 
 // Called for every "You have entered X." of the game log. `initial` is true for the area
-// the character was already in when the program started.
-function onArea(area, initial) {
+// the character was already in when the program started; `details` is { level, id } of the
+// area from the log line before it, when there was one.
+function onArea(area, initial, details) {
   const state = store.state;
-  state.act = actFor(area, state.act, session.previousArea, gamedata.areaActs);
+  state.act = actFor(area, state.act, session.previousArea, gamedata.areaActs, details && details.id);
   if (isCampaign(area)) session.previousArea = area; // boss arenas and hideouts in between do not count
   session.currentArea = area;
   session.lastInventory = null;

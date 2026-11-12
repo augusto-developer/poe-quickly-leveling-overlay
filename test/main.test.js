@@ -9,7 +9,8 @@ const path = require('path');
 const { install } = require('./helpers/fake-electron');
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-const logLine = (area) => `2026/01/01 12:00:00 1234 abc [INFO Client 1] : You have entered ${area}.\r\n`;
+const logLine = (area, id) => (id ? `2026/01/01 12:00:00 1234 abc [DEBUG Client 1] Generating level 1 area "${id}" with seed 1\r\n` : '') +
+  `2026/01/01 12:00:00 1234 abc [INFO Client 1] : You have entered ${area}.\r\n`;
 
 test('main process: a session from start to quit', async (t) => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'poe-gem-overlay-'));
@@ -135,6 +136,21 @@ test('main process: a session from start to quit', async (t) => {
     assert.equal(fake.lastState().volume, 1, 'never above 100%');
     await fake.invoke('options:reset');
     assert.equal(fake.lastState().volume, 1, 'resetting the hotkeys leaves the volume alone');
+  });
+
+  await t.test('a new character starts in Act 1 even after a character in the second half', async () => {
+    fake.send('settings:save', { steps: [{ area: 'The Twilight Strand', act: 6, gems: ['Vitality'] }] });
+    // the last character was in Act 7, and Act 6's Twilight Strand was visited
+    fs.appendFileSync(log, logLine('The Twilight Strand', '2_6_1') + logLine('The Bridge Encampment', '2_7_town'));
+    await wait(800);
+    assert.equal(fake.lastState().act, 7);
+    fake.send('reset');
+    // a new character is born on the Act 1 beach and walks to town
+    fs.appendFileSync(log, logLine('The Twilight Strand', '1_1_1') + logLine("Lioneye's Watch", '1_1_town'));
+    await wait(800);
+    const state = fake.lastState();
+    assert.equal(state.act, 1);
+    assert.deepEqual(state.pending, [], 'the gems of the Act 6 beach are not offered');
   });
 
   await t.test('only wiki links from the gem list are opened', () => {

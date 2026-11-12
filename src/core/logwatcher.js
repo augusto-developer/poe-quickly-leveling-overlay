@@ -2,14 +2,37 @@
 const fs = require('fs');
 
 const ENTERED = /\] : You have entered (.+)\.\s*$/;
+// Written just before "You have entered", for example: Generating level 13 area "1_1_town" with seed 1
+const GENERATING = /Generating level (\d+) area "([^"]+)"/;
 
 function parseArea(line) {
   const m = ENTERED.exec(line);
   return m ? m[1].replace(/’/g, "'").trim() : null;
 }
 
+// The internal id and level of the area being loaded, or null.
+function parseGenerated(line) {
+  const m = GENERATING.exec(line);
+  return m ? { level: Number(m[1]), id: m[2] } : null;
+}
+
+// Reads lines in order and calls onArea(name, details) for each area entered. `details`
+// is the { level, id } line that came right before it, when there was one.
+function lineReader(onArea) {
+  let generated = null;
+  return (line) => {
+    const g = parseGenerated(line);
+    if (g) { generated = g; return; }
+    const area = parseArea(line);
+    if (!area) return;
+    onArea(area, generated);
+    generated = null;
+  };
+}
+
 /**
- * Follows Client.txt and calls onArea(name) on every "You have entered X.".
+ * Follows Client.txt and calls onArea(name, initial, details) on every "You have entered X.".
+ * `details` is { level, id } of the area (see parseGenerated), or null.
  * On start, reads the end of the file just to find out the current area.
  */
 function watchClientLog(filePath, onArea, onError) {
@@ -24,16 +47,15 @@ function watchClientLog(filePath, onArea, onError) {
     fs.readSync(fd, buf, 0, tail, size - tail);
     fs.closeSync(fd);
     let last = null;
-    for (const line of buf.toString('utf8').split(/\r?\n/)) {
-      const a = parseArea(line);
-      if (a) last = a;
-    }
+    const read = lineReader((area, details) => { last = { area, details }; });
+    for (const line of buf.toString('utf8').split(/\r?\n/)) read(line);
     pos = size;
-    if (last) onArea(last, true);
+    if (last) onArea(last.area, true, last.details);
   } catch (err) {
     onError(err);
   }
 
+  const read = lineReader((area, details) => onArea(area, false, details));
   const timer = setInterval(() => {
     fs.stat(filePath, (err, st) => {
       if (err) return onError(err);
@@ -44,10 +66,7 @@ function watchClientLog(filePath, onArea, onError) {
       stream.on('data', (chunk) => {
         const lines = (carry + chunk).split(/\r?\n/);
         carry = lines.pop();
-        for (const line of lines) {
-          const a = parseArea(line);
-          if (a) onArea(a, false);
-        }
+        for (const line of lines) read(line);
       });
       stream.on('error', onError);
     });
@@ -56,4 +75,4 @@ function watchClientLog(filePath, onArea, onError) {
   return () => clearInterval(timer);
 }
 
-module.exports = { watchClientLog, parseArea };
+module.exports = { watchClientLog, parseArea, parseGenerated };

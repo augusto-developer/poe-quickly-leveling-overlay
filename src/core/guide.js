@@ -68,14 +68,27 @@ function pendingGems(guide, state, areaActs) {
   return out;
 }
 
+// The act in the game's own id of a campaign area: "1_1_town" is Act 1, "2_6_1" is Act 6.
+// Null for anything else (hideouts, maps and so on).
+function actOfAreaId(id) {
+  const m = /^\d+_(\d+)_/.exec(String(id || ''));
+  const act = m ? Number(m[1]) : 0;
+  return act >= 1 && act <= 10 ? act : null;
+}
+
 /**
- * Works out which act an area belongs to. Names used twice are one in each half of the
- * campaign, so the half you are in decides. The second half starts after Kitava: arriving
- * at Lioneye's Watch straight from The Cathedral Rooftop while in Act 5.
+ * Works out which act an area belongs to.
+ * The game log names the area being loaded just before "You have entered" ("1_1_1" is the
+ * Twilight Strand of Act 1, "2_6_1" the one of Act 6), so `areaId` settles it whenever it is
+ * there. Without it, the half of the campaign you are in decides: names used twice are one in
+ * each half, and the second half starts after Kitava (arriving at Lioneye's Watch straight
+ * from The Cathedral Rooftop while in Act 5).
  * `currentAct` is the act before entering; `previousArea` the last campaign area entered.
  */
-function actFor(area, currentAct, previousArea, areaActs) {
+function actFor(area, currentAct, previousArea, areaActs, areaId) {
   const acts = areaActs.get(norm(area));
+  const fromId = actOfAreaId(areaId);
+  if (acts && fromId && acts.includes(fromId)) return fromId;
   if (!acts) return currentAct || null; // a hideout or similar: stay in the same act
   if (acts.length === 1) return acts[0];
   const [first, second] = acts;
@@ -84,4 +97,4 @@ function actFor(area, currentAct, previousArea, areaActs) {
   return afterKitava ? second : first;
 }
 
-module.exports = { visitKey, indexAreas, cleanGuide, pendingGems, actFor };
+module.exports = { visitKey, indexAreas, cleanGuide, pendingGems, actFor, actOfAreaId };
