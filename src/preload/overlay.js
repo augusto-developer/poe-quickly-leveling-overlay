@@ -21,6 +21,8 @@ contextBridge.exposeInMainWorld('overlay', {
   passiveDone: (id) => ipcRenderer.send('passive-done', id),
   passiveUndo: () => ipcRenderer.send('passive-undo'),
   openWiki: (name) => ipcRenderer.send('open-wiki', name),
+  updateNow: () => ipcRenderer.send('update-act'),
+  updateLater: () => ipcRenderer.send('update-dismiss'),
   onSound: (cb) => ipcRenderer.on('play-sound', (_e, sound) => cb(sound)),
   onToast: (cb) => ipcRenderer.on('toast', (_e, t) => cb(t)),
   onToastHide: (cb) => ipcRenderer.on('toast-hide', () => cb()),

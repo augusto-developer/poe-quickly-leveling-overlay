@@ -18,6 +18,7 @@ if (!app.requestSingleInstanceLock()) {
   const hooks = require('./features/hooks');
   const hotkeys = require('./features/hotkeys');
   const gameFolder = require('./features/gameFolder');
+  const updates = require('./features/updates');
   const overlay = require('./windows/overlay');
   const toast = require('./windows/toast');
   // These register what their windows can ask for.
@@ -40,6 +41,7 @@ if (!app.requestSingleInstanceLock()) {
     gameFolder.setup();
     hooks.start();
     hotkeys.register();
+    updates.start();
   });
 
   app.on('will-quit', () => {

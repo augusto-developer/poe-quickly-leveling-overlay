@@ -23,6 +23,10 @@ Get the latest version from the [Releases](../../releases) page:
 Windows may show a "Windows protected your PC" notice the first time, because the program is not signed.
 Choose **More info**, then **Run anyway**.
 
+**Updates.** When a new version is published, the overlay shows a notice under its bar. With the installed
+version, **Update** downloads it and restarts the overlay into it. The portable version can't replace itself, so
+**Download** opens the download page.
+
 ### Requirements
 
 - Windows 10 or 11
@@ -71,7 +75,8 @@ Click the **tree** button. The window draws the passive tree with the game art.
 1. Paste a Path of Building code and click **Import build**.
 2. The notables and keystones of the build are put in a suggested order, from the class start outwards,
    with the number of points each step costs.
-3. Change the order with the arrows, or click a notable or keystone on the tree to add or remove it.
+3. Drag a point up or down the list to change the order (or select it and use Alt + arrow keys), and click a
+   notable or keystone on the tree to add or remove it.
 
 When the build has several trees (one per act, for example), each tree continues the one before. Its list
 starts with the points of the previous tree, in the same order, and they are locked there: change them in
@@ -219,8 +224,17 @@ npm run dist     build the installer and the portable .exe into dist/
 If `npm start` fails with "Electron failed to install correctly", run `node node_modules\electron\install.js`
 and try again.
 
-Pushing a tag such as `v1.0.1` makes GitHub build both `.exe` files and attach them to a new release
-(`.github/workflows/release.yml`).
+To publish a new version, change `version` in `package.json` (for example to `1.1.0`), commit, then push a tag
+with the same number:
+
+```
+git tag v1.1.0
+git push && git push --tags
+```
+
+GitHub builds both `.exe` files and attaches them to a new release, with the `latest.yml` file that the
+installed overlays read to find the update (`.github/workflows/release.yml`). The repository must be public for
+the overlays to see the releases.
 
 ### How the code is organised
 

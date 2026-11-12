@@ -1,12 +1,24 @@
 {
-  "name": "poe-gem-overlay",
-  "version": "1.0.0",
+  "name": "poe-quickly-leveling-overlay",
+  "version": "1.0.1",
   "description": "Leveling overlay for Path of Exile: gems to buy in each town, the next passive point of your Path of Building tree, and a mercenary check.",
   "main": "src/main/index.js",
   "license": "MIT",
   "author": "poe-gem-overlay contributors",
-  "keywords": ["path-of-exile", "poe", "overlay", "leveling", "electron"],
-  "engines": { "node": ">=20" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/augusto-developer/poe-quickly-leveling-overlay.git"
+  },
+  "keywords": [
+    "path-of-exile",
+    "poe",
+    "overlay",
+    "leveling",
+    "electron"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "electron .",
     "test": "node --test \"test/**/*.test.js\"",
@@ -15,7 +27,8 @@
   },
   "dependencies": {
     "tesseract.js": "^5.1.0",
-    "uiohook-napi": "^1.5.4"
+    "uiohook-napi": "^1.5.4",
+    "electron-updater": "^6.3.9"
   },
   "devDependencies": {
     "electron": "^45.3.0",
@@ -27,24 +40,50 @@
     "copyright": "MIT License",
     "asar": false,
     "npmRebuild": false,
-    "directories": { "output": "dist", "buildResources": "build" },
-    "files": ["src/**", "data/**", "assets/**", "sounds/**", "package.json", "LICENSE"],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**",
+      "data/**",
+      "assets/**",
+      "sounds/**",
+      "package.json",
+      "LICENSE"
+    ],
     "win": {
       "icon": "build/icon.ico",
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
-      "artifactName": "PoE-Gem-Overlay-Setup-${version}.${ext}",
-      "shortcutName": "PoE Gem Overlay"
+      "artifactName": "PoE-Quickly-Leveling-Overlay-Setup-${version}.${ext}",
+      "shortcutName": "PoE Quickly Leveling Overlay"
     },
     "portable": {
-      "artifactName": "PoE-Gem-Overlay-${version}-portable.${ext}"
-    }
+      "artifactName": "PoE-Quickly-Leveling-Overlay-${version}-portable.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ]
   }
 }

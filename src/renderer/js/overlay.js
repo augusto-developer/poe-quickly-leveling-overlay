@@ -95,6 +95,33 @@ window.overlay.onSound((sound) => {
   audio.play().catch(() => playChime(sound.chime, sound.volume));
 });
 
+// A new version on GitHub: the notice under the bar.
+function showUpdate(u) {
+  const box = document.getElementById('update');
+  box.hidden = !u;
+  if (!u) return;
+  const text = document.getElementById('update-text');
+  const go = document.getElementById('update-go');
+  const later = document.getElementById('update-later');
+  box.className = 'update' + (u.state === 'downloading' || u.state === 'ready' ? ' busy' : u.state === 'error' ? ' failed' : '');
+  go.hidden = later.hidden = !(u.state === 'available' || u.state === 'error');
+  if (u.state === 'available') {
+    text.textContent = `Version ${u.version} is out`;
+    go.textContent = u.portable ? 'Download' : 'Update';
+    go.title = u.portable ? 'Opens the download page' : 'Downloads it and restarts the overlay';
+  } else if (u.state === 'downloading') {
+    text.textContent = `Downloading ${u.version}... ${u.percent}%`;
+  } else if (u.state === 'ready') {
+    text.textContent = 'Restarting to update...';
+  } else if (u.state === 'error') {
+    text.textContent = 'The update failed.';
+    go.textContent = 'Try again';
+    go.title = '';
+  }
+}
+document.getElementById('update-go').addEventListener('click', () => window.overlay.updateNow());
+document.getElementById('update-later').addEventListener('click', () => window.overlay.updateLater());
+
 window.overlay.onState((s) => {
   // the saved volume, unless the handle is being dragged right now
   if (!volume.matches(':active')) { volume.value = Math.round(s.volume * 100); showVolume(Number(volume.value)); }
@@ -107,6 +134,7 @@ window.overlay.onState((s) => {
   actLabel.title = s.canSwitchAct ? 'This area exists in two acts. Click if the act is wrong.' : '';
   actLabel.onclick = s.canSwitchAct ? () => window.overlay.switchAct() : null;
   document.getElementById('status').textContent = s.status || '';
+  showUpdate(s.update);
   document.getElementById('notes').hidden = !s.hasNotes;
 
   // Next passive point of the order set in the tree window.

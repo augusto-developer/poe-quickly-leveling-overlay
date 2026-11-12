@@ -11,6 +11,7 @@ const progress = require('../progress');
 const areas = require('../features/areas');
 const purchases = require('../features/purchases');
 const sounds = require('../platform/sounds');
+const updates = require('../features/updates');
 
 const SIZE = { width: 300, height: 520 }; // at scale 1
 let win = null;
@@ -110,6 +111,8 @@ ipcMain.on('mark', (_e, key) => purchases.markBought(key));
 ipcMain.on('reset', () => areas.resetProgress());
 ipcMain.on('switch-act', () => areas.switchAct());
 ipcMain.on('quit', () => app.quit());
+ipcMain.on('update-act', () => updates.act());
+ipcMain.on('update-dismiss', () => updates.dismiss());
 ipcMain.on('open-wiki', (_e, name) => gamedata.openWiki(name));
 
 // The overlay marks the current milestone as taken (click) or goes back one (undo).

@@ -1,5 +1,10 @@
-# Builds the Windows installer and the portable .exe when a version tag is pushed
-# (for example: git tag v1.0.0 && git push --tags) and attaches them to a GitHub release.
+# Builds the Windows installer and the portable .exe when a version tag is pushed and
+# attaches them to a GitHub release. The overlay of everyone who installed it finds the new
+# release there and offers the update.
+#
+# To publish a new version:
+#   1. change "version" in package.json (for example to 1.1.0) and commit
+#   2. git tag v1.1.0 && git push && git push --tags
 name: Release
 
 on:
@@ -18,10 +23,22 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Check that the tag matches package.json
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "v$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "The tag is $GITHUB_REF_NAME but package.json says $VERSION. Change one of them so they match."
+            exit 1
+          fi
       - run: npm ci
       - run: npm test
       - run: npm run dist
+      # latest.yml and the .blockmap are what the installed overlays read to update themselves.
       - uses: softprops/action-gh-release@v2
         with:
-          files: dist/*.exe
+          files: |
+            dist/*.exe
+            dist/*.exe.blockmap
+            dist/latest.yml
           generate_release_notes: true

@@ -505,6 +505,9 @@
       const step = plan.steps.find((x) => x.id === id);
       const li = document.createElement('li');
       li.className = (n.t === 'k' ? 'keystone' : '') + (id === focusId ? ' focus' : '') + (locked ? ' locked' : '');
+      li.dataset.id = id;
+      // the handle to drag the point to another place (only the new points of this tree move)
+      const grip = document.createElement('span'); grip.className = 'grip'; grip.setAttribute('aria-hidden', 'true');
       const num = document.createElement('span'); num.className = 'num'; num.textContent = String(i + 1);
       const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = n.n; nm.title = n.n;
       const cost = document.createElement('span'); cost.className = 'cost';
@@ -520,13 +523,26 @@
       // Points from the tree before keep their place here: they are changed in that tree.
       if (!locked) {
         const k = i - inherited; // position among the new points
-        const move = (to) => { const l = extras(); l.splice(to, 0, l.splice(k, 1)[0]); setExtras(l); };
-        tool('▲', 'Move up', () => { if (k > 0) move(k - 1); });
-        tool('▼', 'Move down', () => { if (k < order.length - inherited - 1) move(k + 1); });
         tool('✕', 'Remove', () => { const l = extras(); l.splice(k, 1); setExtras(l); });
+        li.classList.add('movable');
+        li.tabIndex = 0;
+        li.title = 'Drag to change the order (or Alt + arrow keys)';
+        li.addEventListener('pointerdown', (e) => startDrag(e, li, k));
+        li.addEventListener('keydown', (e) => {
+          if (!e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+          e.preventDefault();
+          const to = k + (e.key === 'ArrowUp' ? -1 : 1);
+          if (to < 0 || to >= order.length - inherited) return;
+          focusId = id;
+          refocus = id;
+          moveExtra(k, to);
+        });
       }
-      li.append(num, nm, cost, tools);
-      li.addEventListener('click', () => { focusId = id; focusOn(id, Math.max(view.scale, 0.22)); renderSidebar(); });
+      li.append(grip, num, nm, cost, tools);
+      li.addEventListener('click', () => {
+        if (justDragged) return; // the click that ends a drag does not select the point
+        focusId = id; focusOn(id, Math.max(view.scale, 0.22)); renderSidebar();
+      });
       list.appendChild(li);
     });
 
@@ -539,11 +555,98 @@
       if (missing > 0) foot.push(`${missing} notables or keystones of the build are not in the order yet.`);
     }
     $('foot').textContent = foot.join(' ');
+    // after a move with the keyboard, the moved row keeps the keyboard focus
+    if (refocus) {
+      const row = list.querySelector(`li[data-id="${refocus}"]`);
+      refocus = null;
+      if (row) row.focus();
+    }
   }
   const milestoneIds = () => [...allocated].filter((id) => isMilestone(tree.nodes[id]));
 
   // The points that are new in this tree, in their current order.
   const extras = () => order.slice(inherited);
+  // Moves the new point at position `from` to position `to` (both among the new points).
+  function moveExtra(from, to) {
+    if (from === to) return;
+    const l = extras();
+    l.splice(to, 0, l.splice(from, 1)[0]);
+    setExtras(l);
+  }
+
+  // ---------- drag and drop in the order ----------
+  // Hold a row and move it: the row follows the pointer, a line shows where it will land,
+  // and letting go puts it there. Rows from the tree before stay where they are.
+  let refocus = null;     // id of the row that gets the keyboard focus after the next render
+  let justDragged = false;
+  const DRAG_FROM = 4;    // pixels the pointer must travel before a press becomes a drag
+  function startDrag(e, li, from) {
+    if (e.button !== 0 || e.target.closest('button')) return;
+    const list = $('order');
+    const startY = e.clientY;
+    let dragging = false;
+    let target = from;
+    let scrollTimer = null;
+    const marker = document.createElement('li');
+    marker.className = 'drop-line';
+    marker.setAttribute('aria-hidden', 'true');
+
+    // where the row would land, among the new points, for the pointer at height y
+    function slotAt(y) {
+      const rows = [...list.querySelectorAll('li.movable')].filter((r) => r !== li);
+      let slot = rows.length;
+      for (let i = 0; i < rows.length; i++) {
+        const box = rows[i].getBoundingClientRect();
+        if (y < box.top + box.height / 2) { slot = i; break; }
+      }
+      return { slot, rows };
+    }
+    function place(y) {
+      const { slot, rows } = slotAt(y);
+      target = slot;
+      if (slot < rows.length) list.insertBefore(marker, rows[slot]);
+      else if (rows.length) rows[rows.length - 1].after(marker);
+      else li.after(marker);
+      li.style.transform = `translateY(${y - startY}px)`;
+    }
+    // scrolls the list while the pointer is held near its top or bottom edge
+    function edgeScroll(y) {
+      clearInterval(scrollTimer);
+      const box = list.getBoundingClientRect();
+      const speed = y < box.top + 30 ? -8 : y > box.bottom - 30 ? 8 : 0;
+      if (speed) scrollTimer = setInterval(() => { list.scrollTop += speed; place(lastY); }, 16);
+    }
+    let lastY = startY;
+    function onMove(ev) {
+      lastY = ev.clientY;
+      if (!dragging) {
+        if (Math.abs(ev.clientY - startY) < DRAG_FROM) return;
+        dragging = true;
+        li.classList.add('dragging');
+        list.classList.add('sorting');
+      }
+      place(ev.clientY);
+      edgeScroll(ev.clientY);
+    }
+    function onEnd(ev) {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onEnd);
+      window.removeEventListener('pointercancel', onEnd);
+      clearInterval(scrollTimer);
+      if (!dragging) return;
+      marker.remove();
+      li.classList.remove('dragging');
+      list.classList.remove('sorting');
+      li.style.transform = '';
+      justDragged = true;
+      setTimeout(() => { justDragged = false; }, 0);
+      if (ev.type === 'pointerup') moveExtra(from, target);
+    }
+    // followed on the whole window, so a fast move off the row does not lose the drag
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onEnd);
+    window.addEventListener('pointercancel', onEnd);
+  }
   // Sets how the new points of this tree are arranged (null = automatically) and saves.
   function setExtras(list) {
     if (spec()) build.tails[build.specIndex] = list; else build.order = list || [];

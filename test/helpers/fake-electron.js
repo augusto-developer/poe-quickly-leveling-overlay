@@ -3,7 +3,7 @@
 // and driven by plain Node in the tests. Nothing here opens a window or touches the screen.
 const Module = require('module');
 
-function install(userData) {
+function install(userData, { packaged = false } = {}) {
   const fake = {
     ipc: { on: new Map(), handle: new Map() }, // what the windows can ask for
     sent: [],                                  // [channel, ...args] sent to any window
@@ -45,6 +45,7 @@ function install(userData) {
   const display = { id: 1, scaleFactor: 1, size: { width: 1920, height: 1080 }, bounds: { x: 0, y: 0, width: 1920, height: 1080 }, workArea: { x: 0, y: 0, width: 1920, height: 1040 } };
   const electron = {
     app: {
+      isPackaged: packaged,
       getPath: (name) => (name === 'appData' ? require('path').dirname(userData) : userData),
       setPath() {},
       commandLine: { appendSwitch() {} },
@@ -81,7 +82,26 @@ function install(userData) {
     createWorker: async () => ({ setParameters: async () => {}, recognize: async () => ({ data: { text: '' } }), terminate() {} }),
   };
 
-  const stubs = { electron, 'uiohook-napi': uiohook, 'tesseract.js': tesseract };
+  // A stand-in for GitHub releases: the test says what it "finds" with fake.release.
+  const { EventEmitter } = require('events');
+  const autoUpdater = Object.assign(new EventEmitter(), {
+    checks: 0,
+    installed: null,
+    async checkForUpdates() {
+      autoUpdater.checks++;
+      if (fake.release) autoUpdater.emit('update-available', { version: fake.release });
+      else autoUpdater.emit('update-not-available', {});
+    },
+    async downloadUpdate() {
+      if (fake.downloadFails) { autoUpdater.emit('error', new Error('network')); throw new Error('network'); }
+      autoUpdater.emit('download-progress', { percent: 50 });
+      autoUpdater.emit('update-downloaded', { version: fake.release });
+    },
+    quitAndInstall(silent, runAfter) { autoUpdater.installed = { silent, runAfter }; },
+  });
+  fake.autoUpdater = autoUpdater;
+
+  const stubs = { electron, 'uiohook-napi': uiohook, 'tesseract.js': tesseract, 'electron-updater': { autoUpdater } };
   const realLoad = Module._load;
   Module._load = function (request, ...rest) {
     return Object.prototype.hasOwnProperty.call(stubs, request) ? stubs[request] : realLoad.call(this, request, ...rest);

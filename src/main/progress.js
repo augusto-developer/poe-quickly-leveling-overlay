@@ -4,6 +4,7 @@ const { store } = require('./store');
 const { session } = require('./session');
 const gamedata = require('./gamedata');
 const sounds = require('./platform/sounds');
+const updates = require('./features/updates');
 const { norm } = require('../core/text');
 const guideCore = require('../core/guide');
 const buildCore = require('../core/build');
@@ -45,6 +46,7 @@ function overlayState() {
     passive: nextPassive(),
     hasNotes: Boolean(store.build.notes),
     volume: sounds.masterVolume(),
+    update: updates.forOverlay(),
   };
 }
 

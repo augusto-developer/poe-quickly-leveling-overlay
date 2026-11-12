@@ -96,6 +96,17 @@
   .passive-step { font-size: 11px; color: #9a8c70; white-space: nowrap; }
   .passive-undo { font-size: 11px; color: #9a8c70; text-decoration: underline; cursor: pointer; margin-top: 3px; display: inline-block; }
   .passive-undo:hover { color: #fff; }
+  /* a new version: one line under the bar, in the brass of the frame */
+  .update { display: flex; align-items: center; gap: 6px; min-height: 32px; box-sizing: border-box; margin-bottom: 8px; padding: 5px 4px 5px 8px; border: 1px solid #5d4c2e; border-left: 3px solid #d8b56a; border-radius: 3px; background: rgba(216, 181, 106, 0.1); font-size: 12px; color: #e9dfc8; }
+  .update[hidden] { display: none; }
+  .update-text { flex: 1; min-width: 0; }
+  .update-go { font: inherit; font-size: 12px; padding: 2px 9px; border-radius: 3px; cursor: pointer; background: #b08d4f; border: 1px solid #d8b56a; color: #10142a; font-weight: 600; }
+  .update-go:hover { background: #d8b56a; }
+  .update-go[hidden], .update-later[hidden] { display: none; }
+  .update-later { width: 20px; height: 20px; padding: 0; font-size: 15px; line-height: 1; background: none; border: 0; border-radius: 3px; color: #9a8c70; cursor: pointer; }
+  .update-later:hover { color: #fff; background: rgba(216, 181, 106, 0.2); }
+  .update.busy { border-left-color: #9a8c70; }
+  .update.failed { border-left-color: #c0503c; background: rgba(192, 80, 60, 0.1); }
   .status { margin-top: 8px; font-size: 11px; color: #9a8c70; overflow-wrap: anywhere; }
 </style>
 </head>
@@ -147,6 +158,11 @@
       <button class="yes" id="reset-yes">Reset</button>
       <button class="no" id="reset-no">Cancel</button>
     </div>
+  </div>
+  <div class="update" id="update" hidden>
+    <span class="update-text" id="update-text"></span>
+    <button class="update-go" id="update-go"></button>
+    <button class="update-later" id="update-later" title="Hide until the next start" aria-label="Hide the update notice">&times;</button>
   </div>
   <div class="head">
     <span class="area" id="area">...</span>
