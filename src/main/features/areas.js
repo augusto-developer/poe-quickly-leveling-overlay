@@ -1,8 +1,8 @@
 'use strict';
 // Follows the character through the campaign: the current area, its act, and which
 // areas were already visited.
-const { store, saveState } = require('../store');
-const { session, setStatus } = require('../session');
+const { store, saveState, saveOverlayPrefs } = require('../store');
+const { bus, session, setStatus } = require('../session');
 const gamedata = require('../gamedata');
 const progress = require('../progress');
 const sounds = require('../platform/sounds');
@@ -26,7 +26,11 @@ function recordVisit(area) {
 // area from the log line before it, when there was one.
 function onArea(area, initial, details) {
   const state = store.state;
+  const before = state.act;
   state.act = actFor(area, state.act, session.previousArea, gamedata.areaActs, details && details.id);
+  followAct(before);
+  // the links drawer closes when you leave the area, in case it was left open
+  if (!initial && session.drawerOpen) { session.drawerOpen = false; bus.emit('drawer'); }
   if (isCampaign(area)) session.previousArea = area; // boss arenas and hideouts in between do not count
   session.currentArea = area;
   session.lastInventory = null;
@@ -37,13 +41,23 @@ function onArea(area, initial, details) {
   if (!initial && progress.watchingPurchases()) sounds.play('gems');
 }
 
+// Entering a new act moves the links drawer to that act.
+function followAct(before) {
+  const act = store.state.act;
+  if (!act || act === before || store.overlayPrefs.linksAct === act) return;
+  store.overlayPrefs.linksAct = act;
+  saveOverlayPrefs();
+}
+
 // The act shown in the overlay can be wrong for a name used in two acts (for example when
 // the program starts with the character already in the second half). This switches it.
 function switchAct() {
   const area = session.currentArea;
   const acts = area ? gamedata.areaActs.get(norm(area)) || [] : [];
   if (acts.length < 2) return;
+  const before = store.state.act;
   store.state.act = acts[(acts.indexOf(store.state.act) + 1) % acts.length];
+  followAct(before);
   recordVisit(area);
   setStatus(`Act set to ${store.state.act} for ${area}`);
 }

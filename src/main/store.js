@@ -22,7 +22,7 @@ const store = {
   build: buildCore.emptyBuild(),
   buildOrders: { orders: [], inherited: [] }, // the order of every tree, worked out from build.tails
   prefs: {},
-  overlayPrefs: { x: null, y: null, scale: 1 },
+  overlayPrefs: { x: null, y: null, scale: 1, linksAct: null },
 };
 
 const readJson = (name) => JSON.parse(fs.readFileSync(paths.user(name), 'utf8'));
@@ -37,6 +37,8 @@ function load() {
       x: Number.isFinite(saved.x) ? saved.x : null,
       y: Number.isFinite(saved.y) ? saved.y : null,
       scale: clampScale(saved.scale),
+      linksAct: Number.isInteger(saved.linksAct) && saved.linksAct >= 0 && saved.linksAct <= 10 ? saved.linksAct : null,
+      minimized: saved.minimized === true,
     };
   } catch { /* never moved or resized */ }
   try { setBuild(buildCore.cleanBuild(gamedata.tree(), readJson('treeplan.json'))); } catch { /* no passive plan yet */ }

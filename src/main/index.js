@@ -27,6 +27,7 @@ if (!app.requestSingleInstanceLock()) {
   require('./windows/notes');
   require('./windows/options');
   require('./windows/library');
+  require('./windows/links');
 
   app.whenReady().then(async () => {
     config.load();

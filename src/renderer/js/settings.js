@@ -159,9 +159,7 @@
     const i = s.gems.indexOf(name);
     if (i >= 0) s.gems.splice(i, 1); else s.gems.push(name);
     save();
-    renderSteps();
-    renderChosen();
-    renderResults();
+    renderAll();
   }
 
   function renderChosen() {
@@ -240,6 +238,8 @@
     renderResults();
   });
   $('remove-step').addEventListener('click', () => removeStep(selected));
+
+  $('open-links').addEventListener('click', () => api.openLinks());
 
   // ---------- import / export ----------
   $('export').addEventListener('click', async () => {

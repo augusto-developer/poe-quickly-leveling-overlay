@@ -98,6 +98,7 @@
   .chip button:hover { color: var(--str); }
   .chosen-empty { color: var(--muted); align-self: center; }
 
+
   .tools { display: flex; gap: 10px; align-items: center; }
   .tools .field { flex: 1; font-size: 16px; padding: 10px 12px; }
   .seg { display: flex; border: 1px solid var(--brass-dim); border-radius: 3px; overflow: hidden; }
@@ -137,6 +138,7 @@
 <header>
   <h1>Gem route</h1>
   <span id="saved" aria-live="polite"></span>
+  <button class="ghost" id="open-links" title="Which gems you socket together, act by act">Links</button>
   <button class="ghost" id="import">Import</button>
   <button class="ghost" id="export">Export</button>
 </header>

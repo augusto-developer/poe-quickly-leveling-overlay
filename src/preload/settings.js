@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld('settingsApi', {
   exportGuide: (guide) => ipcRenderer.invoke('settings:export', guide),
   importGuide: () => ipcRenderer.invoke('settings:import'),
   openWiki: (name) => ipcRenderer.send('open-wiki', name),
+  openLinks: () => ipcRenderer.send('open-links'),
 });

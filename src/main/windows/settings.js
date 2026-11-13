@@ -16,10 +16,13 @@ bus.on('setup-replaced', () => { if (win.get()) win.get().reload(); });
 
 ipcMain.handle('settings:data', () => ({ gems: gamedata.gems, areas: gamedata.areas, visited: store.state.visited }));
 ipcMain.handle('settings:guide', () => store.guide);
+// The route window saves the areas and their gems; the links belong to the links window,
+// so they are kept as they are.
 ipcMain.on('settings:save', (_e, raw) => {
-  store.guide = clean(raw);
+  store.guide = clean({ ...raw, links: store.guide.links });
   saveGuide();
   changed(); // the overlay list follows the edit right away
+  bus.emit('route-changed');
 });
 ipcMain.handle('settings:export', async (_e, raw) => {
   const { canceled, filePath } = await dialog.showSaveDialog(win.get(), {
@@ -28,7 +31,7 @@ ipcMain.handle('settings:export', async (_e, raw) => {
     filters: [{ name: 'Gem route', extensions: ['json'] }],
   });
   if (canceled || !filePath) return false;
-  fs.writeFileSync(filePath, JSON.stringify(clean(raw), null, 2));
+  fs.writeFileSync(filePath, JSON.stringify(clean({ ...raw, links: store.guide.links }), null, 2));
   return true;
 });
 ipcMain.handle('settings:import', async () => {
@@ -41,6 +44,10 @@ ipcMain.handle('settings:import', async () => {
   try {
     const imported = clean(JSON.parse(fs.readFileSync(filePaths[0], 'utf8')));
     if (imported.steps.length === 0) return { error: 'File has no areas' };
+    // the links of the file come in now; the route window then saves the areas
+    store.guide = { ...store.guide, links: imported.links };
+    saveGuide();
+    bus.emit('links-changed');
     return { guide: imported };
   } catch {
     return { error: 'Invalid file' };

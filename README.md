@@ -54,7 +54,7 @@ Click the **gem** button of the overlay to set up your route:
 3. Changes are saved right away and the overlay follows them.
 
 A gem shows up in the overlay once you have entered its area and are standing in a town. **Export** writes
-the route to a `.json` file you can share, and **Import** loads one.
+the route to a `.json` file you can share, with its links, and **Import** loads one.
 
 **Buying is noticed by itself.** Inside a town, a Ctrl + left click on a vendor item makes the overlay read
 the tooltip title and compare your inventory before and after. The gem is ticked off only when its name is
@@ -65,6 +65,27 @@ inventory) is not ticked. You can also click a gem in the overlay to tick it by 
 
 **Vendor search (F2).** With a vendor open, press F2 to paste a search for all the pending gems into the
 "Highlight Items" field.
+
+### Links, act by act
+
+The **Links** button of the gem route window opens a window to plan which gems you socket together, act by act.
+
+- Pick an act at the top. It shows the gems of that act's areas of the route: active gems on the left, supports
+  on the right.
+- Click an active gem, then click supports to link them to it, or to take them out. A support can be in several
+  links. To put two active gems in one link, tick the box that appears on the other active gems.
+- **Add gem** brings in any gem that is not in the route (a quest reward, a gem bought later). It is only for
+  the links: you are never reminded to buy it.
+- The three small buttons on each gem mark it for that act: **Hold** (box) keeps it in the weapon swap, Set 2;
+  **Swap** (arrows) replaces it with another gem you pick, which takes its place in its links (Herald of Ash for
+  Purity of Elements); **Drop** (bin) means you throw it away. A marked gem leaves the links of that act. Click
+  the button again to remove the mark.
+- **Copy links from Act N** starts the act from the links of the act before, along with all its supports, so you
+  only adjust what changes. Gems held in Set 2 stay held; dropped and swapped-out gems stay behind. Supports are listed by colour: red, green, blue, then white.
+
+The **sockets** button of the overlay opens a drawer with the final links of an act, drawn like sockets on an
+item, and below them the gems to swap, to hold in Set 2 and to drop. It follows the act you are in, can show any other act, and closes by itself when you enter another area.
+**Edit** opens the links window.
 
 ### The next passive point
 
@@ -147,8 +168,11 @@ field of the open window, such as a vendor or the stash.
 ## The overlay panel
 
 - **Gem**, **tree**, **page** and **books** open the windows described above.
+- **Sockets** opens the links drawer; once you have links, so does the tab on the right edge of the overlay.
 - **Three dots** opens a small menu: **Options**, **Window Size** (70% to 180%), **Volume** of the overlay
   sounds (0 turns them off) and **Reset progress**.
+- **Minus** minimizes the overlay to a small icon where it was. Click the icon to open it again, or drag it to move
+  it. In town, the icon shows how many gems are waiting to be bought.
 - **X** closes the program.
 - Drag the bar by its dotted handle to move the overlay. Position and size are remembered.
 - The act next to the area name can be clicked when the area exists in two acts and the overlay guessed wrong.
@@ -262,6 +286,7 @@ to `main` through its preload. To follow one feature end to end, start at its fi
 | In `src/core/` | What it does |
 | --- | --- |
 | `guide.js` | the gem route: cleaning, pending gems, which act an area belongs to |
+| `links.js` | the links of each act (also loaded by the windows) |
 | `build.js`, `treeplan.js` | the passive plan: order of the points, cost of each step, trees that continue each other |
 | `pob.js` | decodes a Path of Building code |
 | `vision.js` | finds the gem tooltip title on a capture and compares inventory cells |

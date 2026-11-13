@@ -108,9 +108,105 @@
   .update.busy { border-left-color: #9a8c70; }
   .update.failed { border-left-color: #c0503c; background: rgba(192, 80, 60, 0.1); }
   .status { margin-top: 8px; font-size: 11px; color: #9a8c70; overflow-wrap: anywhere; }
+
+  /* minimized: only the app icon, where the overlay was */
+  .mini {
+    position: relative; display: block; width: 40px; height: 40px; margin-top: 7px; padding: 3px; cursor: pointer; touch-action: none;
+    background: rgba(14, 11, 8, 0.86); border: 1px solid #6b5a3a; border-radius: 8px;
+  }
+  .mini[hidden], .shell[hidden] { display: none; }
+  .mini img { display: block; width: 32px; height: 32px; pointer-events: none; }
+  .mini:hover { border-color: #d8b56a; box-shadow: 0 0 0 1px rgba(216, 181, 106, 0.35); }
+  .mini.dragging { cursor: grabbing; }
+  .mini:focus-visible { outline: 1px solid #d8b56a; outline-offset: 1px; }
+  .mini-badge {
+    position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box;
+    border-radius: 9px; background: #d8b56a; color: #10142a; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center;
+    box-shadow: 0 0 0 2px rgba(14, 11, 8, 0.9);
+  }
+  .mini-badge[hidden] { display: none; }
+
+  /* panel, the tab of the links drawer, and the drawer, side by side */
+  .shell { display: inline-flex; align-items: flex-start; }
+  .panel { order: 1; }
+  .tab { order: 2; }
+  .drawer { order: 3; }
+  .shell.left .drawer { order: 0; }
+
+  /* the tab hangs on the right edge of the panel */
+  .tab {
+    width: 16px; height: 44px; margin-top: 36px; padding: 0; display: grid; place-items: center; flex: none;
+    background: rgba(14, 11, 8, 0.86); border: 1px solid #6b5a3a; border-left: 0; border-radius: 0 4px 4px 0;
+    color: #b3a586; cursor: pointer;
+  }
+  .tab[hidden] { display: none; }
+  .tab:hover { color: #fff; background: rgba(40, 32, 20, 0.95); }
+  .tab svg { width: 8px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+  .tab[aria-expanded="true"] svg { transform: scaleX(-1); }
+
+  /* the drawer */
+  .drawer {
+    width: 270px; box-sizing: border-box; max-height: calc(100vh - 2px); display: flex; flex-direction: column;
+    background: rgba(14, 11, 8, 0.92); border: 1px solid #6b5a3a; border-radius: 4px;
+  }
+  .drawer[hidden] { display: none; }
+  .shell:not(.left) .drawer { margin-left: 4px; }
+  .shell.left .drawer { margin-right: 4px; width: 266px; }
+  .drawer-head { display: flex; align-items: center; gap: 6px; padding: 7px 6px 6px 10px; border-bottom: 1px solid #3d3322; }
+  .drawer-title { flex: 1; font-weight: 600; color: #d8b56a; }
+  .act-pick { position: relative; }
+  .act-btn {
+    font: inherit; font-size: 12px; padding: 2px 8px; border-radius: 3px; cursor: pointer;
+    background: rgba(216, 181, 106, 0.12); border: 1px solid #5d4c2e; color: #e9dfc8;
+  }
+  .act-btn::after { content: ""; display: inline-block; margin-left: 6px; vertical-align: 2px; border: 4px solid transparent; border-top-color: currentColor; border-bottom: 0; }
+  .act-btn:hover, .act-btn[aria-expanded="true"] { border-color: #d8b56a; }
+  .act-menu {
+    position: absolute; right: 0; top: calc(100% + 3px); z-index: 2; min-width: 96px; padding: 3px;
+    background: #17130d; border: 1px solid #6b5a3a; border-radius: 3px; display: grid; gap: 1px;
+  }
+  .act-menu[hidden] { display: none; }
+  .act-menu button { font: inherit; font-size: 12px; text-align: left; padding: 3px 8px; border: 0; border-radius: 2px; background: none; color: #d9cfb8; cursor: pointer; }
+  .act-menu button:hover { background: rgba(216, 181, 106, 0.2); color: #fff; }
+  .act-menu button[aria-current="true"] { color: #d8b56a; }
+  .act-menu .count { float: right; margin-left: 10px; color: #7d7058; }
+  .drawer-body { overflow-y: auto; padding: 4px 10px 10px; }
+  .drawer-empty { color: #9a8c70; font-size: 12px; padding: 8px 0 2px; }
+
+  /* one link: a card with the border it has in the gem route, sockets joined like on an item */
+  .lk {
+    position: relative; margin: 8px 0 0; padding: 5px 8px 5px 9px;
+    border: 1px solid #5d4c2e; border-left: 3px solid #d8b56a; border-radius: 3px; background: rgba(255, 255, 255, 0.03);
+  }
+  .lk-gem.skill .nm { font-weight: 600; color: #f0e4c4; }
+  .lk-marks { margin-top: 10px; padding: 5px 8px 6px 9px; border: 1px solid #3d3322; border-left: 3px solid #6cb4f0; border-radius: 3px; }
+  .lk-marks.drop { border-left-color: #c0503c; }
+  .lk-marks.swap { border-left-color: #e0b04a; }
+  .lk-marks.swap .lk-marks-title { color: #f2d48a; }
+  .lk-marks.swap .old { color: #a99f88; }
+  .lk-mark.to { padding-left: 2px; margin-bottom: 3px; }
+  .lk-mark.to .arrow { color: #e0b04a; width: 9px; margin-left: 1px; }
+  .lk-marks-title { font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #9fd0f7; margin-bottom: 3px; }
+  .lk-marks.drop .lk-marks-title { color: #f0b3a6; }
+  .lk-mark { display: flex; align-items: center; gap: 8px; padding: 1px 0; font-size: 12px; }
+  .lk-mark .sock { width: 9px; height: 9px; border-radius: 50%; flex: none; border: 1px solid rgba(0, 0, 0, 0.6); }
+  .lk-marks.drop .lk-mark .nm { text-decoration: line-through; text-decoration-color: rgba(224, 112, 90, .7); color: #c9c0a8; }
+  .drawer-edit { font: inherit; font-size: 12px; padding: 2px 8px; border-radius: 3px; cursor: pointer; background: none; border: 1px solid #5d4c2e; color: #d9cfb8; }
+  .drawer-edit:hover { border-color: #d8b56a; color: #fff; }
+  .lk-gem { position: relative; display: flex; align-items: center; gap: 8px; padding: 2px 18px 2px 0; }
+  .lk-gem .sock { position: relative; width: 11px; height: 11px; border-radius: 50%; flex: none; border: 1px solid rgba(0, 0, 0, 0.6); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35); }
+  .lk-gem:not(:last-child) .sock::after { content: ""; position: absolute; left: 3px; top: 11px; width: 3px; height: 9px; background: #8f7d58; border-radius: 1px; }
+  .sock.str { background: #d4553f; } .sock.dex { background: #74b84f; } .sock.int { background: #5f92e6; } .sock.white { background: #dcdcdc; }
+  .sock.unknown { background: #2a241a; border-color: #9a8c70; }
+  .lk-gem .nm { font-size: 12px; line-height: 1.3; }
 </style>
 </head>
 <body>
+<button class="mini" id="mini" aria-label="Open the overlay" hidden>
+  <img src="../../assets/icon.png" alt="">
+  <span class="mini-badge" id="mini-badge" hidden></span>
+</button>
+<div class="shell" id="shell">
 <div class="panel" id="panel">
   <div class="bar" id="bar" title="Drag to move the overlay">
     <span class="grip" aria-hidden="true"><svg viewBox="0 0 8 12"><circle cx="2" cy="2" r="1"/><circle cx="6" cy="2" r="1"/><circle cx="2" cy="6" r="1"/><circle cx="6" cy="6" r="1"/><circle cx="2" cy="10" r="1"/><circle cx="6" cy="10" r="1"/></svg></span>
@@ -126,9 +222,15 @@
     <button class="ico" id="library" title="Builds: save this setup or load another one" aria-label="Builds">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5h3v11h-3zM5.5 2.5h3v11h-3z"/><path d="M9.300 4.200l2.800-.9 2.400 9.600-2.800.9z"/></svg>
     </button>
+    <button class="ico" id="links" title="Links: the gems you socket together, act by act" aria-label="Links" aria-expanded="false" aria-controls="drawer">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="4.500" cy="4.500" r="2.200"/><circle cx="11.500" cy="4.500" r="2.200"/><circle cx="11.500" cy="11.500" r="2.200"/><path d="M6.700 4.500h2.600M11.500 6.700v2.600"/></svg>
+    </button>
     <span class="gap"></span>
     <button class="ico" id="more" title="More: options, size and reset" aria-label="More" aria-expanded="false" aria-controls="menu">
       <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.500" cy="8" r=".9"/><circle cx="8" cy="8" r=".9"/><circle cx="12.500" cy="8" r=".9"/></svg>
+    </button>
+    <button class="ico" id="minimize" title="Minimize: shrink the overlay to an icon" aria-label="Minimize the overlay">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 11.500h8"/></svg>
     </button>
     <button class="ico" id="quit" title="Close the overlay" aria-label="Close the overlay">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>
@@ -172,6 +274,22 @@
   <div id="passive"></div>
   <div id="merc"></div>
   <div class="status" id="status"></div>
+</div>
+<button class="tab" id="tab" title="Links of the act" aria-label="Show the links" aria-expanded="false" aria-controls="drawer" hidden>
+  <svg viewBox="0 0 8 12" aria-hidden="true"><path d="M2.5 2 6 6l-3.500 4"/></svg>
+</button>
+<aside class="drawer" id="drawer" aria-label="Links" hidden>
+  <div class="drawer-head">
+    <span class="drawer-title">Links</span>
+    <div class="act-pick">
+      <button class="act-btn" id="act-btn" aria-haspopup="true" aria-expanded="false" aria-controls="act-menu"></button>
+      <div class="act-menu" id="act-menu" hidden></div>
+    </div>
+    <button class="drawer-edit" id="drawer-edit" title="Open the links window to change them">Edit</button>
+    <button class="ico" id="drawer-close" title="Close the links" aria-label="Close the links"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="drawer-body" id="links-body"></div>
+</aside>
 </div>
 <script src="js/overlay.js"></script>
 </body>

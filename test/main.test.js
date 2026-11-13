@@ -153,6 +153,94 @@ test('main process: a session from start to quit', async (t) => {
     assert.deepEqual(state.pending, [], 'the gems of the Act 6 beach are not offered');
   });
 
+  await t.test('links: planned per act, kept when the route is saved, the drawer follows the act', async () => {
+    fake.send('settings:save', { steps: [
+      { area: 'The Coast', act: 1, gems: ['Spectral Throw', 'Volley Support'] },
+      { area: 'The Southern Forest', act: 2, gems: ['Herald of Ash'] },
+    ] });
+    let data = await fake.invoke('links:data');
+    assert.deepEqual(data.links, {});
+
+    const saved = await fake.invoke('links:save', 1, { extra: ['Faster Attacks Support'], links: [{ skill: 'Spectral Throw', supports: ['Volley Support', 'Faster Attacks Support'] }] });
+    assert.deepEqual(Object.keys(saved), ['1']);
+    let links = fake.lastState().links;
+    assert.equal(links.any, true);
+    assert.deepEqual(links.acts, [1]);
+
+    // the route window saves without links: they are kept
+    fake.send('settings:save', { steps: [{ area: 'The Coast', act: 1, gems: ['Spectral Throw'] }] });
+    data = await fake.invoke('links:data');
+    assert.deepEqual(data.links[1].links[0].supports, ['Volley Support', 'Faster Attacks Support']);
+
+    // an empty act is removed
+    await fake.invoke('links:save', 2, { extra: [], links: [] });
+    assert.deepEqual(Object.keys((await fake.invoke('links:data')).links), ['1']);
+
+    fake.send('reset');
+    fs.appendFileSync(log, logLine('The Coast', '1_1_2') + logLine("Lioneye's Watch", '1_1_town'));
+    await wait(800);
+    fake.send('links-act', 1);
+    fake.send('links-drawer', true);
+    links = fake.lastState().links;
+    assert.equal(links.open, true);
+    assert.equal(links.act, 1);
+    assert.deepEqual(links.links, [{ skill: { name: 'Spectral Throw', color: 'dex' }, supports: [{ name: 'Volley Support', color: 'dex' }, { name: 'Faster Attacks Support', color: 'dex' }] }]);
+    assert.equal('glow' in links, false, 'no more glowing');
+
+    fake.send('links-act', 2);
+    assert.deepEqual(fake.lastState().links.links, [], 'Act 2 has none');
+
+    fs.appendFileSync(log, logLine('The Coast', '1_1_2'));
+    await wait(800);
+    assert.equal(fake.lastState().links.open, false, 'entering another area closes it');
+
+    fs.appendFileSync(log, logLine('The Southern Forest', '1_2_1'));
+    await wait(800);
+    assert.equal(fake.lastState().links.act, 2, 'a new act moves the drawer to it');
+
+    // links come and go with the builds library
+    const lib = await fake.invoke('library:save', 'With links');
+    assert.equal(lib.items.find((i) => i.name === 'With links').same, true);
+    await fake.invoke('links:save', 1, { extra: [], links: [] });
+    assert.equal((await fake.invoke('library:get')).items.find((i) => i.name === 'With links').same, false, 'changing a link changes the setup');
+    await fake.invoke('library:load', 'with-links');
+    assert.equal((await fake.invoke('links:data')).links[1].links.length, 1);
+  });
+
+  await t.test('exporting the route takes the links along, and importing it brings them back', async () => {
+    const { dialog } = require('electron');
+    const file = path.join(tmp, 'gem-route.json');
+    dialog.showSaveDialog = async () => ({ canceled: false, filePath: file });
+    dialog.showOpenDialog = async () => ({ canceled: false, filePaths: [file] });
+    const route = { steps: [{ area: 'The Coast', act: 1, gems: ['Spectral Throw', 'Volley Support'] }] };
+    fake.send('settings:save', route);
+    await fake.invoke('links:save', 1, { extra: [], links: [{ skill: 'Spectral Throw', supports: ['Volley Support'] }], hold: [], drop: [], swap: [] });
+    assert.equal(await fake.invoke('settings:export', route), true);
+    assert.deepEqual(JSON.parse(fs.readFileSync(file, 'utf8')).links[1].links, [{ skill: 'Spectral Throw', supports: ['Volley Support'] }]);
+
+    // another setup in the meantime, then the file comes back
+    fake.send('settings:save', { steps: [] });
+    await fake.invoke('links:save', 1, { extra: [], links: [] });
+    const result = await fake.invoke('settings:import');
+    assert.equal(result.guide.steps.length, 1);
+    fake.send('settings:save', result.guide); // what the route window does with it
+    const data = await fake.invoke('links:data');
+    assert.deepEqual(data.links[1].links, [{ skill: 'Spectral Throw', supports: ['Volley Support'] }]);
+    assert.equal(data.steps.length, 1);
+  });
+
+  await t.test('minimize: the overlay becomes an icon, closes the drawer and is remembered', async () => {
+    fake.send('links-drawer', true);
+    fake.send('overlay-minimize', true);
+    let state = fake.lastState();
+    assert.equal(state.minimized, true);
+    assert.equal(state.links.open, false, 'the drawer closes with it');
+    assert.equal(JSON.parse(fs.readFileSync(path.join(userData, 'overlay.json'), 'utf8')).minimized, true);
+    fake.send('overlay-minimize', false);
+    state = fake.lastState();
+    assert.equal(state.minimized, false);
+  });
+
   await t.test('only wiki links from the gem list are opened', () => {
     fake.send('open-wiki', 'https://example.com');
     assert.equal(fake.opened, undefined);

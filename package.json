@@ -1,6 +1,6 @@
 {
   "name": "poe-quickly-leveling-overlay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Leveling overlay for Path of Exile: gems to buy in each town, the next passive point of your Path of Building tree, and a mercenary check.",
   "main": "src/main/index.js",
   "license": "MIT",

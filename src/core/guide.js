@@ -1,6 +1,7 @@
 'use strict';
 // The gem route: which gems to buy after each area. Pure functions, no Electron.
 const { norm } = require('./text');
+const { cleanLinks } = require('./links');
 
 // Key of a visit to an area in a given act ("6|lioneye's watch").
 const visitKey = (act, area) => `${act}|${norm(area)}`;
@@ -22,7 +23,8 @@ function indexAreas(groups) {
 }
 
 /**
- * Accepts only the shape { steps: [{ area, act, gems: [names] }] } and drops everything else.
+ * Accepts only the shape { steps: [{ area, act, gems: [names] }], links: {...} } and drops
+ * everything else (see links.js for the links, planned act by act).
  * `act` is 1 to 10, or null for an area outside the campaign list. A step saved before acts
  * existed gets the first act its area appears in.
  */
@@ -40,7 +42,14 @@ function cleanGuide(raw, areaActs) {
     const gems = [...new Set((Array.isArray(s.gems) ? s.gems : []).filter((g) => typeof g === 'string' && g.trim()).map((g) => g.trim()))];
     steps.push({ area: s.area.trim(), act, gems });
   }
-  return { steps };
+  return { steps, links: cleanLinks(raw?.links) };
+}
+
+// Has the character been through this area of the route? A step with an act needs that
+// act's visit; a custom area goes by name alone.
+function stepVisited(step, state) {
+  if (step.act) return (state.visitedActs || []).includes(visitKey(step.act, step.area));
+  return (state.visited || []).some((v) => norm(v) === norm(step.area));
 }
 
 /**
@@ -49,14 +58,10 @@ function cleanGuide(raw, areaActs) {
  * `state` is the saved progress: { visited, visitedActs, acquired }.
  */
 function pendingGems(guide, state, areaActs) {
-  const visited = new Set((state.visited || []).map(norm));
-  const visitedActs = new Set(state.visitedActs || []);
   const acquired = state.acquired || [];
   const out = [];
   for (const step of guide.steps) {
-    // A step with an act needs that act's visit; a custom area goes by name alone.
-    const seen = step.act ? visitedActs.has(visitKey(step.act, step.area)) : visited.has(norm(step.area));
-    if (!seen) continue;
+    if (!stepVisited(step, state)) continue;
     const firstAct = (areaActs.get(norm(step.area)) || [])[0];
     for (const name of step.gems) {
       const oldKey = `${step.area}|${name}`; // how purchases were recorded before acts existed
@@ -97,4 +102,4 @@ function actFor(area, currentAct, previousArea, areaActs, areaId) {
   return afterKitava ? second : first;
 }
 
-module.exports = { visitKey, indexAreas, cleanGuide, pendingGems, actFor, actOfAreaId };
+module.exports = { visitKey, indexAreas, cleanGuide, stepVisited, pendingGems, actFor, actOfAreaId };

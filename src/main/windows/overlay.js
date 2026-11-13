@@ -5,7 +5,7 @@ const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const paths = require('../paths');
 const { config } = require('../config');
 const { store, saveState, saveOverlayPrefs, setPrefs, clampScale } = require('../store');
-const { bus, changed } = require('../session');
+const { bus, session, changed } = require('../session');
 const gamedata = require('../gamedata');
 const progress = require('../progress');
 const areas = require('../features/areas');
@@ -13,14 +13,18 @@ const purchases = require('../features/purchases');
 const sounds = require('../platform/sounds');
 const updates = require('../features/updates');
 
-const SIZE = { width: 300, height: 520 }; // at scale 1
+// Sizes at scale 1. The window holds the panel and the tab of the links drawer at its right;
+// with the drawer open it is wider. When there is no room for the drawer on the right of the
+// screen, it opens on the left of the panel and the window moves left, so the panel stays put.
+const SIZE = { width: 322, height: 520 };
+const DRAWER = 270;
 let win = null;
+let panel = { x: 0, y: 0 }; // where the panel is on the screen (the window moves around it)
+let drawerSide = 'right';
 
 const alive = () => win && !win.isDestroyed();
-const size = () => ({
-  width: Math.round(SIZE.width * store.overlayPrefs.scale),
-  height: Math.round(SIZE.height * store.overlayPrefs.scale),
-});
+const scaled = (n) => Math.round(n * store.overlayPrefs.scale);
+const size = () => ({ width: scaled(SIZE.width), height: scaled(SIZE.height) });
 // Keeps the overlay reachable: its top bar always stays on a screen.
 function clampToScreen(x, y) {
   const { width } = size();
@@ -30,13 +34,36 @@ function clampToScreen(x, y) {
     y: Math.round(Math.min(area.y + area.height - 40, Math.max(area.y, y))),
   };
 }
+// Which side the drawer opens on: the right, unless it would leave the screen there.
+function sideFor() {
+  const area = screen.getDisplayNearestPoint({ x: panel.x, y: panel.y }).workArea;
+  const fitsRight = panel.x + scaled(SIZE.width + DRAWER) <= area.x + area.width;
+  const fitsLeft = panel.x - scaled(DRAWER) >= area.x;
+  return fitsRight || !fitsLeft ? 'right' : 'left';
+}
+// Places the window around the panel, with or without the drawer.
+function layout() {
+  if (!alive()) return;
+  const open = session.drawerOpen;
+  const left = open && drawerSide === 'left';
+  const bounds = {
+    x: Math.round(left ? panel.x - scaled(DRAWER) : panel.x),
+    y: Math.round(panel.y),
+    width: scaled(SIZE.width + (open ? DRAWER : 0)),
+    height: scaled(SIZE.height),
+  };
+  win.setResizable(true); // a fixed-size window ignores setBounds on some systems
+  win.setBounds(bounds);
+  win.setResizable(false);
+}
 function push() {
-  if (alive()) win.webContents.send('state', progress.overlayState());
+  if (alive()) win.webContents.send('state', { ...progress.overlayState(), drawerSide, minimized: Boolean(store.overlayPrefs.minimized) });
 }
 
 function create() {
   const prefs = store.overlayPrefs;
   const start = clampToScreen(prefs.x ?? config.overlay?.x ?? 20, prefs.y ?? config.overlay?.y ?? 260);
+  panel = { ...start };
   win = new BrowserWindow({
     ...size(),
     x: start.x,
@@ -61,6 +88,7 @@ function create() {
 }
 
 bus.on('changed', push);
+bus.on('drawer', () => { layout(); push(); });
 bus.on('sound', (sound) => { if (alive()) win.webContents.send('play-sound', sound); });
 
 // The window ignores the mouse except while the pointer is over its controls.
@@ -69,19 +97,18 @@ ipcMain.on('hover', (_e, over) => { if (alive()) win.setIgnoreMouseEvents(!over,
 // ---------- moving and resizing ----------
 let dragOrigin = null;
 ipcMain.on('overlay-drag-start', () => {
-  const [x, y] = win.getPosition();
-  dragOrigin = { x, y };
+  dragOrigin = { ...panel };
 });
 ipcMain.on('overlay-drag', (_e, dx, dy) => {
   if (!dragOrigin || !Number.isFinite(dx) || !Number.isFinite(dy)) return;
-  const p = clampToScreen(dragOrigin.x + dx, dragOrigin.y + dy);
-  win.setPosition(p.x, p.y);
+  panel = clampToScreen(dragOrigin.x + dx, dragOrigin.y + dy);
+  const left = session.drawerOpen && drawerSide === 'left';
+  win.setPosition(Math.round(left ? panel.x - scaled(DRAWER) : panel.x), Math.round(panel.y));
 });
 ipcMain.on('overlay-drag-end', () => {
   if (!dragOrigin) return;
   dragOrigin = null;
-  const [x, y] = win.getPosition();
-  Object.assign(store.overlayPrefs, { x, y });
+  Object.assign(store.overlayPrefs, { x: panel.x, y: panel.y });
   saveOverlayPrefs();
 });
 // step is -1 or +1: one notch smaller or bigger, between 70% and 180%.
@@ -89,13 +116,35 @@ ipcMain.on('overlay-resize', (_e, step) => {
   const scale = clampScale(store.overlayPrefs.scale + (step > 0 ? 0.1 : -0.1));
   if (scale === store.overlayPrefs.scale) return;
   store.overlayPrefs.scale = scale;
-  const [x, y] = win.getPosition();
-  win.setResizable(true); // a fixed-size window ignores setBounds on some systems
-  win.setBounds({ x, y, ...size() });
-  win.setResizable(false);
+  if (session.drawerOpen) drawerSide = sideFor();
+  layout();
   win.webContents.setZoomFactor(scale);
-  Object.assign(store.overlayPrefs, { x, y });
   saveOverlayPrefs();
+  push();
+});
+
+// Minimize to an icon, or open again. Remembered for the next start.
+ipcMain.on('overlay-minimize', (_e, on) => {
+  store.overlayPrefs.minimized = Boolean(on);
+  if (on && session.drawerOpen) { session.drawerOpen = false; layout(); }
+  saveOverlayPrefs();
+  push();
+});
+
+// ---------- the links drawer ----------
+ipcMain.on('links-drawer', (_e, open) => {
+  open = Boolean(open);
+  if (open === session.drawerOpen) return;
+  if (open) drawerSide = sideFor();
+  session.drawerOpen = open;
+  layout();
+  changed();
+});
+ipcMain.on('links-act', (_e, act) => {
+  if (!Number.isInteger(act) || act < 0 || act > 10) return;
+  store.overlayPrefs.linksAct = act;
+  saveOverlayPrefs();
+  changed();
 });
 
 // The volume slider of the menu: save it and play the gem chime once as a sample.

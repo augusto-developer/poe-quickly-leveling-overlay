@@ -66,7 +66,7 @@ test('route: cleaning keeps valid steps and gives each area its act', () => {
     { area: "Lioneye's Watch", act: 6, gems: ['Vitality'] },
     { area: 'My Hideout', act: null, gems: [] },
   ]);
-  assert.deepEqual(guide.cleanGuide(null, areaActs), { steps: [] });
+  assert.deepEqual(guide.cleanGuide(null, areaActs), { steps: [], links: {} });
 });
 
 test('route: a town that exists in two acts is tracked once per act', () => {
@@ -78,6 +78,58 @@ test('route: a town that exists in two acts is tracked once per act', () => {
   assert.deepEqual(guide.pendingGems(route, inAct1, areaActs).map((g) => g.name), ['Frostbolt']);
   const inAct6 = { ...inAct1, visitedActs: [...inAct1.visitedActs, guide.visitKey(6, "Lioneye's Watch")], acquired: ["1|Lioneye's Watch|Frostbolt"] };
   assert.deepEqual(guide.pendingGems(route, inAct6, areaActs).map((g) => g.name), ['Vitality']);
+});
+
+test('links: one set per act, one card per active gem, supports may repeat', () => {
+  const L = require('../src/core/links');
+  const cleaned = guide.cleanGuide({
+    steps: [{ area: 'The Coast', act: 1, gems: ['Spectral Throw', 'Volley Support'] }],
+    links: {
+      1: { extra: ['Frostblink', 'Frostblink', 5], links: [
+        { skill: 'Spectral Throw', supports: ['Volley Support', 'Faster Attacks Support', 'Spectral Throw'] },
+        { skill: 'Spectral Throw', supports: ['Onslaught Support'] }, // a second card for the same gem
+        { skill: 'Frostblink', supports: ['Faster Attacks Support'] },
+      ] },
+      2: { extra: [], links: [] }, // empty: dropped
+      11: { extra: ['x'] },        // not an act
+    },
+  }, areaActs);
+  assert.deepEqual(cleaned.links, { 1: { extra: ['Frostblink'], links: [
+    { skill: 'Spectral Throw', supports: ['Volley Support', 'Faster Attacks Support'] },
+    { skill: 'Frostblink', supports: ['Faster Attacks Support'] },
+  ], hold: [], drop: [], swap: [] } });
+  assert.deepEqual(guide.cleanGuide({ steps: [], links: [{ gems: [] }] }, areaActs).links, {}, 'links of the old shape are dropped');
+
+  // the gems of an act: its areas, then the added ones, then any gem a link still uses
+  const g = { steps: [...cleaned.steps, { area: 'The Southern Forest', act: 2, gems: ['Herald of Ash'] }], links: cleaned.links };
+  assert.deepEqual(L.poolFor(g, 1), ['Spectral Throw', 'Volley Support', 'Frostblink', 'Faster Attacks Support']);
+  assert.deepEqual(L.poolFor(g, 2), ['Herald of Ash']);
+  assert.equal(L.previousWithLinks(g.links, 3), 1);
+  assert.equal(L.previousWithLinks(g.links, 1), 0);
+  assert.equal(L.isSupport('Volley Support', new Map()), true);
+  assert.equal(L.isSupport('Frostblink', new Map([['Frostblink', { type: 'skill' }]])), false);
+});
+
+test('links: a gem kept in Set 2 or dropped leaves the links of that act', () => {
+  const L = require('../src/core/links');
+  const cleaned = L.cleanLinks({ 3: {
+    links: [
+      { skill: 'Spectral Throw', supports: ['Volley Support', 'Faster Attacks Support'] },
+      { skill: 'Leap Slam', supports: ['Volley Support'] }, // left with no supports: no link
+    ],
+    hold: ['Volley Support'],
+    drop: ['Leap Slam', 'Volley Support'], // already held: hold wins
+  } });
+  assert.deepEqual(cleaned, { 3: { extra: [], links: [{ skill: 'Spectral Throw', supports: ['Faster Attacks Support'] }], hold: ['Volley Support'], drop: ['Leap Slam'], swap: [] } });
+  assert.deepEqual(L.cleanLinks({ 4: { hold: ['Frostblink'] } }), { 4: { extra: [], links: [], hold: ['Frostblink'], drop: [], swap: [] } }, 'an act with only marks is kept');
+  // a swap: the old gem leaves the links, one swap per gem, never for itself
+  const swapped = L.cleanLinks({ 5: {
+    links: [{ skill: 'Herald of Ash', supports: ['Inspiration Support'] }, { skill: 'Purity of Elements', supports: ['Inspiration Support'] }],
+    swap: [{ from: 'Herald of Ash', to: 'Purity of Elements' }, { from: 'Herald of Ash', to: 'Anger' }, { from: 'Clarity', to: 'Clarity' }, { from: 'Leap Slam' }],
+  } });
+  assert.deepEqual(swapped[5].swap, [{ from: 'Herald of Ash', to: 'Purity of Elements' }]);
+  assert.deepEqual(swapped[5].links, [{ skill: 'Purity of Elements', supports: ['Inspiration Support'] }]);
+  assert.deepEqual(L.poolFor({ steps: [], links: swapped }, 5).sort(), ['Herald of Ash', 'Inspiration Support', 'Purity of Elements'], 'both gems of a swap stay in the act');
 });
 
 test('acts: the second half of the campaign starts after Kitava', () => {

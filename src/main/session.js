@@ -7,6 +7,9 @@
 //   sound            (url, volume) play an alert sound
 //   setup-replaced   another build was loaded: windows showing the old one start again
 //   notes-changed    the build notes changed
+//   drawer           the links drawer opened or closed: the overlay window changes width
+//   route-changed    the areas or gems of the route changed
+//   links-changed    the links were replaced (route imported)
 const { EventEmitter } = require('events');
 const { config } = require('./config');
 
@@ -21,6 +24,7 @@ const session = {
   ctrlDown: false,
   recordingHotkey: false, // true while the options window is waiting for a key press
   queue: Promise.resolve(), // screen analyses run one at a time, in order
+  drawerOpen: false,      // the links drawer at the side of the overlay
 };
 
 const changed = () => bus.emit('changed');

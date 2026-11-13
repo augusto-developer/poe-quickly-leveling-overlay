@@ -19,7 +19,7 @@ const dir = () => paths.user('builds');
 const fileOf = (id) => (/^[a-z0-9-]{1,60}$/.test(String(id)) ? paths.user('builds', `${id}.json`) : null);
 const cleanName = (name) => String(name || '').replace(/\s+/g, ' ').trim().slice(0, 60);
 // What makes two setups "the same": the tree picked in the tree window does not count.
-const setupKey = (g, b) => JSON.stringify([g.steps, b.specs, b.tails, b.order, b.notes]);
+const setupKey = (g, b) => JSON.stringify([g.steps, g.links, b.specs, b.tails, b.order, b.notes]);
 
 // The numbers and names shown on the card of a setup.
 function describe(g, b) {
