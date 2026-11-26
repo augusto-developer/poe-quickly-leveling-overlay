@@ -1,6 +1,6 @@
 'use strict';
-// Game data that ships with the program (the data/ folder): gems, campaign areas, towns
-// and the passive tree.
+// Game data that ships with the program (the data/ folder): gems, campaign areas, towns,
+// quest rewards and the passive tree.
 const fs = require('fs');
 const { shell } = require('electron');
 const paths = require('./paths');
@@ -18,6 +18,9 @@ const gemUrls = new Map(gems.map((g) => [g.name, g.url]));
 const gemColors = new Map(gems.map((g) => [g.name, g.color]));
 // Which acts each campaign area belongs to.
 const areaActs = indexAreas(areas);
+// What each quest gives each class (see scripts/import-quests.js), read on first use.
+let questData = null;
+const quests = () => questData || (questData = readData('quests.json'));
 
 let townSet = null;
 function isTown(area) {
@@ -43,4 +46,4 @@ function openWiki(name) {
   if (typeof url === 'string' && url.startsWith('https://www.poewiki.net/wiki/')) shell.openExternal(url);
 }
 
-module.exports = { gems, areas, gemUrls, gemColors, areaActs, isTown, tree, mercRules, openWiki };
+module.exports = { gems, areas, gemUrls, gemColors, areaActs, isTown, tree, quests, mercRules, openWiki };

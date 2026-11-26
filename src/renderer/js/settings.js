@@ -35,6 +35,7 @@
   function save() {
     guide.steps.sort((x, y) => (areaOrder.get(stepId(x)) ?? 1e9) - (areaOrder.get(stepId(y)) ?? 1e9));
     api.saveGuide(guide);
+    edits.record();
     $('saved').textContent = 'Saved';
     clearTimeout(savedTimer);
     savedTimer = setTimeout(() => { $('saved').textContent = ''; }, 1500);
@@ -174,7 +175,16 @@
       const remove = el('button', { textContent: '×', title: 'Remove ' + name });
       remove.setAttribute('aria-label', 'Remove ' + name);
       remove.addEventListener('click', () => toggleGem(name));
-      box.append(el('span', { className: 'chip' }, [socket(name), name, remove]));
+      // free quest reward or bought from the vendor: shown next to the gem in the overlay
+      const reward = s.get && s.get[name] === 'reward';
+      const get = el('button', { className: 'get' + (reward ? ' reward' : ''), textContent: reward ? 'free' : 'buy', title: reward ? 'Taken as the free quest reward. Click to buy it instead.' : 'Bought from the vendor. Click to take it as the free quest reward.' });
+      get.addEventListener('click', () => {
+        s.get = s.get || {};
+        if (reward) delete s.get[name]; else s.get[name] = 'reward';
+        save();
+        renderChosen();
+      });
+      box.append(el('span', { className: 'chip' }, [socket(name), name, get, remove]));
     }
   }
 
@@ -257,7 +267,146 @@
     $('saved').textContent = 'Imported';
   });
 
+  // ---------- "From PoB" ----------
+  // Reads a build and lists its gems skill set by skill set: each set is for an act (taken
+  // from its title, and changeable), and a gem goes to the route in the act of the first set
+  // that has it. The route only changes with "Add to the route" or "Replace the route".
+  const dialog = $('pob-dialog');
+  let pob = null;        // { className, classes, skillSets } of the build read
+  let setActs = [];      // act of each skill set, or null to leave the set out
+  let off = new Set();   // gems unticked
+  let plan = null;       // the route for the ticked gems
+
+  // Where each gem is listed: the first set, by act, that has it -> { [name]: set index }.
+  function firstSets() {
+    const order = pob.skillSets.map((_x, i) => i).filter((i) => setActs[i]).sort((a, b) => setActs[a] - setActs[b] || a - b);
+    const first = {};
+    for (const i of order) for (const g of pob.skillSets[i].groups) for (const x of g.gems) if (!(x.name in first)) first[x.name] = i;
+    return first;
+  }
+  const wanted = () => Object.entries(firstSets()).filter(([name]) => !off.has(name)).map(([name, i]) => ({ name, act: setActs[i] }));
+
+  function placeText(name) {
+    if (off.has(name)) return { text: 'not in the route', cls: '' };
+    const p = plan && plan.places[name];
+    if (p && p.start) return { text: 'your class gets it on The Twilight Strand', cls: '' };
+    if (!p) return { text: 'no quest or vendor of the campaign gives it', cls: 'none' };
+    const where = `Act ${p.act}, after ${p.area}`;
+    if (p.how === 'reward') return { text: `${where}: free from ${p.npc}`, cls: 'reward' };
+    return { text: `${where}: buy from ${p.npc || 'the vendor'}`, cls: '' };
+  }
+  function actSelect(i) {
+    const select = el('select', { className: 'set-act', title: 'The act this skill set is for' });
+    select.append(el('option', { value: '', textContent: 'Leave out' }));
+    for (let a = 1; a <= 10; a++) select.append(el('option', { value: String(a), textContent: 'Act ' + a }));
+    select.value = setActs[i] ? String(setActs[i]) : '';
+    select.addEventListener('change', () => { setActs[i] = Number(select.value) || null; replan(); });
+    return select;
+  }
+  function renderPob() {
+    const box = $('pob-groups');
+    box.textContent = '';
+    const first = firstSets();
+    pob.skillSets.forEach((set, i) => {
+      const head = el('div', { className: 'set-head' }, [el('h3', { textContent: set.title || `Skill set ${i + 1}` }), actSelect(i)]);
+      const section = el('div', { className: 'pob-group' }, [head]);
+      if (!setActs[i]) section.append(el('p', { className: 'set-note', textContent: 'Left out of the route.' }));
+      let shown = 0;
+      for (const group of set.groups) {
+        const gems = group.gems.filter((g) => first[g.name] === i);
+        if (gems.length === 0) continue;
+        section.append(el('div', { className: 'link-label', textContent: group.label }));
+        for (const g of gems) {
+          shown++;
+          const tick = el('input', { type: 'checkbox', checked: !off.has(g.name) });
+          tick.setAttribute('aria-label', g.name);
+          const place = placeText(g.name);
+          const row = el('label', { className: 'pob-gem' + (off.has(g.name) ? ' off' : '') }, [
+            tick, socket(g.name), el('span', { className: 'name', textContent: g.name }),
+            el('span', { className: 'place ' + place.cls, textContent: place.text }),
+          ]);
+          tick.addEventListener('change', () => { if (tick.checked) off.delete(g.name); else off.add(g.name); replan(); });
+          section.append(row);
+        }
+      }
+      if (setActs[i] && shown === 0) section.append(el('p', { className: 'set-note', textContent: 'No new gems: they are all in an earlier set.' }));
+      box.append(section);
+    });
+    const count = plan ? plan.steps.reduce((n, st) => n + st.gems.length, 0) : 0;
+    $('pob-missing').textContent = count ? `${count} gems in ${plan.steps.length} areas.` : '';
+    $('pob-add').disabled = $('pob-replace').disabled = count === 0;
+  }
+  async function replan() {
+    plan = await api.plan($('pob-class').value, wanted());
+    renderPob();
+  }
+  $('from-pob').addEventListener('click', () => {
+    $('pob-error').textContent = '';
+    dialog.showModal();
+    $('pob-code').focus();
+  });
+  $('pob-cancel').addEventListener('click', () => { fromTree = false; dialog.close(); });
+  let readCode = '';      // the code of the build read, to hand to the tree window
+  let fromTree = false;  // the code came from the tree window: no need to offer it back
+  $('pob-read').addEventListener('click', async () => {
+    readCode = $('pob-code').value;
+    const result = await api.readPob(readCode);
+    if (result.error) { $('pob-error').textContent = result.error; return; }
+    if (result.skillSets.length === 0) { $('pob-error').textContent = 'The build was read, but it has no gems in it.'; return; }
+    $('pob-error').textContent = '';
+    pob = result;
+    setActs = pob.skillSets.map((x) => x.act);
+    off = new Set();
+    const select = $('pob-class');
+    select.textContent = '';
+    for (const c of pob.classes) select.append(el('option', { value: c, textContent: c, selected: c === pob.className }));
+    $('pob-pick').hidden = false;
+    await replan();
+  });
+  $('pob-class').addEventListener('change', replan);
+
+  function applyPlan(replace) {
+    if (!plan) return;
+    if (replace) guide.steps = [];
+    for (const ps of plan.steps) {
+      let st = guide.steps.find((x) => stepId(x) === stepId(ps));
+      if (!st) { st = { area: ps.area, act: ps.act, gems: [], get: {}, from: {} }; guide.steps.push(st); }
+      st.get = st.get || {};
+      st.from = st.from || {};
+      for (const g of ps.gems) {
+        if (!st.gems.includes(g)) st.gems.push(g);
+        if (ps.get[g] === 'reward') st.get[g] = 'reward';
+        if (ps.from && ps.from[g]) st.from[g] = ps.from[g];
+      }
+    }
+    guide.class = $('pob-class').value;
+    selected = guide.steps.length ? stepId(guide.steps[0]) : null;
+    save();
+    renderAll();
+    dialog.close();
+    $('saved').textContent = replace ? 'Route replaced' : 'Gems added';
+    $('ask-tree').hidden = fromTree;
+    fromTree = false;
+  }
+  $('ask-tree-yes').addEventListener('click', () => { $('ask-tree').hidden = true; api.sendToTree(readCode); });
+  $('ask-tree-no').addEventListener('click', () => { $('ask-tree').hidden = true; });
+  // A code from the tree window: the dialog opens with the build already read.
+  async function takeHandedCode() {
+    const code = await api.takePob();
+    if (!code) return;
+    fromTree = true;
+    $('ask-tree').hidden = true;
+    $('pob-error').textContent = '';
+    if (!dialog.open) dialog.showModal();
+    $('pob-code').value = code;
+    $('pob-read').click();
+  }
+  api.onPobOffer(takeHandedCode);
+  $('pob-add').addEventListener('click', () => applyPlan(false));
+  $('pob-replace').addEventListener('click', () => applyPlan(true));
+
   function renderAll() {
+    $('class-label').textContent = guide.class ? 'Planned for ' + guide.class : '';
     const s = step();
     $('picker').hidden = !s;
     $('blank').hidden = !!s;
@@ -268,7 +417,25 @@
       renderResults();
     }
   }
+  // ---------- undo / redo ----------
+  let refreshEdits = () => {};
+  const edits = EditHistory.createHistory({
+    snapshot: () => JSON.stringify({ class: guide.class || '', steps: guide.steps }),
+    restore: (snap) => {
+      const back = JSON.parse(snap);
+      guide.class = back.class;
+      guide.steps = back.steps;
+      api.saveGuide(guide);
+      confirmRemove = null;
+      if (!step()) selected = guide.steps.length ? stepId(guide.steps[0]) : null;
+      renderAll();
+    },
+    onChange: () => refreshEdits(),
+  });
+  refreshEdits = EditHistory.bindHistory(edits, $('undo'), $('redo'));
+
   renderActs();
   renderAll();
   if (step()) $('gem-input').focus(); else $('area-input').focus();
+  takeHandedCode();
 })();

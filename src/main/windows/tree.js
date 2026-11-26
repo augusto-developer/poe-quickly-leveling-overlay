@@ -27,6 +27,15 @@ ipcMain.handle('tree:import', (_e, code) => {
     return { error: err.message };
   }
 });
+// A PoB code handed over by the route window ("also import the passive tree?").
+let handedCode = null;
+ipcMain.on('pob:to-tree', (_e, code) => {
+  if (typeof code !== 'string' || !code.trim()) return;
+  handedCode = code;
+  if (win.get()) { win.get().webContents.send('tree:pob-offer'); win.get().focus(); } else win.open();
+});
+ipcMain.handle('tree:take-pob', () => { const code = handedCode; handedCode = null; return code; });
+
 ipcMain.handle('tree:suggest', (_e, raw) => {
   const a = buildCore.allocation(gamedata.tree(), clean(raw));
   return a ? treeplan.suggestOrder(gamedata.tree(), a.allocated, a.start) : [];

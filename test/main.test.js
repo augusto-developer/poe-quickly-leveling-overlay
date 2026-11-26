@@ -55,8 +55,40 @@ test('main process: a session from start to quit', async (t) => {
     assert.deepEqual(sounds, [{ url: null, chime: 'gems', volume: 0.8 }], 'one chime for arriving with something to buy');
   });
 
-  await t.test('marking it by hand clears it, and reset brings it back only after the area is visited again', () => {
-    fake.send('mark', fake.lastState().pending[0].key);
+  await t.test('the live screen view is ready in town with a gem to buy, and records nothing on its own', () => {
+    const views = fake.windows.filter((w) => /capture\.html$/.test(w.file || ''));
+    assert.equal(views.length, 1, 'opened on arriving in town with a gem pending');
+    assert.equal(views[0].destroyed, false);
+    assert.equal(fake.sent.filter((m) => m[0] === 'capture:start').length, 0, 'recording waits for Ctrl');
+  });
+
+  await t.test('a Ctrl + click on the gem buys it: the game copies its name and an item enters the inventory', async () => {
+    // A screen with an empty inventory, and the same screen with an item in the first cell.
+    const w = 1920, h = 1080;
+    const empty = Buffer.alloc(w * h * 4);
+    const withItem = Buffer.from(empty);
+    const vision = require('../src/core/vision');
+    const g = vision.inventoryGeometry(w, h);
+    for (let y = Math.ceil(g.top); y < g.top + g.cell; y++) withItem.fill(200, (y * w + Math.ceil(g.left)) * 4, (y * w + Math.floor(g.left + g.cell)) * 4);
+    let shown = empty;
+    fake.screens = [{ id: 'screen:1', display_id: '1', thumbnail: { getSize: () => ({ width: w, height: h }), toBitmap: () => shown } }];
+    fake.clipboard = 'what you had copied';
+    fake.copyText = 'Item Class: Skill Gems\nRarity: Gem\nFreezing Pulse\n--------\nLevel: 1';
+
+    fake.hookHandlers.get('keydown')({ keycode: 29, ctrlKey: true });
+    fake.hookHandlers.get('mousedown')({ button: 1, ctrlKey: true });
+    await wait(400);
+    shown = withItem; // the bought gem shows up in the inventory
+    await wait(900);
+    fake.hookHandlers.get('keyup')({ keycode: 29 });
+
+    assert.match(fake.lastState().status, /^Freezing Pulse: bought/);
+    assert.deepEqual(fake.lastState().pending, []);
+    assert.equal(fake.clipboard, 'what you had copied', 'the clipboard is put back');
+    assert.equal(fake.windows.find((w) => /capture\.html$/.test(w.file || '')).destroyed, true, 'nothing left to buy: the live view closes');
+  });
+
+  await t.test('reset brings the gem back only after the area is visited again', () => {
     assert.deepEqual(fake.lastState().pending, []);
     fake.send('reset');
     assert.deepEqual(fake.lastState().pending, [], 'The Lower Prison is no longer marked as visited');
@@ -153,6 +185,49 @@ test('main process: a session from start to quit', async (t) => {
     assert.deepEqual(state.pending, [], 'the gems of the Act 6 beach are not offered');
   });
 
+  await t.test('a route from a PoB build: each gem with its quest, free or bought, and the help window', async () => {
+    const zlib = require('zlib');
+    const xml = '<PathOfBuilding><Tree activeSpec="1"><Spec title="" classId="3" ascendClassId="0" nodes="1"/></Tree><Skills><SkillSet id="1"><Skill enabled="true">' +
+      '<Gem nameSpec="Freezing Pulse" gemId="Metadata/Items/Gems/SkillGemFreezingPulse" skillId="FreezingPulse" enabled="true"/>' +
+      '<Gem nameSpec="Arcane Surge" gemId="Metadata/Items/Gems/SupportGemArcaneSurge" skillId="SupportArcaneSurge" enabled="true"/>' +
+      '</Skill></SkillSet></Skills></PathOfBuilding>';
+    const code = zlib.deflateSync(Buffer.from(xml)).toString('base64');
+    const read = await fake.invoke('settings:pob', code);
+    assert.equal(read.className, 'Witch');
+    assert.deepEqual(read.skillSets.map((x) => x.act), [1]);
+    assert.deepEqual(read.skillSets[0].groups[0].gems.map((g) => g.name), ['Freezing Pulse', 'Arcane Surge Support']);
+    assert.match((await fake.invoke('settings:pob', 'nope')).error, /Path of Building/);
+
+    const plan = await fake.invoke('settings:plan', 'Witch', ['Freezing Pulse', 'Arcane Surge Support', 'Frostbolt'].map((name) => ({ name, act: 1 })));
+    assert.deepEqual(plan.steps.map((st) => [st.act, st.area]), [[1, 'The Twilight Strand']]);
+    assert.equal(plan.places['Freezing Pulse'].how, 'reward');
+    assert.deepEqual(plan.places['Arcane Surge Support'], { start: true }, 'the Witch finds it in the first chest');
+    assert.equal(plan.places['Frostbolt'].how, 'buy');
+    assert.equal(plan.places['Frostbolt'].npc, 'Nessa');
+    assert.deepEqual((await fake.invoke('settings:plan', 'Nobody', [{ name: 'Freezing Pulse', act: 1 }])).steps, [], 'only real classes');
+
+    // the route window saves it; the Act 1 beach was visited, and we are in Lioneye's Watch
+    fake.send('settings:save', { class: 'Witch', steps: plan.steps });
+    const pending = fake.lastState().pending;
+    assert.deepEqual(pending.map((g) => [g.name, g.how, g.npc]), [['Freezing Pulse', 'reward', 'Tarkleigh'], ['Frostbolt', 'buy', 'Nessa']]);
+
+    // "also import the passive tree?": the code goes to the tree window, which takes it once
+    fake.send('pob:to-tree', code);
+    assert.ok(fake.windows.some((w) => /tree\.html$/.test(w.file || '')), 'the tree window opens');
+    assert.equal(await fake.invoke('tree:take-pob'), code);
+    assert.equal(await fake.invoke('tree:take-pob'), null);
+    fake.send('pob:to-route', code);
+    assert.equal(await fake.invoke('settings:take-pob'), code);
+    fake.send('pob:to-route', '   ');
+    assert.equal(await fake.invoke('settings:take-pob'), null, 'an empty code is not handed over');
+
+    fake.send('open-help');
+    assert.ok(fake.windows.some((w) => /help\.html$/.test(w.file || '')));
+    const help = await fake.invoke('help:data');
+    assert.equal(help.className, 'Witch');
+    assert.equal(help.gems[0].source.quest, 'Enemy at the Gate');
+  });
+
   await t.test('links: planned per act, kept when the route is saved, the drawer follows the act', async () => {
     fake.send('settings:save', { steps: [
       { area: 'The Coast', act: 1, gems: ['Spectral Throw', 'Volley Support'] },
@@ -205,6 +280,16 @@ test('main process: a session from start to quit', async (t) => {
     assert.equal((await fake.invoke('library:get')).items.find((i) => i.name === 'With links').same, false, 'changing a link changes the setup');
     await fake.invoke('library:load', 'with-links');
     assert.equal((await fake.invoke('links:data')).links[1].links.length, 1);
+  });
+
+  await t.test('links: undo puts back the links of every act at once', async () => {
+    const before = await fake.invoke('links:data');
+    const all = { 1: { links: [{ skill: 'Spectral Throw', supports: ['Volley Support'] }] }, 2: { extra: ['Herald of Ash'] } };
+    const links = await fake.invoke('links:replace', all);
+    assert.deepEqual(Object.keys(links).sort(), ['1', '2']);
+    assert.deepEqual(links[1].links, [{ skill: 'Spectral Throw', supports: ['Volley Support'] }]);
+    await fake.invoke('links:replace', before.links);
+    assert.deepEqual((await fake.invoke('links:data')).links, before.links);
   });
 
   await t.test('exporting the route takes the links along, and importing it brings them back', async () => {

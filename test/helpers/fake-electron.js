@@ -7,6 +7,8 @@ function install(userData, { packaged = false } = {}) {
   const fake = {
     ipc: { on: new Map(), handle: new Map() }, // what the windows can ask for
     sent: [],                                  // [channel, ...args] sent to any window
+    clipboard: '',                             // text in the clipboard
+    copyText: '',                              // what the game copies on Ctrl+C (the C key)
     windows: [],
     appEvents: new Map(),
     shortcuts: new Map(),
@@ -39,6 +41,7 @@ function install(userData, { packaged = false } = {}) {
     setPosition(x, y) { this.position = [x, y]; }
     setBounds(b) { this.position = [b.x, b.y]; }
     reload() { this.reloads++; }
+    destroy() { this.destroyed = true; }
     focus() {} setAlwaysOnTop() {} setIgnoreMouseEvents() {} setResizable() {} showInactive() {} hide() {}
   }
 
@@ -60,7 +63,7 @@ function install(userData, { packaged = false } = {}) {
       handle: (channel, cb) => fake.ipc.handle.set(channel, cb),
     },
     screen: { getPrimaryDisplay: () => display, getDisplayNearestPoint: () => display },
-    desktopCapturer: { getSources: async () => [] },
+    desktopCapturer: { getSources: async () => fake.screens || [] },
     dialog: {
       showOpenDialog: async () => ({ canceled: true, filePaths: [] }),
       showSaveDialog: async () => ({ canceled: true }),
@@ -70,13 +73,13 @@ function install(userData, { packaged = false } = {}) {
       register: (key, cb) => { fake.shortcuts.set(key, cb); return true; },
       unregisterAll: () => fake.shortcuts.clear(),
     },
-    clipboard: { readText: () => '', writeText() {} },
+    clipboard: { readText: () => fake.clipboard, writeText(t) { fake.clipboard = t; } },
     nativeImage: { createFromBitmap: () => ({ toPNG: () => Buffer.alloc(0) }) },
     shell: { beep() {}, openExternal(url) { fake.opened = url; }, openPath() {} },
   };
   const uiohook = {
-    uIOhook: { on: (event, cb) => fake.hookHandlers.set(event, cb), start() {}, stop() {}, keyTap() {} },
-    UiohookKey: { Ctrl: 29, CtrlRight: 3613, A: 30, F: 33, V: 47, P: 25 },
+    uIOhook: { on: (event, cb) => fake.hookHandlers.set(event, cb), start() {}, stop() {}, keyTap(key) { if (key === 46 && fake.copyText) fake.clipboard = fake.copyText; } },
+    UiohookKey: { Ctrl: 29, CtrlRight: 3613, A: 30, C: 46, F: 33, V: 47, P: 25 },
   };
   const tesseract = {
     createWorker: async () => ({ setParameters: async () => {}, recognize: async () => ({ data: { text: '' } }), terminate() {} }),

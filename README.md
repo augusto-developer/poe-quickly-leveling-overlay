@@ -11,7 +11,8 @@ A leveling overlay for **Path of Exile 1**. It sits on top of the game and tells
 </p>
 
 It works by reading the game log and looking at the screen. It does not read or change the game's memory or
-files, and it only sends keys to the game when you press one of its hotkeys.
+files, and it only sends keys to the game in answer to one of its hotkeys or to your own Ctrl + click on a
+vendor item.
 
 ## Download
 
@@ -46,19 +47,37 @@ how it knows the area you are in. You can change the folder later in the options
 
 <img src="docs/route.png" alt="Gem route window" width="720">
 
-Click the **gem** button of the overlay to set up your route:
+Click the **gem** button of the overlay to set up your route.
+
+**From a Path of Building build.** Click **From PoB**, paste the build code and click **Read build**. The overlay
+takes the class of the build and its skill sets. Each skill set is for an act, read from its title ("Act 2",
+"Act 3-4"); you can change it, or leave a set out (maps, for example). A gem goes to the act of the first set
+that has it, to a quest of that act where the class can get it: as the free reward of the quest (one per quest)
+or to buy from the vendor. A gem only sold in an earlier act waits for the last visit of that town, and gems of
+other classes go to Siosa (Act 3) or Lilly Roth (Act 6). The starting gem and the chest support of each class
+are left out. Untick what you do not want, then **Replace the route** or **Add to the route**. The window then
+offers to import the passive tree of the same build, and an import in the tree window offers to fill the gem
+route, so one paste does both. The game log does not say when a quest is done, so
+a quest counts as done once you have entered its area and reach a town.
+
+**By hand**, or to adjust what the build made:
 
 1. In "Add an area to the route", type the area name and pick it from the list. The act buttons filter the
    list. An area that exists in two acts is listed in both, as two separate areas with their own gems.
 2. With the area selected, search for gems and click to add or remove them. Enter adds the highlighted gem.
-3. Changes are saved right away and the overlay follows them.
+3. Changes are saved right away and the overlay follows them. **↶** and **↷** (Ctrl+Z, Ctrl+Y) undo and redo
+   any change, removals included. The route window and the links window each keep their own steps.
 
-A gem shows up in the overlay once you have entered its area and are standing in a town. **Export** writes
+Each gem of an area is marked **free** (take it as the quest reward) or **buy**; click the mark to switch it.
+
+A gem shows up in the overlay once you have entered its area and are standing in a town (or in The Library,
+where Siosa sells gems). In the overlay, **free** and **buy** say how to get each one, and **Can't find these
+gems?** opens a small window with the quest, the NPC and the town of each gem of the list. **Export** writes
 the route to a `.json` file you can share, with its links, and **Import** loads one.
 
-**Buying is noticed by itself.** Inside a town, a Ctrl + left click on a vendor item makes the overlay read
-the tooltip title and compare your inventory before and after. The gem is ticked off only when its name is
-in the list and a new item entered the inventory, so a purchase that fails (not enough currency, full
+**Buying is noticed by itself.** Inside a town, at a Ctrl + left click on a vendor item the overlay presses C:
+as you are holding Ctrl, the game copies the item text, which gives the exact gem name. The overlay also
+watches your inventory, and ticks the gem off only when it is in the list and a new item entered the inventory, so a purchase that fails (not enough currency, full
 inventory) is not ticked. You can also click a gem in the overlay to tick it by hand.
 
 **A chime when you arrive.** Entering a town with gems to buy plays a short sound, so the list is not missed.
@@ -103,7 +122,8 @@ When the build has several trees (one per act, for example), each tree continues
 starts with the points of the previous tree, in the same order, and they are locked there: change them in
 the tree they come from and every later tree follows. Below them come the points that are new in this tree,
 which you can move or remove. **Suggest order** arranges the new points again and **Clear** removes only
-them. The overlay follows the tree selected in this window.
+them. The overlay follows the tree selected in this window. **↶** and **↷** (Ctrl+Z, Ctrl+Y) undo and redo
+any change, an import included; switching between the trees of the build is not a change.
 
 The overlay shows "Go to X" with the next point. Click it when you have taken the point, or **undo last** to
 go back one.
@@ -192,8 +212,9 @@ The overlay is built to stay inside what Grinding Gear Games allows for third-pa
 
 - it reads only the game log (`Client.txt`) and what is visible on the screen;
 - it never reads or changes game memory or game files;
-- every input it sends is one action for one key press of yours (F2, F3, F4 or the passive tree key), and
-  that action is always "type a text into a search field".
+- every input it sends answers a key press or click of yours: F2, F3, F4 or the passive tree key type a text
+  into a search field, and a Ctrl + click on a vendor item in town adds a C, so the game copies the item
+  text (copying does nothing in the game world). Your clipboard text is put back afterwards.
 
 That said, this is an unofficial tool and nobody but GGG can promise anything. Use it at your own risk.
 
@@ -222,6 +243,7 @@ None of this is needed. To change something, create `config.json` in that folder
 - `soundVolumes`: the volume of one sound relative to the slider of the overlay, for example `{ "great": 0.5 }`.
 - `toastSeconds`, `toastTop`: how long the centre message stays, and its height as a fraction of the screen.
 - `passiveSearchDelay`: milliseconds to wait for the tree to open before checking (default 350).
+- `liveView`: `false` turns off the recording of the screen used for purchases (see Known limitations).
 - `inventory`: leave `null` to use the geometry scaled by screen height. If purchases are not noticed at
   your resolution, set `{ "left": 1271, "top": 588, "cell": 52.67 }` (the 1920x1080 values) adjusted to your screen.
 
@@ -231,8 +253,9 @@ None of this is needed. To change something, create `config.json` in that folder
   adjusting.
 - Ascendancy, cluster jewel and bloodline nodes are not drawn in the tree.
 - Transfigured and Vaal gems are not in the gem list.
-- Taking a screen capture causes a very short stutter on some machines. It only happens on a Ctrl + click in
-  town and on the hotkeys.
+- To see the inventory, the screen is recorded while Ctrl is in use in a town with gems to buy, and stops a
+  moment later. If that weighs on your game, set `"liveView": false` in `config.json`: purchases then use a
+  plain screen capture, which can cause a very short stutter at each Ctrl + click.
 
 ## Development
 
@@ -275,7 +298,8 @@ src/
     windows/     one file per window: creates it and answers what it asks for
   preload/     the narrow bridge each window gets to the main process
   renderer/    the windows themselves: plain HTML, CSS and JavaScript, no build step
-data/          gems, campaign areas, towns, mercenary rules, the passive tree
+data/          gems, campaign areas, towns, quest rewards, mercenary rules, the passive tree
+scripts/       import-quests.js: makes data/quests.json (see the comment at its top)
 assets/        passive tree art, the icon
 test/          node:test suites
 ```
@@ -288,8 +312,10 @@ to `main` through its preload. To follow one feature end to end, start at its fi
 | `guide.js` | the gem route: cleaning, pending gems, which act an area belongs to |
 | `links.js` | the links of each act (also loaded by the windows) |
 | `build.js`, `treeplan.js` | the passive plan: order of the points, cost of each step, trees that continue each other |
-| `pob.js` | decodes a Path of Building code |
-| `vision.js` | finds the gem tooltip title on a capture and compares inventory cells |
+| `pob.js` | decodes a Path of Building code: the passive trees and the gems of each link group |
+| `questroute.js` | where each gem comes from for a class (quest reward or vendor), and the route of a build |
+| `vision.js` | finds the inventory grid on the screen and compares its cells |
+| `itemtext.js` | the gem name in the item text the game copies |
 | `mercs.js` | reads the mercenary window layout and evaluates the rules |
 | `regex.js` | builds the vendor search text within the character limit |
 | `logwatcher.js`, `gamefolder.js` | follows `Client.txt` and finds the game folder |
@@ -300,6 +326,8 @@ to `main` through its preload. To follow one feature end to end, start at its fi
 - Passive tree data and art: Grinding Gear Games, from their
   [skilltree-export](https://github.com/grindinggear/skilltree-export) repository.
 - Gem list: the "List of skill gems" and "List of support gems" pages of [poewiki.net](https://www.poewiki.net).
+- Quest rewards and vendor gems of each class: [exile-leveling](https://github.com/HeartofPhos/exile-leveling)
+  by HeartofPhos (MIT), which reads them from the game files and the wiki.
 - Text reading: [Tesseract.js](https://github.com/naptha/tesseract.js). Keyboard and mouse listening:
   [uiohook-napi](https://github.com/SnosMe/uiohook-napi). Built with [Electron](https://www.electronjs.org).
 

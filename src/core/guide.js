@@ -23,10 +23,13 @@ function indexAreas(groups) {
 }
 
 /**
- * Accepts only the shape { steps: [{ area, act, gems: [names] }], links: {...} } and drops
- * everything else (see links.js for the links, planned act by act).
- * `act` is 1 to 10, or null for an area outside the campaign list. A step saved before acts
- * existed gets the first act its area appears in.
+ * Accepts only the shape { class, steps: [{ area, act, gems: [names], get, from }], links: {...} }
+ * and drops everything else (see links.js for the links, planned act by act).
+ * `class` is the character class the route was planned for (or ''), `act` is 1 to 10, or
+ * null for an area outside the campaign list. A step saved before acts existed gets the
+ * first act its area appears in. `get[name]` is 'reward' for a gem to take as the free quest
+ * reward; the other gems of the step are bought. `from[name]` is the quest reward the gem
+ * comes from, when the route was made from a build (data/quests.json).
  */
 function cleanGuide(raw, areaActs) {
   const steps = [];
@@ -40,9 +43,14 @@ function cleanGuide(raw, areaActs) {
     if (seen.has(id)) continue;
     seen.add(id);
     const gems = [...new Set((Array.isArray(s.gems) ? s.gems : []).filter((g) => typeof g === 'string' && g.trim()).map((g) => g.trim()))];
-    steps.push({ area: s.area.trim(), act, gems });
+    const get = {};
+    for (const g of gems) if (s.get && s.get[g] === 'reward') get[g] = 'reward';
+    const from = {};
+    for (const g of gems) if (s.from && typeof s.from[g] === 'string' && /^[\w-]{1,40}$/.test(s.from[g])) from[g] = s.from[g];
+    steps.push({ area: s.area.trim(), act, gems, get, from });
   }
-  return { steps, links: cleanLinks(raw?.links) };
+  const cls = typeof raw?.class === 'string' && /^[A-Za-z]{1,20}$/.test(raw.class) ? raw.class : '';
+  return { class: cls, steps, links: cleanLinks(raw?.links) };
 }
 
 // Has the character been through this area of the route? A step with an act needs that
@@ -67,7 +75,7 @@ function pendingGems(guide, state, areaActs) {
       const oldKey = `${step.area}|${name}`; // how purchases were recorded before acts existed
       const key = step.act ? `${step.act}|${oldKey}` : oldKey;
       const bought = acquired.includes(key) || (step.act === firstAct && acquired.includes(oldKey));
-      if (!bought) out.push({ key, name, area: step.area });
+      if (!bought) out.push({ key, name, area: step.area, step });
     }
   }
   return out;

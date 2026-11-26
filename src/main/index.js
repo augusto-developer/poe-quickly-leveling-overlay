@@ -15,6 +15,7 @@ if (!app.requestSingleInstanceLock()) {
   const store = require('./store');
   const { setStatus } = require('./session');
   const ocr = require('./platform/ocr');
+  const stream = require('./platform/stream');
   const hooks = require('./features/hooks');
   const hotkeys = require('./features/hotkeys');
   const gameFolder = require('./features/gameFolder');
@@ -28,6 +29,7 @@ if (!app.requestSingleInstanceLock()) {
   require('./windows/options');
   require('./windows/library');
   require('./windows/links');
+  require('./windows/help');
 
   app.whenReady().then(async () => {
     config.load();
@@ -48,6 +50,7 @@ if (!app.requestSingleInstanceLock()) {
   app.on('will-quit', () => {
     hotkeys.release();
     hooks.stop();
+    stream.stop();
     gameFolder.stop();
     ocr.stop();
   });

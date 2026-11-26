@@ -15,6 +15,7 @@ const DEFAULTS = {
   toastSeconds: 3,
   passiveSearchDelay: 350, // ms to wait for the passive tree to open
   inventory: null,         // inventory grid, when the automatic geometry does not fit
+  liveView: true,          // false: gem purchases use plain screen captures, as in 1.0.2
   mercLayout: null,        // mercenary window positions, when they do not fit
 };
 

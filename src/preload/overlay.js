@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld('overlay', {
   passiveDone: (id) => ipcRenderer.send('passive-done', id),
   passiveUndo: () => ipcRenderer.send('passive-undo'),
   openWiki: (name) => ipcRenderer.send('open-wiki', name),
+  openHelp: () => ipcRenderer.send('open-help'),
   updateNow: () => ipcRenderer.send('update-act'),
   linksDrawer: (open) => ipcRenderer.send('links-drawer', open),
   linksAct: (act) => ipcRenderer.send('links-act', act),

@@ -9,11 +9,27 @@ const { norm } = require('../core/text');
 const guideCore = require('../core/guide');
 const GemLinks = require('../core/links');
 const buildCore = require('../core/build');
+const questroute = require('../core/questroute');
 
 const pendingGems = () => guideCore.pendingGems(store.guide, store.state, gamedata.areaActs);
 const inTown = () => session.currentArea !== null && gamedata.isTown(session.currentArea);
 // Purchases are only watched inside a town with something left to buy.
 const watchingPurchases = () => inTown() && pendingGems().length > 0;
+
+// ---------- where each gem comes from ----------
+// The class the route was planned for, or else the class of the passive tree in use.
+function routeClass() {
+  if (store.guide.class) return store.guide.class;
+  const spec = store.build.specs[store.build.specIndex];
+  return spec ? (gamedata.tree().classes[spec.classId] || {}).name || '' : '';
+}
+// { how: 'reward' | 'buy', npc, where, quest, task } of a pending gem, or null.
+const sourceOf = (g) => questroute.sourceOf(gamedata.quests().offers, routeClass(), g.step, g.name);
+
+// The pending gems with how to get each one, for the help window.
+function pendingHelp() {
+  return pendingGems().map((g) => ({ name: g.name, area: g.area, color: gamedata.gemColors.get(g.name) || 'unknown', wiki: gamedata.gemUrls.has(g.name), source: sourceOf(g) }));
+}
 
 // ---------- links ----------
 // The act shown in the drawer: the one you picked last, which follows you into each new act.
@@ -67,7 +83,10 @@ function overlayState() {
     act: acts.length ? store.state.act || null : null,
     canSwitchAct: acts.length > 1,
     inTown: inTown(),
-    pending: pendingGems().map((g) => ({ key: g.key, name: g.name, wiki: gamedata.gemUrls.has(g.name), color: gamedata.gemColors.get(g.name) || 'unknown' })),
+    pending: pendingGems().map((g) => {
+      const src = sourceOf(g);
+      return { key: g.key, name: g.name, wiki: gamedata.gemUrls.has(g.name), color: gamedata.gemColors.get(g.name) || 'unknown', how: src ? src.how : null, npc: src ? src.npc : null };
+    }),
     status: session.status,
     passive: nextPassive(),
     hasNotes: Boolean(store.build.notes),
@@ -77,4 +96,4 @@ function overlayState() {
   };
 }
 
-module.exports = { linksForOverlay, pendingGems, inTown, watchingPurchases, currentOrder, currentPlan, nextPassive, overlayState };
+module.exports = { linksForOverlay, pendingGems, pendingHelp, routeClass, inTown, watchingPurchases, currentOrder, currentPlan, nextPassive, overlayState };

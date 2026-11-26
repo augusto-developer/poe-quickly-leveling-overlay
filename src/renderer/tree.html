@@ -26,6 +26,12 @@
   .btn { background: none; border: 1px solid var(--brass-dim); border-radius: 3px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
   .btn:hover { border-color: var(--brass); background: var(--navy-raised); }
   .btn.primary { border-color: var(--brass); color: var(--brass); }
+  .btn.icon { padding: 3px 9px; font-size: 15px; line-height: 1; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .btn:disabled:hover { border-color: var(--brass-dim); background: none; }
+  .ask { margin-top: 8px; padding: 8px 10px; border: 1px solid var(--brass); border-radius: 3px; background: var(--navy-raised); font-size: 13px; }
+  .title-row { display: flex; align-items: center; gap: 6px; padding-right: 18px; }
+  .title-row h1 { flex: 1; }
   .msg { font-size: 12px; color: var(--muted); margin-top: 8px; min-height: 17px; }
   .msg.error { color: var(--bad); }
   #spec-row { margin-top: 8px; }
@@ -86,7 +92,11 @@
 </head>
 <body>
 <aside>
-  <h1>Passive tree</h1>
+  <div class="title-row">
+    <h1>Passive tree</h1>
+    <button class="btn icon" id="undo" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button>
+    <button class="btn icon" id="redo" title="Redo (Ctrl+Y)" aria-label="Redo">↷</button>
+  </div>
   <div class="import">
     <label for="pob">Path of Building code</label>
     <textarea id="pob" spellcheck="false" placeholder="Paste the code from PoB: Import/Export, Generate"></textarea>
@@ -98,6 +108,13 @@
       <select id="spec" aria-label="Tree inside the build"></select>
     </div>
     <div class="msg" id="msg" aria-live="polite"></div>
+    <div class="ask" id="ask-route" role="alert" hidden>
+      <span>Also fill the gem route from this build?</span>
+      <div class="row">
+        <button class="btn primary" id="ask-route-yes">Fill the route</button>
+        <button class="btn" id="ask-route-no">No</button>
+      </div>
+    </div>
   </div>
   <div class="order-head">
     <h2 id="order-title">Order of the points</h2>
@@ -116,6 +133,7 @@
   <div class="hint">Drag to move, scroll to zoom, click a notable or keystone to add it to the order</div>
   <div id="loading">Loading the tree...</div>
 </main>
+<script src="js/history.js"></script>
 <script src="js/tree.js"></script>
 </body>
 </html>

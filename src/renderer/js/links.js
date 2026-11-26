@@ -36,6 +36,7 @@
   async function save(message = 'Saved') {
     data.links = await api.save(act, set);
     set = current();
+    edits.record();
     $('saved').textContent = message;
     clearTimeout(savedTimer);
     savedTimer = setTimeout(() => { $('saved').textContent = ''; }, 1500);
@@ -405,11 +406,32 @@
     renderSupports(gems.filter((n) => GemLinks.isSupport(n, gemByName)).sort((a, b) => marksLast(a, b) || byColor(a, b)));
   }
 
-  // The route or the links changed in another window: read them again.
+  // ---------- undo / redo ----------
+  // A snapshot is the links of every act; going back shows the act that changed.
+  let refreshEdits = () => {};
+  const edits = EditHistory.createHistory({
+    snapshot: () => JSON.stringify(data.links || {}),
+    restore: async (snap) => {
+      const before = data.links || {};
+      data.links = await api.replaceAll(JSON.parse(snap));
+      const changedAct = [...new Set([...Object.keys(before), ...Object.keys(data.links)])]
+        .find((a) => JSON.stringify(before[a]) !== JSON.stringify(data.links[a]));
+      if (changedAct && Number(changedAct) !== act) showAct(Number(changedAct));
+      else { set = current(); selected = null; render(); }
+      $('saved').textContent = '';
+    },
+    onChange: () => refreshEdits(),
+  });
+  refreshEdits = EditHistory.bindHistory(edits, $('undo'), $('redo'));
+
+  // The route or the links changed in another window: read them again. If the links
+  // themselves changed there (a route was imported), the undo steps start over.
   api.onRefresh(async () => {
+    const before = JSON.stringify(data.links || {});
     data = await api.getData();
     gemByName = new Map(data.gems.map((g) => [g.name, g]));
     set = current();
+    if (JSON.stringify(data.links || {}) !== before) edits.reset();
     render();
   });
   // The overlay asked for a given act.

@@ -40,4 +40,12 @@ ipcMain.handle('links:save', (_e, act, set) => {
   return store.guide.links;
 });
 
+// Puts back the links of every act at once (undo and redo of the window).
+ipcMain.handle('links:replace', (_e, links) => {
+  store.guide = { ...store.guide, links: GemLinks.cleanLinks(links) };
+  saveGuide();
+  changed();
+  return store.guide.links;
+});
+
 module.exports = { open };

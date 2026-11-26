@@ -354,6 +354,13 @@ window.overlay.onState((s) => {
     dot.className = 'dot ' + gem.color;
     li.appendChild(dot);
     li.appendChild(label);
+    if (gem.how) {
+      const get = document.createElement('span');
+      get.className = 'get ' + gem.how;
+      get.textContent = gem.how === 'reward' ? 'free' : 'buy';
+      get.title = gem.how === 'reward' ? `Free quest reward from ${gem.npc}` : `Buy from ${gem.npc}`;
+      li.appendChild(get);
+    }
     if (gem.wiki) {
       const link = document.createElement('span');
       link.className = 'wiki';
@@ -365,4 +372,9 @@ window.overlay.onState((s) => {
     ul.appendChild(li);
   }
   list.appendChild(ul);
+  const help = document.createElement('button');
+  help.className = 'help-link';
+  help.textContent = "Can't find these gems? Click here";
+  help.addEventListener('click', () => window.overlay.openHelp());
+  list.appendChild(help);
 });

@@ -654,7 +654,8 @@
   }
 
   // Saves the build and gets the order and the costs back from the main process.
-  async function commit() {
+  // `record` is false when nothing was edited (start, undo and redo).
+  async function commit(record = true) {
     const result = await api.save(build);
     plan = result.plan;
     order = result.order;
@@ -662,12 +663,24 @@
     previousTitle = result.previousTitle;
     dirty = true;
     renderSidebar();
+    if (record && edits) edits.record();
   }
 
+  // ---------- undo / redo ----------
+  // A snapshot is the build without which tree is selected: switching trees is not an edit.
+  const editable = () => JSON.stringify({ specs: build.specs, tails: build.tails, order: build.order, notes: build.notes });
+  let refreshEdits = () => {};
+  let edits = null;
+
+  let importedCode = '';  // the code of the last import, to hand to the route window
+  let fromRoute = false;  // the code came from the route window: no need to offer it back
   $('import').addEventListener('click', async () => {
     say('Reading the code...');
-    const result = await api.importPob($('pob').value);
-    if (result.error) return say(result.error, true);
+    $('ask-route').hidden = true;
+    const code = $('pob').value;
+    const result = await api.importPob(code);
+    if (result.error) { fromRoute = false; return say(result.error, true); }
+    importedCode = code;
     // every tree starts arranged automatically, each one continuing the one before
     build = { specs: result.specs, specIndex: result.active, tails: result.specs.map(() => null), order: [], notes: result.notes || '' };
     refreshAllocated();
@@ -677,7 +690,20 @@
     const unknown = spec().nodes.length - spec().nodes.filter((id) => tree.nodes[id]).length;
     say(`Imported${build.notes ? ', with the build notes' : ''}. Order suggested from the class start outwards${build.specs.length > 1 ? ', each tree continuing the one before' : ''}.${unknown > 0 ? ` ${unknown} nodes are outside this tree (ascendancy, cluster jewels) and were left out.` : ''}`);
     $('pob').value = '';
+    $('ask-route').hidden = fromRoute;
+    fromRoute = false;
   });
+  $('ask-route-yes').addEventListener('click', () => { $('ask-route').hidden = true; api.sendToRoute(importedCode); });
+  $('ask-route-no').addEventListener('click', () => { $('ask-route').hidden = true; });
+  // A code from the route window: imported right away (undo brings the old tree back).
+  async function takeHandedCode() {
+    const code = await api.takePob();
+    if (!code) return;
+    fromRoute = true;
+    $('pob').value = code;
+    $('import').click();
+  }
+  api.onPobOffer(takeHandedCode);
   $('spec').addEventListener('change', async (e) => {
     build.specIndex = Number(e.target.value);
     refreshAllocated();
@@ -698,8 +724,24 @@
   refreshAllocated();
   resize();
   if (spec()) fitBuild(); else fitAll();
-  await commit();
+  await commit(false);
+  edits = EditHistory.createHistory({
+    snapshot: editable,
+    restore: async (snap) => {
+      const back = JSON.parse(snap);
+      const sameTrees = back.specs.length === build.specs.length;
+      build = { ...back, specIndex: Math.min(build.specIndex, Math.max(0, back.specs.length - 1)) };
+      refreshAllocated();
+      focusId = null;
+      await commit(false);
+      if (!sameTrees) fitBuild();
+      say('');
+    },
+    onChange: () => refreshEdits(),
+  });
+  refreshEdits = EditHistory.bindHistory(edits, $('undo'), $('redo'));
   $('loading').hidden = true;
+  takeHandedCode();
   loop();
 })().catch((err) => {
   const box = document.getElementById('loading');

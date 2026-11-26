@@ -27,6 +27,8 @@
     padding: 6px 14px; cursor: pointer; color: var(--parchment);
   }
   .ghost:hover { border-color: var(--brass); background: var(--navy-raised); }
+  .ghost.icon { padding: 4px 10px; font-size: 16px; line-height: 1; }
+  .ghost:disabled:hover { border-color: var(--brass-dim); background: none; }
   #saved { color: var(--muted); font-size: 12px; min-width: 60px; text-align: right; }
 
   main { display: grid; grid-template-columns: 320px 1fr; min-height: 0; }
@@ -129,6 +131,46 @@
   .gem.picked .name::after { content: "  in the route"; color: var(--muted); font-size: 12px; }
   .no-results { color: var(--muted); padding: 18px 10px; }
 
+  /* free / buy mark on a chosen gem */
+  .chip .get { font-size: 11px; padding: 1px 6px; border: 1px solid var(--brass-dim); border-radius: 3px; color: var(--muted); }
+  .chip .get:hover { color: var(--parchment); border-color: var(--brass); }
+  .chip .get.reward { color: var(--navy-deep); background: var(--brass); border-color: var(--brass); }
+  #class-label { color: var(--muted); font-size: 13px; }
+
+  /* "From PoB" dialog */
+  dialog { width: min(760px, 92vw); max-height: 88vh; padding: 0; background: var(--navy); color: var(--parchment); border: 1px solid var(--brass); border-radius: 4px; }
+  dialog::backdrop { background: rgba(3, 4, 10, .7); }
+  .pob { display: flex; flex-direction: column; max-height: 88vh; }
+  .pob h2 { font: 400 22px/1.2 var(--display); font-variant: small-caps; letter-spacing: .03em; color: var(--brass); margin: 0; padding: 18px 22px 4px; }
+  .pob .hint { color: var(--muted); font-size: 13px; margin: 4px 22px 10px; flex: none; }
+  .pob-paste { display: flex; gap: 10px; align-items: flex-start; padding: 0 22px 12px; }
+  .pob-paste textarea { flex: 1; resize: vertical; min-height: 64px; font: 12px/1.4 ui-monospace, Consolas, monospace; }
+  .pob .error { color: var(--str); font-size: 13px; padding: 0 22px 8px; }
+  .pob-class { display: flex; gap: 10px; align-items: center; padding: 0 22px 4px; }
+  .pob-class select { background: var(--navy-deep); color: var(--parchment); border: 1px solid var(--brass-dim); border-radius: 3px; padding: 5px 8px; }
+  #pob-pick { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  .pob input[type=checkbox] { accent-color: var(--brass); margin: 0; }
+  .pob-groups { flex: 1 1 auto; overflow-y: auto; padding: 0 22px 8px; border-top: 1px solid var(--brass-dim); border-bottom: 1px solid var(--brass-dim); min-height: 120px; }
+  .pob-group { padding-bottom: 6px; }
+  .set-head { display: flex; align-items: center; gap: 12px; margin: 16px 0 2px; }
+  .set-head h3 { flex: 1; font: 400 17px/1.2 var(--display); font-variant: small-caps; letter-spacing: .03em; color: var(--brass); margin: 0; }
+  .set-act { background: var(--navy-deep); color: var(--parchment); border: 1px solid var(--brass-dim); border-radius: 3px; padding: 3px 6px; font-size: 12px; }
+  .link-label { color: var(--muted); font-size: 12px; margin: 8px 0 0 26px; }
+  .set-note { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
+  .pob-gem { display: grid; grid-template-columns: 18px 14px minmax(140px, 1fr) auto; gap: 8px; align-items: center; padding: 4px 0; cursor: pointer; }
+  .pob-gem .place { color: var(--muted); font-size: 12px; text-align: right; }
+  .pob-gem .place.reward { color: var(--brass); }
+  .pob-gem .place.none { color: var(--str); }
+  .pob-gem.off .name, .pob-gem.off .place { opacity: .45; }
+  .pob footer { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 22px; }
+  .primary { background: var(--brass); color: var(--navy-deep); border: 1px solid var(--brass); border-radius: 3px; padding: 6px 14px; cursor: pointer; }
+  .primary:disabled, .ghost:disabled { opacity: .4; cursor: default; }
+
+  .ask-bar {
+    position: fixed; top: 70px; right: 22px; z-index: 10; display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px 10px 16px; background: var(--navy-raised); border: 1px solid var(--brass); border-radius: 4px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .45);
+  }
   .blank { margin: auto; text-align: center; color: var(--muted); max-width: 340px; }
   .blank p { font: 400 20px/1.3 var(--display); color: var(--parchment); margin: 0 0 6px; }
   [hidden] { display: none !important; }
@@ -137,7 +179,11 @@
 <body>
 <header>
   <h1>Gem route</h1>
+  <span id="class-label"></span>
   <span id="saved" aria-live="polite"></span>
+  <button class="ghost icon" id="undo" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button>
+  <button class="ghost icon" id="redo" title="Redo (Ctrl+Y)" aria-label="Redo">↷</button>
+  <button class="ghost" id="from-pob" title="Fill the route with the gems of a Path of Building build">From PoB</button>
   <button class="ghost" id="open-links" title="Which gems you socket together, act by act">Links</button>
   <button class="ghost" id="import">Import</button>
   <button class="ghost" id="export">Export</button>
@@ -182,7 +228,39 @@
     Add an area in the field on the left and pick the gems you want to be reminded to buy after passing through it.
   </section>
 </main>
+<div class="ask-bar" id="ask-tree" role="alert" hidden>
+  <span>Also import the passive tree of this build?</span>
+  <button class="primary" id="ask-tree-yes">Import the tree</button>
+  <button class="ghost" id="ask-tree-no">No</button>
+</div>
+<dialog id="pob-dialog" aria-labelledby="pob-title">
+  <div class="pob">
+    <h2 id="pob-title">Route from a Path of Building code</h2>
+    <p class="hint">Each gem of the build goes to a quest of the act where your build starts using it: as the free
+      reward of the quest (one per quest) or to buy from the vendor. You can change anything afterwards.</p>
+    <div class="pob-paste">
+      <textarea class="field" id="pob-code" placeholder="Paste the PoB code (Import/Export, Generate)" spellcheck="false"></textarea>
+      <button class="ghost" id="pob-read">Read build</button>
+    </div>
+    <div class="error" id="pob-error" role="alert"></div>
+    <div id="pob-pick" hidden>
+      <div class="pob-class">
+        <label for="pob-class">Class</label>
+        <select id="pob-class"></select>
+        <span class="hint" style="margin:0">Each skill set is for an act. A gem goes to the route in the act of the first set that has it.</span>
+      </div>
+      <div class="pob-groups" id="pob-groups"></div>
+      <p class="hint" id="pob-missing"></p>
+    </div>
+    <footer>
+      <button class="ghost" id="pob-cancel">Cancel</button>
+      <button class="ghost" id="pob-add" disabled title="Keep the route and add these gems to it">Add to the route</button>
+      <button class="primary" id="pob-replace" disabled title="The links of each act are kept">Replace the route</button>
+    </footer>
+  </div>
+</dialog>
 <script src="js/search.js"></script>
+<script src="js/history.js"></script>
 <script src="js/settings.js"></script>
 </body>
 </html>

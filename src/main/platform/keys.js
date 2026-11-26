@@ -30,4 +30,35 @@ async function pasteIntoSearch(text) {
   }
 }
 
-module.exports = { sleep, pasteIntoSearch };
+// The text of the item under the mouse, copied by the game itself. It is only used while
+// you hold Ctrl for your own Ctrl + click: the program presses C, so the game sees Ctrl+C
+// (which copies the item, and does nothing in the game world). One copy at a time; the
+// clipboard you had is put back by restoreClipboard() when the clicks are over.
+let savedClipboard = null;
+let copying = Promise.resolve();
+function copyHoveredItem(timeout = 250) {
+  const run = copying.then(async () => {
+    if (!session.ctrlDown) return null; // without Ctrl held, C alone would open the character panel
+    if (savedClipboard === null) savedClipboard = clipboard.readText();
+    clipboard.writeText('');
+    session.sendingKeys = true;
+    uIOhook.keyTap(UiohookKey.C);
+    setTimeout(() => { session.sendingKeys = false; }, 30).unref?.();
+    const until = Date.now() + timeout;
+    while (Date.now() < until) {
+      await sleep(8);
+      const text = clipboard.readText();
+      if (text) return text;
+    }
+    return null;
+  });
+  copying = run.catch(() => null);
+  return run;
+}
+function restoreClipboard() {
+  if (savedClipboard === null) return;
+  try { clipboard.writeText(savedClipboard); } catch { /* carry on */ }
+  savedClipboard = null;
+}
+
+module.exports = { sleep, pasteIntoSearch, copyHoveredItem, restoreClipboard };

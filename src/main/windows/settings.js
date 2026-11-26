@@ -7,6 +7,8 @@ const { store, saveGuide } = require('../store');
 const { bus, changed } = require('../session');
 const gamedata = require('../gamedata');
 const { cleanGuide } = require('../../core/guide');
+const { decodePob } = require('../../core/pob');
+const questroute = require('../../core/questroute');
 
 const win = singleWindow('settings', { width: 1040, height: 720, minWidth: 820, minHeight: 520, title: 'Gem route' });
 const clean = (raw) => cleanGuide(raw, gamedata.areaActs);
@@ -24,6 +26,43 @@ ipcMain.on('settings:save', (_e, raw) => {
   changed(); // the overlay list follows the edit right away
   bus.emit('route-changed');
 });
+// "From PoB": the class and the gems of a build, and where each gem comes from for a class.
+const classNames = () => gamedata.tree().classes.map((c) => c.name);
+ipcMain.handle('settings:pob', (_e, code) => {
+  try {
+    const pob = decodePob(code, gamedata.quests().ids);
+    const spec = pob.specs[pob.active];
+    return { className: classNames()[spec.classId] || '', classes: classNames(), skillSets: pob.skillSets };
+  } catch (err) {
+    return { error: err.message };
+  }
+});
+// gems: [{ name, act }], act being the act the gem is needed from (or null).
+ipcMain.handle('settings:plan', (_e, cls, gems) => {
+  if (!classNames().includes(cls) || !Array.isArray(gems)) return { steps: [], missing: [], start: [], places: {} };
+  const { offers, start } = gamedata.quests();
+  const wanted = gems.filter((g) => g && typeof g.name === 'string');
+  const acts = {};
+  for (const g of wanted) if (Number.isInteger(g.act) && g.act >= 1 && g.act <= 10) acts[g.name] = g.act;
+  const plan = questroute.planRoute(offers, cls, wanted.map((g) => g.name), start[cls] || [], acts);
+  // where each gem landed, for the list of the import panel
+  const places = {};
+  for (const step of plan.steps) {
+    for (const gem of step.gems) places[gem] = { area: step.area, act: step.act, ...questroute.sourceOf(offers, cls, step, gem) };
+  }
+  for (const gem of plan.start) places[gem] = { start: true };
+  return { ...plan, places };
+});
+// A PoB code handed over by the passive tree window ("also fill the gem route?"): the
+// window opens (or comes to the front) and takes it once.
+let handedCode = null;
+ipcMain.on('pob:to-route', (_e, code) => {
+  if (typeof code !== 'string' || !code.trim()) return;
+  handedCode = code;
+  if (win.get()) { win.get().webContents.send('settings:pob-offer'); win.get().focus(); } else win.open();
+});
+ipcMain.handle('settings:take-pob', () => { const code = handedCode; handedCode = null; return code; });
+
 ipcMain.handle('settings:export', async (_e, raw) => {
   const { canceled, filePath } = await dialog.showSaveDialog(win.get(), {
     title: 'Export route',
