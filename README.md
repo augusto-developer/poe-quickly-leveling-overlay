@@ -271,17 +271,11 @@ npm run dist     build the installer and the portable .exe into dist/
 If `npm start` fails with "Electron failed to install correctly", run `node node_modules\electron\install.js`
 and try again.
 
-To publish a new version, change `version` in `package.json` (for example to `1.1.0`), commit, then push a tag
-with the same number:
-
-```
-git tag v1.1.0
-git push && git push --tags
-```
-
-GitHub builds both `.exe` files and attaches them to a new release, with the `latest.yml` file that the
-installed overlays read to find the update (`.github/workflows/release.yml`). The repository must be public for
-the overlays to see the releases.
+To publish a new version, change `version` in `package.json` (for example to `1.2.0`), commit and push, then run
+`npm run dist`. Create a release on GitHub with the tag `v` + that number (`v1.2.0`) and attach, from `dist/`, both
+`.exe` files and `latest.yml` (the file the installed overlays read to find the update; the `.blockmap` is
+optional and only makes the update download smaller). The repository must be public for the overlays to see
+the releases.
 
 ### How the code is organised
 
